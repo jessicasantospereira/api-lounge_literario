@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Endereco {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_endereco;
+    private Long idEndereco;
     private String logradouro;
     private String numero;
     private String complemento;
@@ -28,7 +28,7 @@ public class Endereco {
     private TipoEndereco tipoEndereco;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", foreignKey = @ForeignKey(name = "id_endereco"))
+    @JoinColumn(name = "idCliente", foreignKey = @ForeignKey(name = "fk_idEndereco"))
     @JsonBackReference
     private Cliente cliente;
 }

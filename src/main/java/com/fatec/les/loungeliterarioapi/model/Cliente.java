@@ -17,7 +17,7 @@ import java.util.List;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Long idCliente;
     private String nome;
     private String cpf;
     @Column(name = "data_nascimento")
@@ -26,12 +26,12 @@ public class Cliente {
     private LocalDate dataCadastro;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", foreignKey = @ForeignKey(name = "id_contato"))
+    @JoinColumn(name = "idCliente", foreignKey = @ForeignKey(name = "fk_idContato"))
     @JsonManagedReference
     private List<Contato> contato;
 
     @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", foreignKey = @ForeignKey(name = "id_endereco"))
+    @JoinColumn(name = "idCliente", foreignKey = @ForeignKey(name = "fk_idEndereco"))
     @JsonManagedReference
     private List<Endereco> endereco;
 }

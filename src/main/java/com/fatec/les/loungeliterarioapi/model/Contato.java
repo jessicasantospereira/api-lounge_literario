@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class Contato {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id_contato;
+    private Long idContato;
     private String ddd;
     private String telefone;
     private String email;
@@ -24,7 +24,7 @@ public class Contato {
     private TipoTelefone tipoContato;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id", foreignKey = @ForeignKey(name = "id_contato"))
+    @JoinColumn(name = "idCliente", foreignKey = @ForeignKey(name = "fk_idContato"))
     @JsonBackReference
     private Cliente cliente;
 }

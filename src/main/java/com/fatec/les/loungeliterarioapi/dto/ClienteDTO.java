@@ -26,12 +26,4 @@ public class ClienteDTO {
     private LocalDate dataCadastro;
     private List<Contato> contato;
     private List<Endereco> endereco;
-
-    public Cliente toModel(){
-        return new Cliente(idCliente, nome, cpf, dataNascimento, dataCadastro, contato, endereco);
-    }
-
-    public static ClienteDTO fromModel(Cliente cliente){
-        return new ClienteDTO(cliente.getIdCliente(), cliente.getNome(), cliente.getCpf(), cliente.getDataNascimento(),cliente.getDataNascimento(), cliente.getContato(), cliente.getEndereco());
-    }
 }

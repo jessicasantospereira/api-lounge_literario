@@ -34,4 +34,20 @@ public class Cliente {
     @JoinColumn(name = "idCliente", foreignKey = @ForeignKey(name = "fk_idEndereco"))
     @JsonManagedReference
     private List<Endereco> endereco;
+
+    public void addEndereco(Endereco end) {
+        endereco.add(end);
+    }
+
+    public void removerEndereco(Endereco end) {
+        endereco.remove(end);
+    }
+
+    public void addContato(Contato ct) {
+        contato.add(ct);
+    }
+
+    public void removerContato(Contato ct) {
+        contato.remove(ct);
+    }
 }

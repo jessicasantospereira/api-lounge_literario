@@ -31,12 +31,15 @@ public class Produto {
     @Column(name="data_cadastro")
     private LocalDate dataCadastro;
 
-    public Produto(String titulo, String descricao, String imagem, Tags tag, BigDecimal preco) {
+    private int qtdeEstoque;
+
+    public Produto(String titulo, String descricao, String imagem, Tags tag, BigDecimal preco, int qtde) {
         this.titulo = titulo;
         this.descricao = descricao;
         this.imagem = imagem;
         this.tag = tag;
         this.preco = preco;
+        this.qtdeEstoque = qtde;
         setDataCadastro(LocalDate.now());
     }
 

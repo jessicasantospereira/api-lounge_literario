@@ -23,7 +23,7 @@ public class Cliente {
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
     @Column(name = "data_cadastro")
-    private LocalDate dataCadastro;
+    private LocalDate dataCadastro = LocalDate.now();
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "idCliente", foreignKey = @ForeignKey(name = "fk_idContato"))

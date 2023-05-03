@@ -22,13 +22,15 @@ public class ProdutoDTO {
     private Tags tag;
     private BigDecimal preco;
 
+    private int qtdeEstoque;
+
     @JsonFormat(pattern = "dd/MM/yyyy")
     private LocalDate dataCadastro;
 
     public Produto toModel(){
-        return new Produto(titulo, descricao, imagem, tag, preco);
+        return new Produto(titulo, descricao, imagem, tag, preco, qtdeEstoque);
     }
     public static ProdutoDTO fromModel(Produto produto){
-        return new ProdutoDTO(produto.getId(), produto.getTitulo(), produto.getDescricao(), produto.getImagem(), produto.getTag(), produto.getPreco(), produto.getDataCadastro());
+        return new ProdutoDTO(produto.getId(), produto.getTitulo(), produto.getDescricao(), produto.getImagem(), produto.getTag(), produto.getPreco(), produto.getQtdeEstoque(), produto.getDataCadastro());
     }
 }

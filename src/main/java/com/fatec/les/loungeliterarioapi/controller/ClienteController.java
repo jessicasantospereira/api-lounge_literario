@@ -37,6 +37,8 @@ public class ClienteController {
     public Page<Cliente> getLista(@RequestParam(value="nome", required = false, defaultValue = "") String nome,
                                      @RequestParam(value="cpf", required = false, defaultValue = "") String cpf,
                                      Pageable pageable){
+        System.out.println("Nome: " + nome);
+        System.out.println("CPF: " + cpf);
 //        return repository.buscarPorNomeCpf("%"+nome+"%", "%"+cpf+"%", pageable).map(ClienteDTO::fromModel);
         return service.buscarTodos(nome, cpf, pageable);
     }

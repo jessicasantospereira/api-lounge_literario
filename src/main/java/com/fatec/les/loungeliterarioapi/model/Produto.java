@@ -1,5 +1,6 @@
 package com.fatec.les.loungeliterarioapi.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fatec.les.loungeliterarioapi.dto.ProdutoDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -28,6 +29,8 @@ public class Produto {
     private Tags tag;
     @Column(name = "preco", precision = 16, scale = 2)
     private BigDecimal preco;
+
+    @JsonFormat(pattern = "dd/MM/yyyy")
     @Column(name="data_cadastro")
     private LocalDate dataCadastro;
 

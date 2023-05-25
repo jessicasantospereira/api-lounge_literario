@@ -26,7 +26,7 @@ public class ClienteService {
         Optional<Cliente> record = this.repository.findById(id);
 
         if (record.orElseGet(() -> null) != null) {
-            // return new ResponseEntity<Cliente>(record.get(), HttpStatus.OK);
+//             return new ResponseEntity<Cliente>(record.get(), HttpStatus.OK);
             return (Cliente) record.get();
         }
         // return new ResponseEntity<String>("Cliente não localizado",
@@ -55,7 +55,6 @@ public class ClienteService {
             return new ResponseEntity<ClienteDTO>(clienteMapper.toDto(cliente), HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();
-            ;
             return new ResponseEntity<String>("Dados informados inválidos!", HttpStatus.BAD_REQUEST);
         }
     }

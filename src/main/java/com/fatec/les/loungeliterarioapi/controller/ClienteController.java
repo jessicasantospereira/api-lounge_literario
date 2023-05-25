@@ -37,13 +37,22 @@ public class ClienteController {
     public Page<Cliente> getLista(@RequestParam(value="nome", required = false, defaultValue = "") String nome,
                                      @RequestParam(value="cpf", required = false, defaultValue = "") String cpf,
                                      Pageable pageable){
-        System.out.println("Nome: " + nome);
-        System.out.println("CPF: " + cpf);
+
 //        return repository.buscarPorNomeCpf("%"+nome+"%", "%"+cpf+"%", pageable).map(ClienteDTO::fromModel);
         return service.buscarTodos(nome, cpf, pageable);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<?> getCliente(@PathVariable("id") Long id){
+        System.out.println("Entrou aqui {}" + id);
+        Cliente cliente = service.buscarPorIdDoCliente(id);
+        if (cliente.getIdCliente() == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(cliente);
+    }
     @PostMapping
     public ResponseEntity<?> salvarCliente(@RequestBody Cliente cliente){
+        System.out.println("Entrou aqui {}" + cliente.getIdCliente());
         if (cliente.getIdCliente() != null) {
             Cliente existente = service.buscarPorIdDoCliente(cliente.getIdCliente());
             if (cliente.getEndereco() != null) {

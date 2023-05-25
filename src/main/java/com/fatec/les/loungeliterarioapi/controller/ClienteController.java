@@ -43,16 +43,25 @@ public class ClienteController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<?> getCliente(@PathVariable("id") Long id){
-        System.out.println("Entrou aqui {}" + id);
         Cliente cliente = service.buscarPorIdDoCliente(id);
         if (cliente.getIdCliente() == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(cliente);
     }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> atualizarCliente(@PathVariable("id") Long id, @RequestBody Cliente cliente){
+        Cliente clienteExistente = service.buscarPorIdDoCliente(id);
+        if (clienteExistente.getIdCliente() == null) {
+            return ResponseEntity.notFound().build();
+        }
+        cliente.setIdCliente(id);
+        service.salvarCliente(cliente);
+        return ResponseEntity.ok(cliente);
+    }
+
     @PostMapping
     public ResponseEntity<?> salvarCliente(@RequestBody Cliente cliente){
-        System.out.println("Entrou aqui {}" + cliente.getIdCliente());
         if (cliente.getIdCliente() != null) {
             Cliente existente = service.buscarPorIdDoCliente(cliente.getIdCliente());
             if (cliente.getEndereco() != null) {

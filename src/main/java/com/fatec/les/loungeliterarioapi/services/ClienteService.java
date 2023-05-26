@@ -10,7 +10,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException;
 
 import java.util.Collection;
 import java.util.Optional;
@@ -33,6 +32,7 @@ public class ClienteService {
         // HttpStatus.BAD_REQUEST);
         return null;
     }
+
     public Page<Cliente> buscarTodos(String nome, String cpf, Pageable pageable) {
         Page<Cliente> clientes = repository.buscarPorNomeCpf("%"+nome+"%", "%"+cpf+"%", pageable);
 
@@ -57,5 +57,9 @@ public class ClienteService {
             e.printStackTrace();
             return new ResponseEntity<String>("Dados informados inválidos!", HttpStatus.BAD_REQUEST);
         }
+    }
+
+    public void deletarCliente(Cliente cliente) {
+        repository.delete(cliente);
     }
 }

@@ -86,5 +86,15 @@ public class ClienteController {
         return service.salvarCliente(cliente);
     }
 
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletarCliente(@PathVariable("id") Long id){
+        Cliente cliente = service.buscarPorIdDoCliente(id);
+        if (cliente.getIdCliente() == null) {
+            return ResponseEntity.notFound().build();
+        }
+        service.deletarCliente(cliente);
+        return ResponseEntity.ok().build();
+    }
+
 
 }

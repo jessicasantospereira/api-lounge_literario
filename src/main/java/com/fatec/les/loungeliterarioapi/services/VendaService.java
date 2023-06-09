@@ -24,4 +24,8 @@ public class VendaService {
         }
         return repository.save(novaVenda);
     }
+
+    public long getItens() {
+        return repository.count();
+    }
 }

@@ -33,6 +33,7 @@ public class Venda {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_cupom")
     private Cupom cupom;
+
     @Override
     public String toString() {
         return "Venda{" +

@@ -84,4 +84,8 @@ public class ClienteService {
     public void deletarCliente(Cliente cliente) {
         repository.delete(cliente);
     }
+
+    public long getItens() {
+        return repository.count();
+    }
 }

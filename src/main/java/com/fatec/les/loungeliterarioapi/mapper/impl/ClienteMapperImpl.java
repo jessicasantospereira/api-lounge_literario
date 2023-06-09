@@ -30,7 +30,8 @@ public class ClienteMapperImpl implements ClienteMapper {
         dto.setDataNascimento(cliente.getDataNascimento());
         dto.setDataCadastro(cliente.getDataCadastro());
         dto.setIdCliente(cliente.getIdCliente());
-
+        dto.setContato(cliente.getContato());
+        dto.setEndereco(cliente.getEndereco());
         return dto;
     }
 }

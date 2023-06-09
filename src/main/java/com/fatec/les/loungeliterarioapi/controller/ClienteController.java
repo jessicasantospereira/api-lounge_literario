@@ -50,7 +50,7 @@ public class ClienteController {
         return ResponseEntity.ok(cliente);
     }
     @PutMapping("/{id}")
-    public ResponseEntity<?> atualizarCliente(@PathVariable("id") Long id, @RequestBody Cliente cliente){
+    public ResponseEntity<?> atualizarCliente(@PathVariable("id") Long id, @RequestBody ClienteDTO cliente){
         Cliente clienteExistente = service.buscarPorIdDoCliente(id);
         if (clienteExistente.getIdCliente() == null) {
             return ResponseEntity.notFound().build();
@@ -61,7 +61,8 @@ public class ClienteController {
     }
 
     @PostMapping
-    public ResponseEntity<?> salvarCliente(@RequestBody Cliente cliente){
+    public ResponseEntity<?> salvarCliente(@RequestBody ClienteDTO cliente){
+        System.out.println("Cliente => " + cliente.toString());
         if (cliente.getIdCliente() != null) {
             Cliente existente = service.buscarPorIdDoCliente(cliente.getIdCliente());
             if (cliente.getEndereco() != null) {
@@ -84,6 +85,7 @@ public class ClienteController {
             }
         }
         return service.salvarCliente(cliente);
+
     }
 
     @DeleteMapping("/{id}")

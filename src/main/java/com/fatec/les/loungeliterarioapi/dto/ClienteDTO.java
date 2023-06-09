@@ -19,11 +19,11 @@ public class ClienteDTO {
     private String nome;
     private String cpf;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
 
     @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataCadastro;
+    private LocalDate dataCadastro  = LocalDate.now();;
     private List<Contato> contato;
     private List<Endereco> endereco;
 }

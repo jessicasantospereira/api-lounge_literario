@@ -1,5 +1,6 @@
 package com.fatec.les.loungeliterarioapi.model;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -28,6 +29,9 @@ public class Venda {
     @Column
     private BigDecimal total;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_cupom")
+    private Cupom cupom;
     @Override
     public String toString() {
         return "Venda{" +

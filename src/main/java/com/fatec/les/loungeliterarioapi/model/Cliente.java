@@ -1,15 +1,18 @@
 package com.fatec.les.loungeliterarioapi.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
 
 @Data
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -17,11 +20,16 @@ import java.util.List;
 public class Cliente {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id_cliente")
     private Long idCliente;
     private String nome;
     private String cpf;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "data_cadastro")
     private LocalDate dataCadastro = LocalDate.now();
 

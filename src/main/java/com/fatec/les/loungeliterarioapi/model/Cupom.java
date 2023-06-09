@@ -1,5 +1,6 @@
 package com.fatec.les.loungeliterarioapi.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +21,8 @@ public class Cupom {
     private Long idCupom;
 
     private String codigo;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "data_validade")
     private LocalDate dataValidade;
 

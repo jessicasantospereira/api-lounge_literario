@@ -4,16 +4,12 @@ import com.fatec.les.loungeliterarioapi.dto.ClienteDTO;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
 import com.fatec.les.loungeliterarioapi.model.Contato;
 import com.fatec.les.loungeliterarioapi.model.Endereco;
-import com.fatec.les.loungeliterarioapi.repository.ClienteRepository;
-import com.fatec.les.loungeliterarioapi.repository.ContatoRepository;
-import com.fatec.les.loungeliterarioapi.repository.EnderecoRepository;
 import com.fatec.les.loungeliterarioapi.services.ClienteService;
 import com.fatec.les.loungeliterarioapi.services.ContatoService;
 import com.fatec.les.loungeliterarioapi.services.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -24,8 +20,7 @@ import java.util.Optional;
 @RequestMapping("api/clientes")
 @CrossOrigin("*")
 public class ClienteController {
-    @Autowired
-    private ClienteRepository repository;
+
     @Autowired
     private ClienteService service;
     @Autowired

@@ -28,7 +28,8 @@ public class Venda {
     private List<ItemVenda> itens;
     @Column
     private BigDecimal total;
-
+    @Column
+    private Boolean temCupom;
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_cupom")
     private Cupom cupom;
@@ -40,6 +41,8 @@ public class Venda {
                 ", formaPagamento=" + formaPagamento +
                 ", itens=" + itens +
                 ", total=" + total +
+                ", temCupom=" + temCupom +
+                ", cupom=" + cupom +
                 '}';
     }
 }

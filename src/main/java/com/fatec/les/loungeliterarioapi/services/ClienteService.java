@@ -57,6 +57,12 @@ public class ClienteService {
     public ResponseEntity<?> salvarCliente(ClienteDTO dados) {
 
         try {
+            if(dados.getIdCliente() != null){
+                Cliente cliente = clienteMapper.toEntity(dados);
+                cliente.setIdCliente(dados.getIdCliente());
+                Cliente existente = repository.save(cliente);
+                return new ResponseEntity<ClienteDTO>(clienteMapper.toDto(existente), HttpStatus.CREATED);
+            }
             Cliente cliente = repository.save(clienteMapper.toEntity(dados));
             List<Endereco> enderecos = dados.getEndereco();
             List<Contato> contatos = dados.getContato();

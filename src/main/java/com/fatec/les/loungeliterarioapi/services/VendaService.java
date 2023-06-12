@@ -36,7 +36,7 @@ public class VendaService {
             novaVenda.setCupom(cupomRepository.findByCodigo(venda.getCupom()));
         }
         CupomTroca troca = new CupomTroca();
-        troca.setCodigo(uuid);
+        troca.setCodigo(uuid.toString());
         troca.setDataValidade(LocalDate.now().plusDays(30));
         trocaRepository.save(troca);
 

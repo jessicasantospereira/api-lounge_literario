@@ -8,6 +8,8 @@ import com.fatec.les.loungeliterarioapi.repository.ProdutoRepository;
 import com.fatec.les.loungeliterarioapi.services.VendaService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -25,7 +27,7 @@ public class VendasController {
 
     @PostMapping
     @Transactional
-    public void realizarVenda(@RequestBody VendaDTO venda){
+    public ResponseEntity<?> realizarVenda(@RequestBody VendaDTO venda){
         System.out.println(venda.getCupom());
         Venda novaVenda = service.salvarVenda(venda);
 
@@ -39,6 +41,7 @@ public class VendasController {
         });
 
         itemVendaRepository.saveAll(novaVenda.getItens());
+        return new ResponseEntity(novaVenda.getCupomTroca(), null, HttpStatus.CREATED);
 
     }
 }

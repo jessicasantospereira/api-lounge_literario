@@ -20,7 +20,8 @@ public class CupomTroca {
     @Column(name = "id_troca")
     private Long idCupomTroca;
 
-    private UUID codigo;
+    @Column(columnDefinition = "VARCHAR(255)")
+    private String codigo;
 
     @Column(name = "data_validade")
     private LocalDate dataValidade;

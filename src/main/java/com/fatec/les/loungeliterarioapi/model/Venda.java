@@ -33,6 +33,9 @@ public class Venda {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_cupom")
     private Cupom cupom;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_troca")
+    private CupomTroca cupomTroca;
 
     @Override
     public String toString() {

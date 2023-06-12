@@ -1,12 +1,10 @@
 package com.fatec.les.loungeliterarioapi.controller;
 
-import com.fatec.les.loungeliterarioapi.dto.ProdutoDTO;
 import com.fatec.les.loungeliterarioapi.dto.VendaDTO;
 import com.fatec.les.loungeliterarioapi.model.Produto;
 import com.fatec.les.loungeliterarioapi.model.Venda;
 import com.fatec.les.loungeliterarioapi.repository.ItemVendaRepository;
 import com.fatec.les.loungeliterarioapi.repository.ProdutoRepository;
-import com.fatec.les.loungeliterarioapi.repository.VendaRepository;
 import com.fatec.les.loungeliterarioapi.services.VendaService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;

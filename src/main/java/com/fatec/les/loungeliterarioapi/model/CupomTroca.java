@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 
 import java.time.LocalDate;
+import java.util.UUID;
 @Data
 @ToString
 @AllArgsConstructor
@@ -19,7 +20,7 @@ public class CupomTroca {
     @Column(name = "id_troca")
     private Long idCupomTroca;
 
-    private String codigo;
+    private UUID codigo;
 
     @Column(name = "data_validade")
     private LocalDate dataValidade;

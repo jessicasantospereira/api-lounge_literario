@@ -2,7 +2,7 @@ package com.fatec.les.loungeliterarioapi.controller;
 
 import com.fatec.les.loungeliterarioapi.model.Admin;
 import com.fatec.les.loungeliterarioapi.repository.ProdutoRepository;
-import com.fatec.les.loungeliterarioapi.services.ClienteService;
+import com.fatec.les.loungeliterarioapi.services.impl.ClienteServiceImpl;
 import com.fatec.les.loungeliterarioapi.services.VendaService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -17,7 +17,7 @@ public class AdminController {
     @Autowired
     private VendaService vendaService;
     @Autowired
-    private ClienteService clienteService;
+    private ClienteServiceImpl clienteService;
     @Autowired
     private ProdutoRepository produtoRepository;
 

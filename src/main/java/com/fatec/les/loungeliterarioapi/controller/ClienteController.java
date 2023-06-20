@@ -4,7 +4,7 @@ import com.fatec.les.loungeliterarioapi.dto.ClienteDTO;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
 import com.fatec.les.loungeliterarioapi.model.Contato;
 import com.fatec.les.loungeliterarioapi.model.Endereco;
-import com.fatec.les.loungeliterarioapi.services.ClienteService;
+import com.fatec.les.loungeliterarioapi.services.impl.ClienteServiceImpl;
 import com.fatec.les.loungeliterarioapi.services.ContatoService;
 import com.fatec.les.loungeliterarioapi.services.EnderecoService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,7 +13,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.Optional;
 
 
 @RestController
@@ -22,7 +21,7 @@ import java.util.Optional;
 public class ClienteController {
 
     @Autowired
-    private ClienteService service;
+    private ClienteServiceImpl service;
     @Autowired
     private EnderecoService endService;
     @Autowired
@@ -38,8 +37,10 @@ public class ClienteController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<?> getCliente(@PathVariable("id") Long id){
+        System.out.println("ID => " + id);
         Cliente cliente = service.buscarPorIdDoCliente(id);
-        if (cliente.getIdCliente() == null) {
+
+        if (cliente == null) {
             return ResponseEntity.notFound().build();
         }
         return ResponseEntity.ok(cliente);

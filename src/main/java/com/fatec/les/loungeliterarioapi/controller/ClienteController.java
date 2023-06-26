@@ -4,29 +4,32 @@ import com.fatec.les.loungeliterarioapi.dto.ClienteDTO;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
 import com.fatec.les.loungeliterarioapi.model.Contato;
 import com.fatec.les.loungeliterarioapi.model.Endereco;
-import com.fatec.les.loungeliterarioapi.services.impl.ClienteServiceImpl;
+import com.fatec.les.loungeliterarioapi.services.ClienteService;
 import com.fatec.les.loungeliterarioapi.services.ContatoService;
 import com.fatec.les.loungeliterarioapi.services.EnderecoService;
-import org.springframework.beans.factory.annotation.Autowired;
+
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-
-
+@Slf4j
 @RestController
 @RequestMapping("api/clientes")
 @CrossOrigin("*")
 public class ClienteController {
 
-    @Autowired
-    private ClienteServiceImpl service;
-    @Autowired
-    private EnderecoService endService;
-    @Autowired
-    private ContatoService contatoService;
+    private ClienteService service;
 
+    private EnderecoService endService;
+
+    private ContatoService contatoService;
+    public ClienteController(ContatoService contatoService, EnderecoService enderecoService, ClienteService clienteService){
+        this.service = clienteService;
+        this.contatoService = contatoService;
+        this.endService = enderecoService;
+    }
     @GetMapping
     public Page<Cliente> getLista(@RequestParam(value="nome", required = false, defaultValue = "") String nome,
                                      @RequestParam(value="cpf", required = false, defaultValue = "") String cpf,
@@ -37,12 +40,13 @@ public class ClienteController {
     }
     @GetMapping("/{id}")
     public ResponseEntity<?> getCliente(@PathVariable("id") Long id){
-        System.out.println("ID => " + id);
+        log.info("Buscar cliente {} ", id);
         Cliente cliente = service.buscarPorIdDoCliente(id);
-
         if (cliente == null) {
             return ResponseEntity.notFound().build();
         }
+        cliente.setIdCliente(id);
+        log.info("Cliente encontrado {} ", cliente.getNome());
         return ResponseEntity.ok(cliente);
     }
     @PutMapping("/{id}")
@@ -58,7 +62,8 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<?> salvarCliente(@RequestBody ClienteDTO cliente){
-        System.out.println("Cliente => " + cliente.toString());
+       log.info("Cliente entrada {} ", cliente.toString());
+
         if (cliente.getIdCliente() != null) {
             Cliente existente = service.buscarPorIdDoCliente(cliente.getIdCliente());
             if (cliente.getEndereco() != null) {
@@ -80,7 +85,10 @@ public class ClienteController {
                 return contatoService.salvarContato(contato);
             }
         }
-        return service.salvarCliente(cliente);
+
+        ResponseEntity clienteSalvo = service.salvarCliente(cliente);
+        log.info("Cliente saida {} ", clienteSalvo.toString());
+        return clienteSalvo;
 
     }
 

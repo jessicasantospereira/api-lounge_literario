@@ -7,6 +7,7 @@ import com.fatec.les.loungeliterarioapi.model.Endereco;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -14,11 +15,12 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 public class ClienteDTO {
     private Long idCliente;
     private String nome;
     private String cpf;
-
+    private boolean isAtivo;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
 

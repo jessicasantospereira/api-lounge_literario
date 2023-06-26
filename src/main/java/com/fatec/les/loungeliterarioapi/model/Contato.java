@@ -30,4 +30,16 @@ public class Contato {
     @JoinColumn(name = "idCliente", foreignKey = @ForeignKey(name = "fk_idContato"))
     @JsonBackReference
     private Cliente cliente;
+
+    @Override
+    public String toString() {
+        return "Contato{" +
+                "idContato=" + idContato +
+                ", ddd='" + ddd + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", email='" + email + '\'' +
+                ", tipoContato=" + tipoContato +
+                ", cliente=" + cliente +
+                '}';
+    }
 }

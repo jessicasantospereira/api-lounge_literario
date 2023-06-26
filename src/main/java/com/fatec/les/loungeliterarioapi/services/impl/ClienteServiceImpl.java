@@ -9,7 +9,7 @@ import com.fatec.les.loungeliterarioapi.repository.ClienteRepository;
 import com.fatec.les.loungeliterarioapi.services.ClienteService;
 import com.fatec.les.loungeliterarioapi.services.ContatoService;
 import com.fatec.les.loungeliterarioapi.services.EnderecoService;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
@@ -17,13 +17,16 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
+@Slf4j
 @Service
 public class ClienteServiceImpl implements ClienteService {
     private ClienteRepository repository;
     private EnderecoService enderecoService;
     private ContatoService contatoService;
     private ClienteMapper clienteMapper;
+
     public ClienteServiceImpl(ClienteRepository repository, EnderecoService enderecoService, ContatoService contatoService, ClienteMapper clienteMapper) {
         this.repository = repository;
         this.enderecoService = enderecoService;
@@ -59,9 +62,14 @@ public class ClienteServiceImpl implements ClienteService {
 
     @Override
     public Cliente buscarPorIdDoCliente(Long id) {
-        Cliente cliente = repository.findById(id).orElse(null);
-        if(cliente != null){
-            return cliente;
+        Cliente c1 = repository.findById(id).get();
+
+        if(c1 != null){
+            List<Endereco> end = enderecoService.buscarEnderecoPorIdCliente(id);
+            List<Contato> ct = contatoService.buscarContatoPorIdCliente(id);
+            c1.setContato(ct);
+            c1.setEndereco(end);
+            return c1;
         }
         return null;
     }

@@ -24,6 +24,8 @@ public class Cliente {
     private Long idCliente;
     private String nome;
     private String cpf;
+    @Column(name = "is_ativo")
+    private boolean isAtivo;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "data_nascimento")

@@ -15,6 +15,7 @@ public class ClienteMapperImpl implements ClienteMapper {
         cliente.setCpf(clienteDto.getCpf());
         cliente.setDataCadastro(clienteDto.getDataCadastro());
         cliente.setDataNascimento(clienteDto.getDataNascimento());
+        cliente.setAtivo(clienteDto.isAtivo());
 
         return cliente;
     }
@@ -25,6 +26,9 @@ public class ClienteMapperImpl implements ClienteMapper {
             return null;
         }
         ClienteDTO dto = new ClienteDTO();
+
+        dto.setIdCliente(cliente.getIdCliente());
+
         dto.setNome(cliente.getNome());
         dto.setCpf(cliente.getCpf());
         dto.setDataNascimento(cliente.getDataNascimento());
@@ -32,6 +36,8 @@ public class ClienteMapperImpl implements ClienteMapper {
         dto.setIdCliente(cliente.getIdCliente());
         dto.setContato(cliente.getContato());
         dto.setEndereco(cliente.getEndereco());
+
+        dto.setAtivo(cliente.isAtivo());
         return dto;
     }
 }

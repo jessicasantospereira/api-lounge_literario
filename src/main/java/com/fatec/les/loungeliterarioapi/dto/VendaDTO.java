@@ -1,8 +1,6 @@
 package com.fatec.les.loungeliterarioapi.dto;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
-import com.fatec.les.loungeliterarioapi.model.Cupom;
 import com.fatec.les.loungeliterarioapi.model.FormaPagamento;
 import com.fatec.les.loungeliterarioapi.model.ItemVenda;
 
@@ -11,6 +9,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 @Data
 @AllArgsConstructor
@@ -29,4 +28,6 @@ public class VendaDTO {
     private Boolean temCupom;
 
     private String cupom;
+
+    private LocalDate dataVenda;
 }

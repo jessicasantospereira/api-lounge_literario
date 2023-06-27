@@ -7,6 +7,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 
 @Data
@@ -36,6 +37,8 @@ public class Venda {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_troca")
     private CupomTroca cupomTroca;
+    @Column(name = "data_venda")
+    private LocalDate dataVenda;
 
     @Override
     public String toString() {

@@ -53,6 +53,7 @@ public class ClienteServiceImpl implements ClienteService {
                 contato.setCliente(cliente);
                 contatoService.salvarContato(contato);
             }
+
             return new ResponseEntity<ClienteDTO>(clienteMapper.toDto(cliente), HttpStatus.CREATED);
         } catch (Exception e) {
             e.printStackTrace();

@@ -41,7 +41,7 @@ public class VendaService {
         trocaRepository.save(troca);
 
         novaVenda.setCupomTroca(troca);
-        
+        novaVenda.setDataVenda(LocalDate.now());
         return repository.save(novaVenda);
     }
 

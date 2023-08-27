@@ -1,6 +1,7 @@
 package com.fatec.les.loungeliterarioapi.controller;
 
 import com.fatec.les.loungeliterarioapi.dto.ProdutoDTO;
+import com.fatec.les.loungeliterarioapi.mapper.ProdutoMapper;
 import com.fatec.les.loungeliterarioapi.model.Produto;
 import com.fatec.les.loungeliterarioapi.repository.ProdutoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,15 +19,22 @@ public class ProdutoController {
     @Autowired
     private ProdutoRepository repository;
 
+    private ProdutoMapper mapper;
+
     @PostMapping
     public ProdutoDTO salvar(@RequestBody ProdutoDTO produto){
-        Produto entidadeProduto = produto.toModel();
+        Produto entidadeProduto = mapper.toEntity(produto);
         repository.save(entidadeProduto);
-        return ProdutoDTO.fromModel(entidadeProduto);
+        return mapper.toDto(entidadeProduto);
     }
     @GetMapping
     public List<ProdutoDTO> getLista(){
-        return repository.findAll().stream().map(ProdutoDTO::fromModel).collect(Collectors.toList());
+        Optional<List<Produto>> produtos = Optional.ofNullable(repository.findAll());
+        if(produtos.isEmpty()){
+            return null;
+        }
+
+        return produtos.get().stream().map(produto -> mapper.toDto(produto)).collect(Collectors.toList());
     }
     @GetMapping("{id}")
     public ResponseEntity<ProdutoDTO> getById(@PathVariable Long id){
@@ -34,7 +42,7 @@ public class ProdutoController {
         if(produtoExistente.isEmpty()){
             return ResponseEntity.notFound().build();
         }
-        var produto = produtoExistente.map(ProdutoDTO::fromModel).get();
+        var produto = mapper.toDto(produtoExistente.get());
         return ResponseEntity.ok(produto);
     }
 }

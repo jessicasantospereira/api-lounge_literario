@@ -24,6 +24,10 @@ public class Cliente {
     private Long idCliente;
     private String nome;
     private String cpf;
+
+    @Column(columnDefinition = "VARCHAR(255)")
+    private String codigo;
+
     @Column(name = "is_ativo")
     private boolean isAtivo;
 
@@ -31,14 +35,17 @@ public class Cliente {
     @Column(name = "data_nascimento")
     private LocalDate dataNascimento;
 
+    private String ddd;
+    private String telefone;
+    private String email;
+    private String senha;
+
+    @Enumerated(EnumType.STRING)
+    private Genero genero;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "data_cadastro")
     private LocalDate dataCadastro = LocalDate.now();
-
-    @OneToMany(cascade = CascadeType.ALL)
-    @JoinColumn(name = "idCliente", foreignKey = @ForeignKey(name = "fk_idContato"))
-    @JsonManagedReference
-    private List<Contato> contato;
 
     @OneToMany(cascade = CascadeType.ALL)
     @JoinColumn(name = "idCliente", foreignKey = @ForeignKey(name = "fk_idEndereco"))
@@ -53,11 +60,22 @@ public class Cliente {
         endereco.remove(end);
     }
 
-    public void addContato(Contato ct) {
-        contato.add(ct);
-    }
-
-    public void removerContato(Contato ct) {
-        contato.remove(ct);
+    @Override
+    public String toString() {
+        return "Cliente{" +
+                "idCliente=" + idCliente +
+                ", nome='" + nome + '\'' +
+                ", cpf='" + cpf + '\'' +
+                ", codigo='" + codigo + '\'' +
+                ", isAtivo=" + isAtivo +
+                ", dataNascimento=" + dataNascimento +
+                ", ddd='" + ddd + '\'' +
+                ", telefone='" + telefone + '\'' +
+                ", email='" + email + '\'' +
+                ", senha='" + senha + '\'' +
+                ", genero=" + genero +
+                ", dataCadastro=" + dataCadastro +
+                ", endereco=" + endereco +
+                '}';
     }
 }

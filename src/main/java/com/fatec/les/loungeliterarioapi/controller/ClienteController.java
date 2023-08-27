@@ -1,11 +1,10 @@
 package com.fatec.les.loungeliterarioapi.controller;
 
 import com.fatec.les.loungeliterarioapi.dto.ClienteDTO;
+import com.fatec.les.loungeliterarioapi.dto.EnderecoDTO;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
-import com.fatec.les.loungeliterarioapi.model.Contato;
 import com.fatec.les.loungeliterarioapi.model.Endereco;
 import com.fatec.les.loungeliterarioapi.services.ClienteService;
-import com.fatec.les.loungeliterarioapi.services.ContatoService;
 import com.fatec.les.loungeliterarioapi.services.EnderecoService;
 
 import lombok.extern.slf4j.Slf4j;
@@ -14,6 +13,8 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.UUID;
+
 @Slf4j
 @RestController
 @RequestMapping("api/clientes")
@@ -21,13 +22,10 @@ import org.springframework.web.bind.annotation.*;
 public class ClienteController {
 
     private ClienteService service;
-
     private EnderecoService endService;
 
-    private ContatoService contatoService;
-    public ClienteController(ContatoService contatoService, EnderecoService enderecoService, ClienteService clienteService){
+    public ClienteController(EnderecoService enderecoService, ClienteService clienteService){
         this.service = clienteService;
-        this.contatoService = contatoService;
         this.endService = enderecoService;
     }
     @GetMapping
@@ -35,7 +33,6 @@ public class ClienteController {
                                      @RequestParam(value="cpf", required = false, defaultValue = "") String cpf,
                                      Pageable pageable){
 
-//        return repository.buscarPorNomeCpf("%"+nome+"%", "%"+cpf+"%", pageable).map(ClienteDTO::fromModel);
         return service.buscarTodos(nome, cpf, pageable);
     }
     @GetMapping("/{id}")
@@ -63,27 +60,21 @@ public class ClienteController {
     @PostMapping
     public ResponseEntity<?> salvarCliente(@RequestBody ClienteDTO cliente){
        log.info("Cliente entrada {} ", cliente.toString());
-
+        UUID uuid = UUID.randomUUID();
         if (cliente.getIdCliente() != null) {
             Cliente existente = service.buscarPorIdDoCliente(cliente.getIdCliente());
-            if (cliente.getEndereco() != null) {
-                Endereco endereco = null;
-                for (Endereco end : cliente.getEndereco()) {
-                    existente.addEndereco(end);
-                    endereco = end;
-                }
-                endereco.setCliente(existente);
-                return endService.salvarEndereco(endereco);
-            }
-            if (cliente.getContato() != null) {
-                Contato contato = null;
-                for (Contato cont : cliente.getContato()) {
-                    existente.addContato(cont);
-                    contato = cont;
-                }
-                contato.setCliente(existente);
-                return contatoService.salvarContato(contato);
-            }
+//            if (cliente.getEndereco() != null) {
+//                Endereco endereco = null;
+//                for (EnderecoDTO end : cliente.getEndereco()) {
+//                    existente.addEndereco(end);
+//                    endereco = end;
+//                }
+//                endereco.setCliente(existente);
+//                return endService.salvarEndereco(endereco);
+//            }
+
+        }else {
+            cliente.setCodigo(uuid.toString());
         }
 
         ResponseEntity clienteSalvo = service.salvarCliente(cliente);

@@ -3,6 +3,7 @@ package com.fatec.les.loungeliterarioapi.mapper.impl;
 import com.fatec.les.loungeliterarioapi.dto.ClienteDTO;
 import com.fatec.les.loungeliterarioapi.mapper.ClienteMapper;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
+import com.fatec.les.loungeliterarioapi.model.Genero;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -16,6 +17,15 @@ public class ClienteMapperImpl implements ClienteMapper {
         cliente.setDataCadastro(clienteDto.getDataCadastro());
         cliente.setDataNascimento(clienteDto.getDataNascimento());
         cliente.setAtivo(clienteDto.isAtivo());
+        cliente.setEndereco(clienteDto.getEndereco());
+        cliente.setGenero(Genero.valueOf(clienteDto.getGenero()));
+        cliente.setSenha(clienteDto.getSenha());
+        cliente.setEmail(clienteDto.getEmail());
+        cliente.setTelefone(clienteDto.getTelefone());
+        cliente.setDdd(clienteDto.getDdd());
+        cliente.setCodigo(clienteDto.getCodigo());
+        cliente.setIdCliente(clienteDto.getIdCliente());
+
 
         return cliente;
     }
@@ -34,8 +44,13 @@ public class ClienteMapperImpl implements ClienteMapper {
         dto.setDataNascimento(cliente.getDataNascimento());
         dto.setDataCadastro(cliente.getDataCadastro());
         dto.setIdCliente(cliente.getIdCliente());
-        dto.setContato(cliente.getContato());
         dto.setEndereco(cliente.getEndereco());
+        dto.setGenero(cliente.getGenero().toString());
+        dto.setSenha(cliente.getSenha());
+        dto.setEmail(cliente.getEmail());
+        dto.setTelefone(cliente.getTelefone());
+        dto.setDdd(cliente.getDdd());
+        dto.setCodigo(cliente.getCodigo());
 
         dto.setAtivo(cliente.isAtivo());
         return dto;

@@ -34,7 +34,7 @@ public class ProdutoDTO {
     private double peso;
     private double profundidade;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataCadastro;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dataCadastro = LocalDate.now();
 
 }

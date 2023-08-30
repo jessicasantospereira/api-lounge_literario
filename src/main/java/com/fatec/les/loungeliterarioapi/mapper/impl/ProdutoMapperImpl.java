@@ -3,10 +3,13 @@ package com.fatec.les.loungeliterarioapi.mapper.impl;
 import com.fatec.les.loungeliterarioapi.dto.ProdutoDTO;
 import com.fatec.les.loungeliterarioapi.mapper.ProdutoMapper;
 import com.fatec.les.loungeliterarioapi.model.Produto;
+import org.springframework.stereotype.Component;
 
+@Component
 public class ProdutoMapperImpl implements ProdutoMapper {
     @Override
     public Produto toEntity(ProdutoDTO produtoDto) {
+        System.out.println("Entrei aqui " + produtoDto.getCodigo());
         Produto produto = new Produto();
         produto.setTitulo(produtoDto.getTitulo());
         produto.setDescricao(produtoDto.getDescricao());
@@ -26,6 +29,8 @@ public class ProdutoMapperImpl implements ProdutoMapper {
         produto.setEdicao(produtoDto.getEdicao());
         produto.setAno(produtoDto.getAno());
         produto.setAtivo(produtoDto.isAtivo());
+        produto.setCodigo(produtoDto.getCodigo());
+        produto.setDataCadastro(produtoDto.getDataCadastro());
 
         return produto;
     }
@@ -35,6 +40,7 @@ public class ProdutoMapperImpl implements ProdutoMapper {
         if (produto == null) {
             return null;
         }
+        System.out.println("Entrei aqui " + produto.getQtdeEstoque());
         ProdutoDTO dto = new ProdutoDTO();
         dto.setAltura(produto.getAltura());
         dto.setAno(produto.getAno());
@@ -57,6 +63,7 @@ public class ProdutoMapperImpl implements ProdutoMapper {
         dto.setCategoria(produto.getCategoria());
         dto.setDataCadastro(produto.getDataCadastro());
         dto.setAtivo(produto.isAtivo());
+        dto.setDataCadastro(produto.getDataCadastro());
 
         return dto;
     }

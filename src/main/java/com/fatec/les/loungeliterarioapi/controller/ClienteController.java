@@ -21,8 +21,8 @@ import java.util.UUID;
 @CrossOrigin("*")
 public class ClienteController {
 
-    private ClienteService service;
-    private EnderecoService endService;
+    private final ClienteService service;
+    private final EnderecoService endService;
 
     public ClienteController(EnderecoService enderecoService, ClienteService clienteService){
         this.service = clienteService;

@@ -12,7 +12,6 @@ import java.time.LocalDate;
 import java.util.List;
 
 @Data
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -52,6 +51,11 @@ public class Cliente {
     @JsonManagedReference
     private List<Endereco> endereco;
 
+    @OneToMany(cascade = CascadeType.ALL)
+    @JoinColumn(name = "idCliente", foreignKey = @ForeignKey(name = "fk_idCartao"))
+    @JsonManagedReference
+    private List<CartaoDeCredito> cartaoDeCredito;
+
     public void addEndereco(Endereco end) {
         endereco.add(end);
     }
@@ -76,6 +80,7 @@ public class Cliente {
                 ", genero=" + genero +
                 ", dataCadastro=" + dataCadastro +
                 ", endereco=" + endereco +
+                ", cartaoDeCredito=" + cartaoDeCredito +
                 '}';
     }
 }

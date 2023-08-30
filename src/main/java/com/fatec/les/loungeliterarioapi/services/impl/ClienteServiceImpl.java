@@ -49,12 +49,9 @@ public class ClienteServiceImpl implements ClienteService {
     public Cliente buscarPorIdDoCliente(Long id) {
         Cliente c1 = repository.findById(id).get();
 
-        if(c1 != null){
-            List<Endereco> end = enderecoService.buscarEnderecoPorIdCliente(id);
-            c1.setEndereco(end);
-            return c1;
-        }
-        return null;
+        List<Endereco> end = enderecoService.buscarEnderecoPorIdCliente(id);
+        c1.setEndereco(end);
+        return c1;
     }
 
     @Override

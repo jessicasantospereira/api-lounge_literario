@@ -25,7 +25,7 @@ public class ClienteMapperImpl implements ClienteMapper {
         cliente.setDdd(clienteDto.getDdd());
         cliente.setCodigo(clienteDto.getCodigo());
         cliente.setIdCliente(clienteDto.getIdCliente());
-
+        cliente.setCartaoDeCredito(clienteDto.getCartaoDeCredito());
 
         return cliente;
     }
@@ -53,6 +53,7 @@ public class ClienteMapperImpl implements ClienteMapper {
         dto.setCodigo(cliente.getCodigo());
 
         dto.setAtivo(cliente.isAtivo());
+        dto.setCartaoDeCredito(cliente.getCartaoDeCredito());
         return dto;
     }
 }

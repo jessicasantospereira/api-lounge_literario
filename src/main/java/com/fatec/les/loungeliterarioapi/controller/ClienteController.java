@@ -2,10 +2,7 @@ package com.fatec.les.loungeliterarioapi.controller;
 
 import com.fatec.les.loungeliterarioapi.dto.CartaoDeCreditoDTO;
 import com.fatec.les.loungeliterarioapi.dto.ClienteDTO;
-import com.fatec.les.loungeliterarioapi.dto.EnderecoDTO;
-import com.fatec.les.loungeliterarioapi.model.CartaoDeCredito;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
-import com.fatec.les.loungeliterarioapi.model.Endereco;
 import com.fatec.les.loungeliterarioapi.services.ClienteService;
 import com.fatec.les.loungeliterarioapi.services.EnderecoService;
 
@@ -98,6 +95,9 @@ public class ClienteController {
     @PostMapping("/cartao")
     public ResponseEntity<?> cadastrarCartao(@RequestBody CartaoDeCreditoDTO cartao){
         log.info("Cartao entrada {} ", cartao.toString());
+
+        service.salvarCartao(cartao);
+//        CartaoDeCredito cartaoSalvo = service.salvarCartao(cartao);
         return null;
     }
 

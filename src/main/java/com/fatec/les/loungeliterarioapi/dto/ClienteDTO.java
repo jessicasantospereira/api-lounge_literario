@@ -1,6 +1,7 @@
 package com.fatec.les.loungeliterarioapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fatec.les.loungeliterarioapi.model.CartaoDeCredito;
 import com.fatec.les.loungeliterarioapi.model.Endereco;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -32,4 +33,6 @@ public class ClienteDTO {
     private LocalDate dataCadastro  = LocalDate.now();;
 
     private List<Endereco> endereco;
+
+    private List<CartaoDeCredito> cartaoDeCredito;
 }

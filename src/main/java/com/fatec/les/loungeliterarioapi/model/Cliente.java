@@ -2,6 +2,7 @@ package com.fatec.les.loungeliterarioapi.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fatec.les.loungeliterarioapi.dto.CartaoDeCreditoDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -63,7 +64,9 @@ public class Cliente {
     public void removerEndereco(Endereco end) {
         endereco.remove(end);
     }
-
+    public void addCartaoDeCredito(CartaoDeCredito cartao) {
+        cartaoDeCredito.add(cartao);
+    }
     @Override
     public String toString() {
         return "Cliente{" +
@@ -83,4 +86,6 @@ public class Cliente {
                 ", cartaoDeCredito=" + cartaoDeCredito +
                 '}';
     }
+
+
 }

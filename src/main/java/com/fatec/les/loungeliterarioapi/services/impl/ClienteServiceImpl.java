@@ -1,10 +1,13 @@
 package com.fatec.les.loungeliterarioapi.services.impl;
 
+import com.fatec.les.loungeliterarioapi.dto.CartaoDeCreditoDTO;
 import com.fatec.les.loungeliterarioapi.dto.ClienteDTO;
 import com.fatec.les.loungeliterarioapi.mapper.ClienteMapper;
+import com.fatec.les.loungeliterarioapi.model.CartaoDeCredito;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
 import com.fatec.les.loungeliterarioapi.model.Endereco;
 import com.fatec.les.loungeliterarioapi.repository.ClienteRepository;
+import com.fatec.les.loungeliterarioapi.services.CartaoService;
 import com.fatec.les.loungeliterarioapi.services.ClienteService;
 import com.fatec.les.loungeliterarioapi.services.EnderecoService;
 import lombok.extern.slf4j.Slf4j;
@@ -22,11 +25,13 @@ public class ClienteServiceImpl implements ClienteService {
     private ClienteRepository repository;
     private EnderecoService enderecoService;
     private ClienteMapper clienteMapper;
+    private CartaoService cartaoService;
 
-    public ClienteServiceImpl(ClienteRepository repository, EnderecoService enderecoService, ClienteMapper clienteMapper) {
+    public ClienteServiceImpl(ClienteRepository repository, EnderecoService enderecoService, ClienteMapper clienteMapper, CartaoService cartaoService) {
         this.repository = repository;
         this.enderecoService = enderecoService;
         this.clienteMapper = clienteMapper;
+        this.cartaoService = cartaoService;
     }
     @Override
     public ResponseEntity<?> salvarCliente(ClienteDTO dados) {
@@ -50,7 +55,9 @@ public class ClienteServiceImpl implements ClienteService {
         Cliente c1 = repository.findById(id).get();
 
         List<Endereco> end = enderecoService.buscarEnderecoPorIdCliente(id);
+        List<CartaoDeCredito> cartoes = cartaoService.buscarCartaoPorIdCliente(id);
         c1.setEndereco(end);
+        c1.setCartaoDeCredito(cartoes);
         return c1;
     }
 
@@ -71,5 +78,13 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public long getItens() {
         return repository.count();
+    }
+
+    @Override
+    public void salvarCartao(CartaoDeCreditoDTO cartao) {
+        Cliente cliente = this.buscarPorIdDoCliente(cartao.getIdCliente());
+        cliente.addCartaoDeCredito(cartao.toEntity());
+
+        repository.save(cliente);
     }
 }

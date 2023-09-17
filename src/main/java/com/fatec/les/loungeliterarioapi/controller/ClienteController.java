@@ -91,15 +91,21 @@ public class ClienteController {
         service.deletarCliente(cliente);
         return ResponseEntity.ok().build();
     }
+    @GetMapping("/cartao/{id}")
+    public ResponseEntity<?> buscarCartao(@PathVariable("id") Long id){
+        log.info("Buscar cartão cliente id: {} ", id);
 
+//        service.salvarCartao(cartao);
+        return ResponseEntity.ok().build();
+
+    }
     @PostMapping("/cartao")
     public ResponseEntity<?> cadastrarCartao(@RequestBody CartaoDeCreditoDTO cartao){
         log.info("Cartao entrada {} ", cartao.toString());
 
         service.salvarCartao(cartao);
-//        CartaoDeCredito cartaoSalvo = service.salvarCartao(cartao);
-        return null;
-    }
+        return ResponseEntity.ok().build();
 
+    }
 
 }

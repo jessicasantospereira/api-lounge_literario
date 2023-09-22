@@ -2,6 +2,7 @@ package com.fatec.les.loungeliterarioapi.controller;
 
 import com.fatec.les.loungeliterarioapi.dto.CartaoDeCreditoDTO;
 import com.fatec.les.loungeliterarioapi.dto.ClienteDTO;
+import com.fatec.les.loungeliterarioapi.dto.EnderecoDTO;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
 import com.fatec.les.loungeliterarioapi.services.ClienteService;
 import com.fatec.les.loungeliterarioapi.services.EnderecoService;
@@ -107,5 +108,12 @@ public class ClienteController {
         return ResponseEntity.ok().build();
 
     }
+    @PostMapping("/endereco")
+    public ResponseEntity<?> cadastrarEndereco(@RequestBody EnderecoDTO endereco){
+        log.info("Endereco entrada {} ", endereco.toString());
 
+        service.salvarEndereco(endereco);
+        return ResponseEntity.ok().build();
+
+    }
 }

@@ -2,7 +2,9 @@ package com.fatec.les.loungeliterarioapi.services.impl;
 
 import com.fatec.les.loungeliterarioapi.dto.CartaoDeCreditoDTO;
 import com.fatec.les.loungeliterarioapi.dto.ClienteDTO;
+import com.fatec.les.loungeliterarioapi.dto.EnderecoDTO;
 import com.fatec.les.loungeliterarioapi.mapper.ClienteMapper;
+import com.fatec.les.loungeliterarioapi.mapper.EnderecoMapper;
 import com.fatec.les.loungeliterarioapi.model.CartaoDeCredito;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
 import com.fatec.les.loungeliterarioapi.model.Endereco;
@@ -27,11 +29,14 @@ public class ClienteServiceImpl implements ClienteService {
     private ClienteMapper clienteMapper;
     private CartaoService cartaoService;
 
-    public ClienteServiceImpl(ClienteRepository repository, EnderecoService enderecoService, ClienteMapper clienteMapper, CartaoService cartaoService) {
+    private EnderecoMapper enderecoMapper;
+
+    public ClienteServiceImpl(ClienteRepository repository, EnderecoService enderecoService, ClienteMapper clienteMapper, CartaoService cartaoService, EnderecoMapper enderecoMapper) {
         this.repository = repository;
         this.enderecoService = enderecoService;
         this.clienteMapper = clienteMapper;
         this.cartaoService = cartaoService;
+        this.enderecoMapper = enderecoMapper;
     }
     @Override
     public ResponseEntity<?> salvarCliente(ClienteDTO dados) {
@@ -84,6 +89,14 @@ public class ClienteServiceImpl implements ClienteService {
     public void salvarCartao(CartaoDeCreditoDTO cartao) {
         Cliente cliente = this.buscarPorIdDoCliente(cartao.getIdCliente());
         cliente.addCartaoDeCredito(cartao.toEntity());
+
+        repository.save(cliente);
+    }
+
+    @Override
+    public void salvarEndereco(EnderecoDTO endereco) {
+        Cliente cliente = this.buscarPorIdDoCliente(endereco.getIdCliente());
+        cliente.addEndereco(enderecoMapper.toEntity(endereco));
 
         repository.save(cliente);
     }

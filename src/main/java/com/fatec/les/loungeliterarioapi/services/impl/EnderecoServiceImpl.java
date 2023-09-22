@@ -1,5 +1,7 @@
 package com.fatec.les.loungeliterarioapi.services.impl;
 
+import com.fatec.les.loungeliterarioapi.dto.EnderecoDTO;
+import com.fatec.les.loungeliterarioapi.mapper.EnderecoMapper;
 import com.fatec.les.loungeliterarioapi.model.Endereco;
 import com.fatec.les.loungeliterarioapi.repository.EnderecoRepository;
 import com.fatec.les.loungeliterarioapi.services.EnderecoService;
@@ -15,17 +17,11 @@ import java.util.Optional;
 @Service
 public class EnderecoServiceImpl implements EnderecoService {
     private EnderecoRepository repository;
-    public EnderecoServiceImpl(EnderecoRepository repository) {
+
+    private EnderecoMapper enderecoMapper;
+    public EnderecoServiceImpl(EnderecoRepository repository, EnderecoMapper enderecoMapper) {
         this.repository = repository;
-    }
-    @Override
-    public ResponseEntity<?> salvarEndereco(Endereco endereco) {
-        try {
-            return new ResponseEntity<Endereco>(this.repository.save(endereco), HttpStatus.CREATED);
-        } catch (Exception e) {
-            e.printStackTrace();
-            return new ResponseEntity<String>("Dados informados inválidos!", HttpStatus.BAD_REQUEST);
-        }
+        this.enderecoMapper = enderecoMapper;
     }
 
     @Override

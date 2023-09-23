@@ -4,6 +4,7 @@ import com.fatec.les.loungeliterarioapi.dto.CartaoDeCreditoDTO;
 import com.fatec.les.loungeliterarioapi.dto.ClienteDTO;
 import com.fatec.les.loungeliterarioapi.dto.EnderecoDTO;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
+import com.fatec.les.loungeliterarioapi.model.Endereco;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -17,5 +18,4 @@ public interface ClienteService {
 
     void salvarCartao(CartaoDeCreditoDTO cartao);
 
-    void salvarEndereco(EnderecoDTO endereco);
 }

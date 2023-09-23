@@ -1,5 +1,6 @@
 package com.fatec.les.loungeliterarioapi.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -40,6 +41,8 @@ public class Venda {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_troca")
     private CupomTroca cupomTroca;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "data_venda")
     private LocalDate dataVenda;
 

@@ -12,5 +12,9 @@ import java.util.List;
 public interface EnderecoService {
 
    List<Endereco> buscarEnderecoPorIdCliente(Long id);
+    ResponseEntity<?> salvarEndereco(EnderecoDTO endereco);
 
+    void deletarEndereco(Endereco end);
+
+    Endereco buscarEnderecoPorId(Long idEnd);
 }

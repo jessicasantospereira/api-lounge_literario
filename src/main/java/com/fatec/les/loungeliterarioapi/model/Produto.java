@@ -43,7 +43,7 @@ public class Produto {
     @Column(name = "preco", precision = 16, scale = 2)
     private BigDecimal preco;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name="data_cadastro")
     private LocalDate dataCadastro;
 

@@ -2,10 +2,8 @@ package com.fatec.les.loungeliterarioapi.controller;
 
 import com.fatec.les.loungeliterarioapi.dto.CartaoDeCreditoDTO;
 import com.fatec.les.loungeliterarioapi.dto.ClienteDTO;
-import com.fatec.les.loungeliterarioapi.dto.EnderecoDTO;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
 import com.fatec.les.loungeliterarioapi.services.ClienteService;
-import com.fatec.les.loungeliterarioapi.services.EnderecoService;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -22,11 +20,9 @@ import java.util.UUID;
 public class ClienteController {
 
     private final ClienteService service;
-    private final EnderecoService endService;
 
-    public ClienteController(EnderecoService enderecoService, ClienteService clienteService){
+    public ClienteController(ClienteService clienteService){
         this.service = clienteService;
-        this.endService = enderecoService;
     }
     @GetMapping
     public Page<Cliente> getLista(@RequestParam(value="nome", required = false, defaultValue = "") String nome,
@@ -108,12 +104,5 @@ public class ClienteController {
         return ResponseEntity.ok().build();
 
     }
-    @PostMapping("/endereco")
-    public ResponseEntity<?> cadastrarEndereco(@RequestBody EnderecoDTO endereco){
-        log.info("Endereco entrada {} ", endereco.toString());
 
-        service.salvarEndereco(endereco);
-        return ResponseEntity.ok().build();
-
-    }
 }

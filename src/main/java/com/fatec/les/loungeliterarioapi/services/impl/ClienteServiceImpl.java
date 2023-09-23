@@ -2,16 +2,11 @@ package com.fatec.les.loungeliterarioapi.services.impl;
 
 import com.fatec.les.loungeliterarioapi.dto.CartaoDeCreditoDTO;
 import com.fatec.les.loungeliterarioapi.dto.ClienteDTO;
-import com.fatec.les.loungeliterarioapi.dto.EnderecoDTO;
 import com.fatec.les.loungeliterarioapi.mapper.ClienteMapper;
-import com.fatec.les.loungeliterarioapi.mapper.EnderecoMapper;
-import com.fatec.les.loungeliterarioapi.model.CartaoDeCredito;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
-import com.fatec.les.loungeliterarioapi.model.Endereco;
 import com.fatec.les.loungeliterarioapi.repository.ClienteRepository;
 import com.fatec.les.loungeliterarioapi.services.CartaoService;
 import com.fatec.les.loungeliterarioapi.services.ClienteService;
-import com.fatec.les.loungeliterarioapi.services.EnderecoService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -25,18 +20,14 @@ import java.util.List;
 @Service
 public class ClienteServiceImpl implements ClienteService {
     private ClienteRepository repository;
-    private EnderecoService enderecoService;
     private ClienteMapper clienteMapper;
     private CartaoService cartaoService;
 
-    private EnderecoMapper enderecoMapper;
 
-    public ClienteServiceImpl(ClienteRepository repository, EnderecoService enderecoService, ClienteMapper clienteMapper, CartaoService cartaoService, EnderecoMapper enderecoMapper) {
+    public ClienteServiceImpl(ClienteRepository repository,ClienteMapper clienteMapper, CartaoService cartaoService) {
         this.repository = repository;
-        this.enderecoService = enderecoService;
         this.clienteMapper = clienteMapper;
         this.cartaoService = cartaoService;
-        this.enderecoMapper = enderecoMapper;
     }
     @Override
     public ResponseEntity<?> salvarCliente(ClienteDTO dados) {
@@ -59,10 +50,10 @@ public class ClienteServiceImpl implements ClienteService {
     public Cliente buscarPorIdDoCliente(Long id) {
         Cliente c1 = repository.findById(id).get();
 
-        List<Endereco> end = enderecoService.buscarEnderecoPorIdCliente(id);
-        List<CartaoDeCredito> cartoes = cartaoService.buscarCartaoPorIdCliente(id);
-        c1.setEndereco(end);
-        c1.setCartaoDeCredito(cartoes);
+//        List<Endereco> end = c1.getEndereco();
+//        List<CartaoDeCredito> cartoes = cartaoService.buscarCartaoPorIdCliente(id);
+//        c1.setEndereco(end);
+//        c1.setCartaoDeCredito(cartoes);
         return c1;
     }
 
@@ -93,11 +84,5 @@ public class ClienteServiceImpl implements ClienteService {
         repository.save(cliente);
     }
 
-    @Override
-    public void salvarEndereco(EnderecoDTO endereco) {
-        Cliente cliente = this.buscarPorIdDoCliente(endereco.getIdCliente());
-        cliente.addEndereco(enderecoMapper.toEntity(endereco));
 
-        repository.save(cliente);
-    }
 }

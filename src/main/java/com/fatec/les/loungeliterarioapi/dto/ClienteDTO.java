@@ -30,7 +30,7 @@ public class ClienteDTO {
     private LocalDate dataNascimento;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dataCadastro  = LocalDate.now();;
+    private LocalDate dataCadastro  = LocalDate.now();
 
     private List<Endereco> endereco;
 

@@ -14,7 +14,7 @@ public interface EnderecoService {
    List<Endereco> buscarEnderecoPorIdCliente(Long id);
     ResponseEntity<?> salvarEndereco(EnderecoDTO endereco);
 
-    void deletarEndereco(Endereco end);
+    void deletarEndereco(Long idEnd);
 
     Endereco buscarEnderecoPorId(Long idEnd);
 }

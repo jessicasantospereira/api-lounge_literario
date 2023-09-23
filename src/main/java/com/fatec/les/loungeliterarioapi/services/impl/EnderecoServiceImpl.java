@@ -8,6 +8,7 @@ import com.fatec.les.loungeliterarioapi.repository.EnderecoRepository;
 import com.fatec.les.loungeliterarioapi.services.ClienteService;
 import com.fatec.les.loungeliterarioapi.services.EnderecoService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
@@ -21,6 +22,8 @@ public class EnderecoServiceImpl implements EnderecoService {
     private EnderecoRepository repository;
     private ClienteService clienteService;
     private EnderecoMapper enderecoMapper;
+
+    @Autowired
     public EnderecoServiceImpl(EnderecoRepository repository, EnderecoMapper enderecoMapper, ClienteService clienteService) {
         this.repository = repository;
         this.enderecoMapper = enderecoMapper;
@@ -46,13 +49,17 @@ public class EnderecoServiceImpl implements EnderecoService {
     }
 
     @Override
-    public void deletarEndereco(Endereco end) {
-        log.info("Deletando endereço");
-        this.repository.delete(end);
+    public void deletarEndereco(Long idEnd) {
+        log.info("Deletando endereço {} ", idEnd);
+
+        this.repository.deleteByIdEndereco(idEnd);
+
     }
 
     @Override
     public Endereco buscarEnderecoPorId(Long idEnd) {
-        return this.repository.findById(idEnd).get();
+        log.info("Buscando endereço por id {} ", idEnd);
+
+        return this.repository.findByIdEndereco(idEnd).get();
     }
 }

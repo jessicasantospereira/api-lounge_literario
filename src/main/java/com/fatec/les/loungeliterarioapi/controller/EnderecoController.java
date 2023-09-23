@@ -3,11 +3,10 @@ package com.fatec.les.loungeliterarioapi.controller;
 import com.fatec.les.loungeliterarioapi.dto.EnderecoDTO;
 import com.fatec.les.loungeliterarioapi.model.Endereco;
 import com.fatec.les.loungeliterarioapi.services.EnderecoService;
+import jakarta.transaction.Transactional;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 @Slf4j
 @RestController
@@ -31,8 +30,12 @@ public class EnderecoController {
 
     }
     @DeleteMapping("/{id}/{idEnd}")
+    @Transactional
     public ResponseEntity<?> deletarEndereco(@PathVariable("id") Long id, @PathVariable("idEnd") Long idEnd){
-        log.info("Deletar endereco cliente id: {} ", id);
+        log.info("Deletar endereco cliente id: {} e endereco id: {} ", id, idEnd);
+        Endereco endereco = endService.buscarEnderecoPorIdCliente(id).stream().filter(end -> end.getIdEndereco().equals(idEnd)).findFirst().get();
+        log.info("Endereco encontrado {} ", endereco.getLogradouro());
+        endService.deletarEndereco(endereco.getIdEndereco());
 
         return ResponseEntity.ok().build();
     }

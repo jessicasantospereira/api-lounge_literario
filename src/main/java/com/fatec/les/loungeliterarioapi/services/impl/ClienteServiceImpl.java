@@ -28,10 +28,16 @@ public class ClienteServiceImpl implements ClienteService {
     public ResponseEntity<?> salvarCliente(ClienteDTO dados) {
         try {
             if(dados.getIdCliente() != null){
-                Cliente cliente = clienteMapper.toEntity(dados);
-                cliente.setIdCliente(dados.getIdCliente());
-                Cliente existente = repository.save(cliente);
-                return new ResponseEntity<ClienteDTO>(clienteMapper.toDto(existente), HttpStatus.CREATED);
+                Cliente existente = repository.findById(dados.getIdCliente()).orElse(null);
+                if (existente != null) {
+                    // Atualize o cliente existente com os dados do DTO
+                    clienteMapper.updateFromDTO(existente, dados);
+
+                    // Salve o cliente atualizado
+                    Cliente clienteAtualizado = repository.save(existente);
+
+                    return new ResponseEntity<ClienteDTO>(clienteMapper.toDto(clienteAtualizado), HttpStatus.CREATED);
+                }
             }
             Cliente cliente = repository.save(clienteMapper.toEntity(dados));
             return new ResponseEntity<ClienteDTO>(clienteMapper.toDto(cliente), HttpStatus.CREATED);

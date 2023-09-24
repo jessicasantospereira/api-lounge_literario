@@ -46,9 +46,8 @@ public class CartaoServiceImpl implements CartaoService {
         CartaoDeCredito cartaoDeCredito = cartaoMapper.toEntity(cartao);
         cartaoDeCredito.setCliente(c1);
         CartaoDeCredito cartaoPrincipal = repository.findByClienteAndPrincipal(c1, true);
-        log.info("Cartão principal: {}", cartaoPrincipal.isPrincipal());
-        // Se o cartão já existir, atualize-o
 
+        // Se o cartão já existir, atualize-o
         if(cartao.getIdCartao() != null){
             cartaoDeCredito.setIdCartao(cartao.getIdCartao());
             // Se o cartão existente for o principal, desmarque-o

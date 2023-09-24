@@ -1,10 +1,16 @@
 package com.fatec.les.loungeliterarioapi.services;
 
+import com.fatec.les.loungeliterarioapi.dto.CartaoDeCreditoDTO;
 import com.fatec.les.loungeliterarioapi.model.CartaoDeCredito;
-import com.fatec.les.loungeliterarioapi.model.Endereco;
+import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
 public interface CartaoService {
     List<CartaoDeCredito> buscarCartaoPorIdCliente(Long id);
+
+    void deletarCartao(Long idCartao);
+
+    ResponseEntity<?> salvarCartao(CartaoDeCreditoDTO cartao);
+    CartaoDeCredito buscarCartaoPorId(Long idCartao);
 }

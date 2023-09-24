@@ -24,4 +24,5 @@ public class EnderecoDTO {
     private boolean endCobranca;
     private TipoEndereco tipoEndereco;
     private Long idCliente;
+    private String nomeEndereco;
 }

@@ -1,11 +1,9 @@
 package com.fatec.les.loungeliterarioapi.services.impl;
 
-import com.fatec.les.loungeliterarioapi.dto.CartaoDeCreditoDTO;
 import com.fatec.les.loungeliterarioapi.dto.ClienteDTO;
 import com.fatec.les.loungeliterarioapi.mapper.ClienteMapper;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
 import com.fatec.les.loungeliterarioapi.repository.ClienteRepository;
-import com.fatec.les.loungeliterarioapi.services.CartaoService;
 import com.fatec.les.loungeliterarioapi.services.ClienteService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
@@ -19,15 +17,12 @@ import java.util.List;
 @Slf4j
 @Service
 public class ClienteServiceImpl implements ClienteService {
-    private ClienteRepository repository;
-    private ClienteMapper clienteMapper;
-    private CartaoService cartaoService;
+    private final ClienteRepository repository;
+    private final ClienteMapper clienteMapper;
 
-
-    public ClienteServiceImpl(ClienteRepository repository,ClienteMapper clienteMapper, CartaoService cartaoService) {
+    public ClienteServiceImpl(ClienteRepository repository,ClienteMapper clienteMapper) {
         this.repository = repository;
         this.clienteMapper = clienteMapper;
-        this.cartaoService = cartaoService;
     }
     @Override
     public ResponseEntity<?> salvarCliente(ClienteDTO dados) {
@@ -76,13 +71,6 @@ public class ClienteServiceImpl implements ClienteService {
         return repository.count();
     }
 
-    @Override
-    public void salvarCartao(CartaoDeCreditoDTO cartao) {
-        Cliente cliente = this.buscarPorIdDoCliente(cartao.getIdCliente());
-        cliente.addCartaoDeCredito(cartao.toEntity());
-
-        repository.save(cliente);
-    }
 
 
 }

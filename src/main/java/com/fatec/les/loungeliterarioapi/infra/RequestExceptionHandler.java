@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 public class RequestExceptionHandler {
 
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity threat404(){
-        return ResponseEntity.notFound().build();
+    public ResponseEntity threat404() {
+        return ResponseEntity.badRequest().body("Recurso não encontrado");
     }
 }

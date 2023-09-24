@@ -25,6 +25,7 @@ public class Endereco {
     private String uf;
     private boolean endEntrega;
     private boolean endCobranca;
+    private String nomeEndereco;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_endereco")

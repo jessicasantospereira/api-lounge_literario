@@ -20,14 +20,4 @@ public class CartaoDeCreditoDTO {
     private String bandeira;
     private Long idCliente;
 
-    public CartaoDeCredito toEntity() {
-        CartaoDeCredito cartao = new CartaoDeCredito();
-        cartao.setIdCartao(this.getIdCartao());
-        cartao.setNumero(this.getNumero());
-        cartao.setNome(this.getNome());
-        cartao.setValidade(this.getValidade());
-        cartao.setCvv(this.getCvv());
-        cartao.setBandeira(Bandeiras.valueOf(this.getBandeira()));
-        return cartao;
-    }
 }

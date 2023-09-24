@@ -1,10 +1,10 @@
 package com.fatec.les.loungeliterarioapi.controller;
 
-import com.fatec.les.loungeliterarioapi.dto.CartaoDeCreditoDTO;
 import com.fatec.les.loungeliterarioapi.dto.ClienteDTO;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
 import com.fatec.les.loungeliterarioapi.services.ClienteService;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -36,7 +36,7 @@ public class ClienteController {
         log.info("Buscar cliente {} ", id);
         Cliente cliente = service.buscarPorIdDoCliente(id);
         if (cliente == null) {
-            return ResponseEntity.notFound().build();
+           throw new EntityNotFoundException();
         }
         cliente.setIdCliente(id);
         log.info("Cliente encontrado {} ", cliente.getNome());
@@ -46,7 +46,7 @@ public class ClienteController {
     public ResponseEntity<?> atualizarCliente(@PathVariable("id") Long id, @RequestBody ClienteDTO cliente){
         Cliente clienteExistente = service.buscarPorIdDoCliente(id);
         if (clienteExistente.getIdCliente() == null) {
-            return ResponseEntity.notFound().build();
+            throw new EntityNotFoundException();
         }
         cliente.setIdCliente(id);
         service.salvarCliente(cliente);
@@ -83,26 +83,11 @@ public class ClienteController {
     public ResponseEntity<?> deletarCliente(@PathVariable("id") Long id){
         Cliente cliente = service.buscarPorIdDoCliente(id);
         if (cliente.getIdCliente() == null) {
-            return ResponseEntity.notFound().build();
+            throw new EntityNotFoundException();
         }
         service.deletarCliente(cliente);
         return ResponseEntity.ok().build();
     }
-    @GetMapping("/cartao/{id}")
-    public ResponseEntity<?> buscarCartao(@PathVariable("id") Long id){
-        log.info("Buscar cartão cliente id: {} ", id);
 
-//        service.salvarCartao(cartao);
-        return ResponseEntity.ok().build();
-
-    }
-    @PostMapping("/cartao")
-    public ResponseEntity<?> cadastrarCartao(@RequestBody CartaoDeCreditoDTO cartao){
-        log.info("Cartao entrada {} ", cartao.toString());
-
-        service.salvarCartao(cartao);
-        return ResponseEntity.ok().build();
-
-    }
 
 }

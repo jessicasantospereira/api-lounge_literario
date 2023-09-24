@@ -20,6 +20,7 @@ public class EnderecoMapperImpl implements EnderecoMapper {
         endereco.setTipoEndereco(enderecoDto.getTipoEndereco());
         endereco.setEndCobranca(enderecoDto.isEndCobranca());
         endereco.setEndEntrega(enderecoDto.isEndEntrega());
+        endereco.setNomeEndereco(enderecoDto.getNomeEndereco());
 
         return endereco;
     }
@@ -41,6 +42,7 @@ public class EnderecoMapperImpl implements EnderecoMapper {
         dto.setTipoEndereco(endereco.getTipoEndereco());
         dto.setEndCobranca(endereco.isEndCobranca());
         dto.setEndEntrega(endereco.isEndEntrega());
+        dto.setNomeEndereco(endereco.getNomeEndereco());
 
         return dto;
     }

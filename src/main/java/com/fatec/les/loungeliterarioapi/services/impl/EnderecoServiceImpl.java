@@ -43,7 +43,11 @@ public class EnderecoServiceImpl implements EnderecoService {
         Cliente c1 = clienteService.buscarPorIdDoCliente(endereco.getIdCliente());
         Endereco end = enderecoMapper.toEntity(endereco);
         end.setCliente(c1);
-
+        if(endereco.getIdEndereco() != null){
+            end.setIdEndereco(endereco.getIdEndereco());
+            Endereco existente = repository.save(end);
+            return new ResponseEntity<EnderecoDTO>(enderecoMapper.toDto(existente), HttpStatus.CREATED);
+        }
         return new ResponseEntity<>(this.repository.save(end), HttpStatus.CREATED);
     }
 

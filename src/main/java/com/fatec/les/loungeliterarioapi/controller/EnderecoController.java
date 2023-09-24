@@ -39,4 +39,10 @@ public class EnderecoController {
 
         return ResponseEntity.ok().build();
     }
+    @PutMapping("/{idEnd}")
+    public ResponseEntity<?> atualizarEndereco(@PathVariable("idEnd") Long idEnd, @RequestBody EnderecoDTO endereco){
+        log.info("Endereco entrada {} ", endereco.toString());
+
+        return endService.salvarEndereco(endereco);
+    }
 }

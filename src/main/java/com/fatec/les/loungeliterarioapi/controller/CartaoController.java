@@ -20,14 +20,25 @@ public class CartaoController {
     @GetMapping("/{id}")
     public ResponseEntity<?> buscarCartao(@PathVariable("id") Long id){
         log.info("Buscar cartão cliente id: {} ", id);
-
-        return ResponseEntity.ok().build();
-
+        return ResponseEntity.ok(service.buscarCartaoPorId(id));
     }
     @PostMapping()
     public ResponseEntity<?> cadastrarCartao(@RequestBody CartaoDeCreditoDTO cartao){
         log.info("Cartao entrada {} ", cartao.toString());
         return service.salvarCartao(cartao);
 
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> atualizarCartao(@PathVariable("id") Long id, @RequestBody CartaoDeCreditoDTO cartao){
+        log.info("Cartao entrada {} ", cartao.toString());
+
+        return service.salvarCartao(cartao);
+    }
+    @DeleteMapping("/{id}/{idCartao}")
+    public ResponseEntity<?> deletarCartao(@PathVariable("id") Long id, @PathVariable("idCartao") Long idCartao){
+        log.info("Deletar cartão cliente id: {} e cartão id: {} ", id, idCartao);
+        service.deletarCartao(idCartao);
+
+        return ResponseEntity.ok().build();
     }
 }

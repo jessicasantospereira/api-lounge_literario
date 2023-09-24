@@ -19,5 +19,6 @@ public class CartaoDeCreditoDTO {
     private String cvv;
     private String bandeira;
     private Long idCliente;
+    private boolean principal;
 
 }

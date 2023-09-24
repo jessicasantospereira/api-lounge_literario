@@ -31,4 +31,6 @@ public class CartaoDeCredito {
     @JsonBackReference
     private Cliente cliente;
 
+    private boolean principal;
+
 }

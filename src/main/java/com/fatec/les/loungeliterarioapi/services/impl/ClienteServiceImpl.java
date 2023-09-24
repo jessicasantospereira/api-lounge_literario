@@ -44,11 +44,6 @@ public class ClienteServiceImpl implements ClienteService {
     @Override
     public Cliente buscarPorIdDoCliente(Long id) {
         Cliente c1 = repository.findById(id).get();
-
-//        List<Endereco> end = c1.getEndereco();
-//        List<CartaoDeCredito> cartoes = cartaoService.buscarCartaoPorIdCliente(id);
-//        c1.setEndereco(end);
-//        c1.setCartaoDeCredito(cartoes);
         return c1;
     }
 

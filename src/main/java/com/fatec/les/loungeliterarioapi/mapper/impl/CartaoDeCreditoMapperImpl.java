@@ -16,6 +16,7 @@ public class CartaoDeCreditoMapperImpl implements CartaoDeCreditoMapper {
         cartao.setCvv(cartaoDto.getCvv());
         cartao.setValidade(cartaoDto.getValidade());
         cartao.setBandeira(Bandeiras.valueOf(cartaoDto.getBandeira()));
+        cartao.setPrincipal(cartaoDto.isPrincipal());
         return cartao;
     }
 
@@ -32,7 +33,7 @@ public class CartaoDeCreditoMapperImpl implements CartaoDeCreditoMapper {
         cartaoDto.setCvv(cartao.getCvv());
         cartaoDto.setValidade(cartao.getValidade());
         cartaoDto.setBandeira(cartao.getBandeira().toString());
-
+        cartaoDto.setPrincipal(cartao.isPrincipal());
 
         return cartaoDto;
     }

@@ -12,5 +12,5 @@ public interface CartaoService {
     void deletarCartao(Long idCartao);
 
     ResponseEntity<?> salvarCartao(CartaoDeCreditoDTO cartao);
-    CartaoDeCredito buscarCartaoPorId(Long idCartao);
+    CartaoDeCreditoDTO buscarCartaoPorId(Long idCartao);
 }

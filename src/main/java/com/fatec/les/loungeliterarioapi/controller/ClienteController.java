@@ -2,17 +2,16 @@ package com.fatec.les.loungeliterarioapi.controller;
 
 import com.fatec.les.loungeliterarioapi.dto.ClienteDTO;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
-import com.fatec.les.loungeliterarioapi.model.Contato;
-import com.fatec.les.loungeliterarioapi.model.Endereco;
 import com.fatec.les.loungeliterarioapi.services.ClienteService;
-import com.fatec.les.loungeliterarioapi.services.ContatoService;
-import com.fatec.les.loungeliterarioapi.services.EnderecoService;
 
+import jakarta.persistence.EntityNotFoundException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -20,22 +19,16 @@ import org.springframework.web.bind.annotation.*;
 @CrossOrigin("*")
 public class ClienteController {
 
-    private ClienteService service;
+    private final ClienteService service;
 
-    private EnderecoService endService;
-
-    private ContatoService contatoService;
-    public ClienteController(ContatoService contatoService, EnderecoService enderecoService, ClienteService clienteService){
+    public ClienteController(ClienteService clienteService){
         this.service = clienteService;
-        this.contatoService = contatoService;
-        this.endService = enderecoService;
     }
     @GetMapping
     public Page<Cliente> getLista(@RequestParam(value="nome", required = false, defaultValue = "") String nome,
                                      @RequestParam(value="cpf", required = false, defaultValue = "") String cpf,
                                      Pageable pageable){
 
-//        return repository.buscarPorNomeCpf("%"+nome+"%", "%"+cpf+"%", pageable).map(ClienteDTO::fromModel);
         return service.buscarTodos(nome, cpf, pageable);
     }
     @GetMapping("/{id}")
@@ -43,7 +36,7 @@ public class ClienteController {
         log.info("Buscar cliente {} ", id);
         Cliente cliente = service.buscarPorIdDoCliente(id);
         if (cliente == null) {
-            return ResponseEntity.notFound().build();
+           throw new EntityNotFoundException();
         }
         cliente.setIdCliente(id);
         log.info("Cliente encontrado {} ", cliente.getNome());
@@ -53,7 +46,7 @@ public class ClienteController {
     public ResponseEntity<?> atualizarCliente(@PathVariable("id") Long id, @RequestBody ClienteDTO cliente){
         Cliente clienteExistente = service.buscarPorIdDoCliente(id);
         if (clienteExistente.getIdCliente() == null) {
-            return ResponseEntity.notFound().build();
+            throw new EntityNotFoundException();
         }
         cliente.setIdCliente(id);
         service.salvarCliente(cliente);
@@ -63,27 +56,21 @@ public class ClienteController {
     @PostMapping
     public ResponseEntity<?> salvarCliente(@RequestBody ClienteDTO cliente){
        log.info("Cliente entrada {} ", cliente.toString());
-
+        UUID uuid = UUID.randomUUID();
         if (cliente.getIdCliente() != null) {
             Cliente existente = service.buscarPorIdDoCliente(cliente.getIdCliente());
-            if (cliente.getEndereco() != null) {
-                Endereco endereco = null;
-                for (Endereco end : cliente.getEndereco()) {
-                    existente.addEndereco(end);
-                    endereco = end;
-                }
-                endereco.setCliente(existente);
-                return endService.salvarEndereco(endereco);
-            }
-            if (cliente.getContato() != null) {
-                Contato contato = null;
-                for (Contato cont : cliente.getContato()) {
-                    existente.addContato(cont);
-                    contato = cont;
-                }
-                contato.setCliente(existente);
-                return contatoService.salvarContato(contato);
-            }
+//            if (cliente.getEndereco() != null) {
+//                Endereco endereco = null;
+//                for (EnderecoDTO end : cliente.getEndereco()) {
+//                    existente.addEndereco(end);
+//                    endereco = end;
+//                }
+//                endereco.setCliente(existente);
+//                return endService.salvarEndereco(endereco);
+//            }
+
+        }else {
+            cliente.setCodigo(uuid.toString());
         }
 
         ResponseEntity clienteSalvo = service.salvarCliente(cliente);
@@ -96,7 +83,7 @@ public class ClienteController {
     public ResponseEntity<?> deletarCliente(@PathVariable("id") Long id){
         Cliente cliente = service.buscarPorIdDoCliente(id);
         if (cliente.getIdCliente() == null) {
-            return ResponseEntity.notFound().build();
+            throw new EntityNotFoundException();
         }
         service.deletarCliente(cliente);
         return ResponseEntity.ok().build();

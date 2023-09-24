@@ -1,10 +1,12 @@
 package com.fatec.les.loungeliterarioapi.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -13,6 +15,7 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@ToString
 @Entity
 @Table(name="venda")
 public class Venda {
@@ -22,6 +25,7 @@ public class Venda {
     @ManyToOne
     @JoinColumn(name="id_cliente")
     private Cliente cliente;
+
     @Enumerated(EnumType.STRING)
     @Column(name = "forma_pagamento")
     private FormaPagamento formaPagamento;
@@ -37,6 +41,8 @@ public class Venda {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_troca")
     private CupomTroca cupomTroca;
+
+    @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "data_venda")
     private LocalDate dataVenda;
 

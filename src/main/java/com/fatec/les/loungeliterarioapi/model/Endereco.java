@@ -5,10 +5,8 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Data
-@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -25,6 +23,9 @@ public class Endereco {
     private String bairro;
     private String cidade;
     private String uf;
+    private boolean endEntrega;
+    private boolean endCobranca;
+    private String nomeEndereco;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "tipo_endereco")
@@ -34,4 +35,22 @@ public class Endereco {
     @JoinColumn(name = "idCliente", foreignKey = @ForeignKey(name = "fk_idEndereco"))
     @JsonBackReference
     private Cliente cliente;
+
+    @Override
+    public String toString() {
+        return "Endereco{" +
+                "idEndereco=" + idEndereco +
+                ", logradouro='" + logradouro + '\'' +
+                ", numero='" + numero + '\'' +
+                ", complemento='" + complemento + '\'' +
+                ", cep='" + cep + '\'' +
+                ", bairro='" + bairro + '\'' +
+                ", cidade='" + cidade + '\'' +
+                ", uf='" + uf + '\'' +
+                ", endEntrega=" + endEntrega +
+                ", endCobranca=" + endCobranca +
+                ", tipoEndereco=" + tipoEndereco +
+                ", cliente=" + cliente +
+                '}';
+    }
 }

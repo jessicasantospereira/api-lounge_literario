@@ -1,15 +1,14 @@
 package com.fatec.les.loungeliterarioapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fatec.les.loungeliterarioapi.model.Produto;
 import com.fatec.les.loungeliterarioapi.model.Tags;
-import jakarta.persistence.Column;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.List;
 
 @Data
 @AllArgsConstructor
@@ -19,18 +18,23 @@ public class ProdutoDTO {
     private String titulo;
     private String descricao;
     private String imagem;
-    private Tags tag;
+    private List<Tags> categoria;
     private BigDecimal preco;
-
+    private String codigo;
     private int qtdeEstoque;
+    private boolean isAtivo;
+    private int numeroPaginas;
+    private String autor;
+    private String editora;
+    private String edicao;
+    private String ano;
+    private String isbn;
+    private double altura;
+    private double largura;
+    private double peso;
+    private double profundidade;
 
-    @JsonFormat(pattern = "dd/MM/yyyy")
-    private LocalDate dataCadastro;
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    private LocalDate dataCadastro = LocalDate.now();
 
-    public Produto toModel(){
-        return new Produto(titulo, descricao, imagem, tag, preco, qtdeEstoque);
-    }
-    public static ProdutoDTO fromModel(Produto produto){
-        return new ProdutoDTO(produto.getId(), produto.getTitulo(), produto.getDescricao(), produto.getImagem(), produto.getTag(), produto.getPreco(), produto.getQtdeEstoque(), produto.getDataCadastro());
-    }
 }

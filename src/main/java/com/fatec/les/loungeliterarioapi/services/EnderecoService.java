@@ -1,5 +1,6 @@
 package com.fatec.les.loungeliterarioapi.services;
 
+import com.fatec.les.loungeliterarioapi.dto.EnderecoDTO;
 import com.fatec.les.loungeliterarioapi.model.Endereco;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -10,8 +11,10 @@ import java.util.List;
 
 public interface EnderecoService {
 
-   ResponseEntity<?> salvarEndereco(Endereco endereco);
-
    List<Endereco> buscarEnderecoPorIdCliente(Long id);
+    ResponseEntity<?> salvarEndereco(EnderecoDTO endereco);
 
+    void deletarEndereco(Long idEnd);
+
+    Endereco buscarEnderecoPorId(Long idEnd);
 }

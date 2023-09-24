@@ -7,13 +7,15 @@ import com.fatec.les.loungeliterarioapi.repository.ItemVendaRepository;
 import com.fatec.les.loungeliterarioapi.repository.ProdutoRepository;
 import com.fatec.les.loungeliterarioapi.services.VendaService;
 import jakarta.transaction.Transactional;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Optional;
-
+@Slf4j
 @RestController
 @RequestMapping("/api/vendas")
 @CrossOrigin("*")
@@ -28,7 +30,6 @@ public class VendasController {
     @PostMapping
     @Transactional
     public ResponseEntity<?> realizarVenda(@RequestBody VendaDTO venda){
-        System.out.println(venda.getCupom());
         Venda novaVenda = service.salvarVenda(venda);
 
         venda.getItens().stream().forEach(iv -> {
@@ -44,4 +45,16 @@ public class VendasController {
         return new ResponseEntity(novaVenda.getCupomTroca(), null, HttpStatus.CREATED);
 
     }
+    @GetMapping("{id}")
+    public List<Venda> getVendas(@PathVariable Long id){
+        log.info("Listar vendas por idCliente {}", id);
+        List<Venda> vendas = service.listarVendasPorCliente(id);
+        for (Venda venda: vendas
+             ) {
+            log.info("Venda {}", venda);
+        }
+
+        return null;
+    }
+
 }

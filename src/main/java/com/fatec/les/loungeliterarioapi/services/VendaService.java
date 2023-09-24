@@ -9,6 +9,7 @@ import com.fatec.les.loungeliterarioapi.repository.CupomTrocaRepository;
 import com.fatec.les.loungeliterarioapi.repository.VendaRepository;
 
 import java.time.LocalDate;
+import java.util.List;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -47,5 +48,9 @@ public class VendaService {
 
     public long getItens() {
         return repository.count();
+    }
+
+    public List<Venda> listarVendasPorCliente(Long id) {
+       return repository.findAllByIdCliente(id).get();
     }
 }

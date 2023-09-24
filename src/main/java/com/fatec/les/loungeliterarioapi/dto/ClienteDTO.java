@@ -1,8 +1,7 @@
 package com.fatec.les.loungeliterarioapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fatec.les.loungeliterarioapi.model.Cliente;
-import com.fatec.les.loungeliterarioapi.model.Contato;
+import com.fatec.les.loungeliterarioapi.model.CartaoDeCredito;
 import com.fatec.les.loungeliterarioapi.model.Endereco;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -21,11 +20,19 @@ public class ClienteDTO {
     private String nome;
     private String cpf;
     private boolean isAtivo;
+    private String codigo;
+    private String ddd;
+    private String telefone;
+    private String email;
+    private String senha;
+    private String genero;
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataNascimento;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dataCadastro  = LocalDate.now();;
-    private List<Contato> contato;
+    private LocalDate dataCadastro  = LocalDate.now();
+
     private List<Endereco> endereco;
+
+    private List<CartaoDeCredito> cartaoDeCredito;
 }

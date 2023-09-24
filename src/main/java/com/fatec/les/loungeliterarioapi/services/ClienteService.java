@@ -12,4 +12,5 @@ public interface ClienteService {
     Page<Cliente> buscarTodos(String nome, String cpf, Pageable pageable);
     void deletarCliente(Cliente cliente);
     long getItens();
+
 }

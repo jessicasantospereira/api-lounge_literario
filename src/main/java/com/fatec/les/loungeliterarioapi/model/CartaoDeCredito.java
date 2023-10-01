@@ -1,11 +1,14 @@
 package com.fatec.les.loungeliterarioapi.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
+
+import java.util.List;
 
 @Data
 @ToString
@@ -32,5 +35,8 @@ public class CartaoDeCredito {
     private Cliente cliente;
 
     private boolean principal;
+
+    @ManyToMany(mappedBy = "cartaoDeCredito")
+    private List<Venda> vendas;
 
 }

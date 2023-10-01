@@ -1,5 +1,6 @@
 package com.fatec.les.loungeliterarioapi.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
@@ -26,9 +27,14 @@ public class Venda {
     @JoinColumn(name="id_cliente")
     private Cliente cliente;
 
-    @Enumerated(EnumType.STRING)
-    @Column(name = "forma_pagamento")
-    private FormaPagamento formaPagamento;
+    @ManyToMany
+    @JoinTable(
+            name = "venda_cartao",
+            joinColumns = @JoinColumn(name = "venda_id"),
+            inverseJoinColumns = @JoinColumn(name = "cartao_id")
+    )
+    private List<CartaoDeCredito> cartaoDeCredito;
+
     @OneToMany(mappedBy = "venda")
     private List<ItemVenda> itens;
     @Column
@@ -46,16 +52,19 @@ public class Venda {
     @Column(name = "data_venda")
     private LocalDate dataVenda;
 
+
     @Override
     public String toString() {
         return "Venda{" +
                 "id=" + id +
                 ", cliente=" + cliente +
-                ", formaPagamento=" + formaPagamento +
+                ", cartaoDeCredito=" + cartaoDeCredito +
                 ", itens=" + itens +
                 ", total=" + total +
                 ", temCupom=" + temCupom +
                 ", cupom=" + cupom +
+                ", cupomTroca=" + cupomTroca +
+                ", dataVenda=" + dataVenda +
                 '}';
     }
 }

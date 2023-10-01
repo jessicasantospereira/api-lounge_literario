@@ -1,6 +1,7 @@
 package com.fatec.les.loungeliterarioapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fatec.les.loungeliterarioapi.model.CartaoDeCredito;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
 import com.fatec.les.loungeliterarioapi.model.FormaPagamento;
 import com.fatec.les.loungeliterarioapi.model.ItemVenda;
@@ -32,4 +33,6 @@ public class VendaDTO {
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataVenda = LocalDate.now();
+
+    private List<CartaoDeCredito> cartaoDeCredito;
 }

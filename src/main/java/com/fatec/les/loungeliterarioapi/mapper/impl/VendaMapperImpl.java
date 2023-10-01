@@ -12,7 +12,7 @@ public class VendaMapperImpl implements VendaMapper {
         Venda venda = new Venda();
         venda.setCliente(vendaDto.getCliente());
         venda.setItens(vendaDto.getItens());
-        venda.setFormaPagamento(vendaDto.getFormaPagamento());
+        venda.setCartaoDeCredito(vendaDto.getCartaoDeCredito());
         venda.setTemCupom(vendaDto.getTemCupom());
         venda.setTotal(vendaDto.getTotal());
 

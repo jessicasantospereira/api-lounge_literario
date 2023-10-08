@@ -1,6 +1,7 @@
 package com.fatec.les.loungeliterarioapi.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -36,6 +37,7 @@ public class CartaoDeCredito {
 
     private boolean principal;
 
+    @JsonIgnore
     @ManyToMany(mappedBy = "cartaoDeCredito")
     private List<Venda> vendas;
 

@@ -12,10 +12,10 @@ import java.time.LocalDate;
 import java.util.List;
 import java.util.UUID;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.config.CustomRepositoryImplementationDetector;
 import org.springframework.stereotype.Service;
-
+@Slf4j
 @Service
 public class VendaService {
     @Autowired
@@ -30,6 +30,7 @@ public class VendaService {
     private CupomTrocaRepository trocaRepository;
 
     public Venda salvarVenda(VendaDTO venda) {
+
         Venda novaVenda = mapper.toEntity(venda);
         UUID uuid = UUID.randomUUID();
 

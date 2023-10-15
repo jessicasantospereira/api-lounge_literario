@@ -1,10 +1,7 @@
 package com.fatec.les.loungeliterarioapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fatec.les.loungeliterarioapi.model.CartaoDeCredito;
-import com.fatec.les.loungeliterarioapi.model.Cliente;
-import com.fatec.les.loungeliterarioapi.model.FormaPagamento;
-import com.fatec.les.loungeliterarioapi.model.ItemVenda;
+import com.fatec.les.loungeliterarioapi.model.*;
 
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,4 +32,6 @@ public class VendaDTO {
     private LocalDate dataVenda = LocalDate.now();
 
     private List<CartaoDeCredito> cartaoDeCredito;
+
+    private Endereco enderecoEntrega;
 }

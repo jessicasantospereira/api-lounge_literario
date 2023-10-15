@@ -55,6 +55,9 @@ public class Venda {
     @Column(name = "data_venda")
     private LocalDate dataVenda;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "id_endereco")
+    private Endereco enderecoEntrega;
 
     @Override
     public String toString() {

@@ -15,7 +15,6 @@ public class VendaMapperImpl implements VendaMapper {
         venda.setCartaoDeCredito(vendaDto.getCartaoDeCredito());
         venda.setTemCupom(vendaDto.getTemCupom());
         venda.setTotal(vendaDto.getTotal());
-
         return venda;
     }
 

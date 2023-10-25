@@ -38,12 +38,14 @@ public class Venda {
     )
     private List<CartaoDeCredito> cartaoDeCredito;
 
+    @JsonBackReference
     @OneToMany(mappedBy = "venda")
     private List<ItemVenda> itens;
     @Column
     private BigDecimal total;
     @Column
     private Boolean temCupom;
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_cupom")
     private Cupom cupom;
@@ -58,6 +60,10 @@ public class Venda {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_endereco")
     private Endereco enderecoEntrega;
+
+    @Column(name = "status_venda")
+    @Enumerated(EnumType.STRING)
+    private StatusVenda statusVenda;
 
     @Override
     public String toString() {

@@ -34,4 +34,6 @@ public class VendaDTO {
     private List<CartaoDeCredito> cartaoDeCredito;
 
     private Endereco enderecoEntrega;
+
+    private StatusVenda statusVenda;
 }

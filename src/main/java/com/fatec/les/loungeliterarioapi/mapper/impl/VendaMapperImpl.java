@@ -20,6 +20,14 @@ public class VendaMapperImpl implements VendaMapper {
 
     @Override
     public VendaDTO toDto(Venda venda) {
-        return null;
+        VendaDTO dto = new VendaDTO();
+        dto.setCliente(venda.getCliente());
+        dto.setItens(venda.getItens());
+        dto.setCartaoDeCredito(venda.getCartaoDeCredito());
+        dto.setTemCupom(venda.getTemCupom());
+        dto.setTotal(venda.getTotal());
+        dto.setStatusVenda(venda.getStatusVenda());
+
+        return dto;
     }
 }

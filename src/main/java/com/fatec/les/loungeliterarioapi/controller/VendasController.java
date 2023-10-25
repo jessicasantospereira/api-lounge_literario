@@ -47,16 +47,11 @@ public class VendasController {
         return new ResponseEntity<>(novaVenda.getCupomTroca(), null, HttpStatus.CREATED);
 
     }
-    @GetMapping("{id}")
-    public List<Venda> getVendas(@PathVariable Long id){
-        log.info("Listar vendas por idCliente {}", id);
-        List<Venda> vendas = service.listarVendasPorCliente(id);
-        for (Venda venda: vendas
-             ) {
-            log.info("Venda {}", venda);
-        }
-
-        return null;
+    @GetMapping()
+    public List<Venda> getVendas(){
+        log.info("Listar todas as vendas");
+        List<Venda> vendas = service.buscarTodasVendas();
+        return vendas;
     }
 
 }

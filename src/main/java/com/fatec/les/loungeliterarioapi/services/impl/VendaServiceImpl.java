@@ -12,10 +12,13 @@ import com.fatec.les.loungeliterarioapi.repository.VendaRepository;
 
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 import com.fatec.les.loungeliterarioapi.services.VendaService;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 @Slf4j
 @Service
@@ -58,5 +61,11 @@ public class VendaServiceImpl implements VendaService {
     @Override
     public List<Venda> listarVendasPorCliente(Long id) {
        return repository.findAllByIdCliente(id).get();
+    }
+
+    @Override
+    public List<Venda> buscarTodasVendas() {
+        List<Venda> vendas =  repository.findAll();
+        return vendas;
     }
 }

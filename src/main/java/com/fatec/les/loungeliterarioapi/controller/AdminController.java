@@ -14,19 +14,20 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/admin")
 @CrossOrigin("*")
 public class AdminController {
-    @Autowired
-    private VendaServiceImpl vendaService;
-    @Autowired
-    private ClienteServiceImpl clienteService;
-    @Autowired
-    private ProdutoRepository produtoRepository;
+//    @Autowired
+//    private VendaServiceImpl vendaService;
+//    @Autowired
+//    private ClienteServiceImpl clienteService;
+//    @Autowired
+//    private ProdutoRepository produtoRepository;
 
     @GetMapping
     public Admin getItens(){
-        long vendas = vendaService.getItens();
-        long clientes = clienteService.getItens();
-        long produtos = produtoRepository.count();
+//        long vendas = vendaService.getItens();
+//        long clientes = clienteService.getItens();
+//        long produtos = produtoRepository.count();
 
-        return new Admin(produtos, clientes, vendas);
+//        return new Admin(produtos, clientes, vendas);
+        return null;
     }
 }

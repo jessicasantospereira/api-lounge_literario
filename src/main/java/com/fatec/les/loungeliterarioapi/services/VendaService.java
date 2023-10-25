@@ -12,4 +12,6 @@ public interface VendaService {
     long getItens();
 
     List<Venda> listarVendasPorCliente(Long id);
+
+    List<Venda> buscarTodasVendas();
 }

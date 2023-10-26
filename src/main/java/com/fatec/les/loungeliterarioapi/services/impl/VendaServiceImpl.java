@@ -1,9 +1,11 @@
 package com.fatec.les.loungeliterarioapi.services.impl;
 
+import com.fatec.les.loungeliterarioapi.dto.ResponseVendaDTO;
 import com.fatec.les.loungeliterarioapi.dto.VendaDTO;
 import com.fatec.les.loungeliterarioapi.mapper.VendaMapper;
 import com.fatec.les.loungeliterarioapi.model.CupomTroca;
 import com.fatec.les.loungeliterarioapi.model.Endereco;
+import com.fatec.les.loungeliterarioapi.model.StatusVenda;
 import com.fatec.les.loungeliterarioapi.model.Venda;
 import com.fatec.les.loungeliterarioapi.repository.CupomRepository;
 import com.fatec.les.loungeliterarioapi.repository.CupomTrocaRepository;
@@ -64,8 +66,18 @@ public class VendaServiceImpl implements VendaService {
     }
 
     @Override
-    public List<Venda> buscarTodasVendas() {
-        List<Venda> vendas =  repository.findAll();
-        return vendas;
+    public Page<ResponseVendaDTO> buscarTodasVendas(Pageable pageable) {
+        Page<Venda> vendas =  repository.findAll(pageable);
+        Page<ResponseVendaDTO> responseDTO = vendas.map(venda -> new ResponseVendaDTO(venda));
+        return responseDTO;
+    }
+
+    @Override
+    public ResponseVendaDTO atualizarVenda(Long id, String status) {
+       Venda venda = repository.findById(id).get();
+       venda.setStatusVenda(StatusVenda.getStatusVenda(status));
+       repository.save(venda);
+       ResponseVendaDTO responseVendaDTO = new ResponseVendaDTO(venda);
+       return responseVendaDTO;
     }
 }

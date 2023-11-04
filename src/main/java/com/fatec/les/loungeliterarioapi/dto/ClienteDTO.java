@@ -32,7 +32,7 @@ public class ClienteDTO {
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataCadastro  = LocalDate.now();
 
-    private List<Endereco> endereco;
+    private List<EnderecoDTO> endereco;
 
-    private List<CartaoDeCredito> cartaoDeCredito;
+    private List<CartaoDeCreditoDTO> cartaoDeCredito;
 }

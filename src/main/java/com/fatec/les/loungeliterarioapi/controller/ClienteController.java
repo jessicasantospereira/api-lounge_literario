@@ -45,10 +45,10 @@ public class ClienteController {
     @PutMapping("/{id}")
     public ResponseEntity<?> atualizarCliente(@PathVariable("id") Long id, @RequestBody ClienteDTO cliente){
         Cliente clienteExistente = service.buscarPorIdDoCliente(id);
+        log.info("Cliente entrada {} ", clienteExistente.getNome());
         if (clienteExistente.getIdCliente() == null) {
             throw new EntityNotFoundException();
         }
-        cliente.setIdCliente(id);
         service.salvarCliente(cliente);
         return ResponseEntity.ok(cliente);
     }

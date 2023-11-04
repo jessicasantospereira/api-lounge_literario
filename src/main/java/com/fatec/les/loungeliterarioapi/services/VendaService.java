@@ -1,56 +1,22 @@
 package com.fatec.les.loungeliterarioapi.services;
 
+import com.fatec.les.loungeliterarioapi.dto.ResponseVendaDTO;
 import com.fatec.les.loungeliterarioapi.dto.VendaDTO;
-import com.fatec.les.loungeliterarioapi.mapper.VendaMapper;
-import com.fatec.les.loungeliterarioapi.model.CupomTroca;
 import com.fatec.les.loungeliterarioapi.model.Venda;
-import com.fatec.les.loungeliterarioapi.repository.CupomRepository;
-import com.fatec.les.loungeliterarioapi.repository.CupomTrocaRepository;
-import com.fatec.les.loungeliterarioapi.repository.VendaRepository;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.UUID;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.repository.config.CustomRepositoryImplementationDetector;
-import org.springframework.stereotype.Service;
+public interface VendaService {
 
-@Service
-public class VendaService {
-    @Autowired
-    private VendaRepository repository;
-    @Autowired
-    private VendaMapper mapper;
-    @Autowired
-    private CupomService cupomService;
-    @Autowired
-    private CupomRepository cupomRepository;
-    @Autowired
-    private CupomTrocaRepository trocaRepository;
+    Venda salvarVenda(VendaDTO venda);
 
-    public Venda salvarVenda(VendaDTO venda) {
-        Venda novaVenda = mapper.toEntity(venda);
-        UUID uuid = UUID.randomUUID();
+    long getItens();
 
-        if (venda.getTemCupom()) {
-            novaVenda.setCupom(cupomRepository.findByCodigo(venda.getCupom()));
-        }
-        CupomTroca troca = new CupomTroca();
-        troca.setCodigo(uuid.toString());
-        troca.setDataValidade(LocalDate.now().plusDays(30));
-        trocaRepository.save(troca);
+    List<Venda> listarVendasPorCliente(Long id);
 
-        novaVenda.setCupomTroca(troca);
-        novaVenda.setDataVenda(LocalDate.now());
-        return repository.save(novaVenda);
-    }
+    Page<ResponseVendaDTO> buscarTodasVendas(Pageable pageable);
 
-    public long getItens() {
-        return repository.count();
-    }
-
-    public List<Venda> listarVendasPorCliente(Long id) {
-       return repository.findAllByIdCliente(id).get();
-    }
+    ResponseVendaDTO atualizarVenda(Long id, String status);
 }

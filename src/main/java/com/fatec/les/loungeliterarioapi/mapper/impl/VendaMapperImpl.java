@@ -12,15 +12,22 @@ public class VendaMapperImpl implements VendaMapper {
         Venda venda = new Venda();
         venda.setCliente(vendaDto.getCliente());
         venda.setItens(vendaDto.getItens());
-        venda.setFormaPagamento(vendaDto.getFormaPagamento());
+        venda.setCartaoDeCredito(vendaDto.getCartaoDeCredito());
         venda.setTemCupom(vendaDto.getTemCupom());
         venda.setTotal(vendaDto.getTotal());
-
         return venda;
     }
 
     @Override
     public VendaDTO toDto(Venda venda) {
-        return null;
+        VendaDTO dto = new VendaDTO();
+        dto.setCliente(venda.getCliente());
+        dto.setItens(venda.getItens());
+        dto.setCartaoDeCredito(venda.getCartaoDeCredito());
+        dto.setTemCupom(venda.getTemCupom());
+        dto.setTotal(venda.getTotal());
+        dto.setStatusVenda(venda.getStatusVenda());
+
+        return dto;
     }
 }

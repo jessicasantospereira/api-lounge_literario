@@ -7,4 +7,6 @@ public interface ClienteMapper {
     public Cliente toEntity(ClienteDTO clienteDto);
 
     public ClienteDTO toDto(Cliente cliente);
+
+    public void updateFromDTO(Cliente cliente, ClienteDTO dto);
 }

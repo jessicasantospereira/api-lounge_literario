@@ -51,6 +51,7 @@ public class VendaServiceImpl implements VendaService {
         troca.setDataValidade(LocalDate.now().plusDays(30));
         trocaRepository.save(troca);
         Endereco end = enderecoRepository.findByIdEndereco(venda.getEnderecoEntrega().getIdEndereco()).get();
+        novaVenda.setStatusVenda(StatusVenda.EM_PROCESSAMENTO);
         novaVenda.setCupomTroca(troca);
         novaVenda.setDataVenda(LocalDate.now());
         novaVenda.setEnderecoEntrega(end);

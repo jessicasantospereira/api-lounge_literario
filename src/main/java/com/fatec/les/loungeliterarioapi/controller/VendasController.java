@@ -33,7 +33,7 @@ public class VendasController {
         this.produtoRepository = produtoRepository;
     }
 
-    @PostMapping
+    @PostMapping(consumes = "application/json")
     @Transactional
     public ResponseEntity<?> realizarVenda(@RequestBody VendaDTO venda){
         Venda novaVenda = service.salvarVenda(venda);

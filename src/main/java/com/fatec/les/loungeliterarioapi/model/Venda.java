@@ -1,9 +1,6 @@
 package com.fatec.les.loungeliterarioapi.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
+import com.fasterxml.jackson.annotation.*;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -20,6 +17,7 @@ import java.util.List;
 @ToString
 @Entity
 @Table(name="venda")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Venda {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,7 +36,6 @@ public class Venda {
     )
     private List<CartaoDeCredito> cartaoDeCredito;
 
-    @JsonBackReference
     @OneToMany(mappedBy = "venda")
     private List<ItemVenda> itens;
     @Column

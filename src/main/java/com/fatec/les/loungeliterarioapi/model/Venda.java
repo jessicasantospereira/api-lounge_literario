@@ -46,9 +46,6 @@ public class Venda {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_cupom")
     private Cupom cupom;
-    @OneToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "id_troca")
-    private CupomTroca cupomTroca;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
     @Column(name = "data_venda")
@@ -72,7 +69,6 @@ public class Venda {
                 ", total=" + total +
                 ", temCupom=" + temCupom +
                 ", cupom=" + cupom +
-                ", cupomTroca=" + cupomTroca +
                 ", dataVenda=" + dataVenda +
                 '}';
     }

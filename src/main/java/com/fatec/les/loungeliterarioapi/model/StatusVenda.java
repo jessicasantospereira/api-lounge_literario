@@ -7,7 +7,8 @@ public enum StatusVenda {
     ENTREGUE,
     EM_TROCA,
     TROCA_AUTORIZADA,
-    CANCELADO
+    CANCELADO,
+    REPROVADO
     ;
 
     private StatusVenda() {

@@ -28,13 +28,11 @@ public class VendaServiceImpl implements VendaService {
     private final VendaRepository repository;
     private final VendaMapper mapper;
     private final CupomRepository cupomRepository;
-    private final CupomTrocaRepository trocaRepository;
     private final EnderecoRepository enderecoRepository;
-    public VendaServiceImpl(VendaRepository repository, VendaMapper mapper, CupomRepository cupomRepository, CupomTrocaRepository trocaRepository, EnderecoRepository enderecoRepository) {
+    public VendaServiceImpl(VendaRepository repository, VendaMapper mapper, CupomRepository cupomRepository, EnderecoRepository enderecoRepository) {
         this.repository = repository;
         this.mapper = mapper;
         this.cupomRepository = cupomRepository;
-        this.trocaRepository = trocaRepository;
         this.enderecoRepository = enderecoRepository;
     }
     @Override
@@ -46,13 +44,9 @@ public class VendaServiceImpl implements VendaService {
         if (venda.getTemCupom()) {
             novaVenda.setCupom(cupomRepository.findByCodigo(venda.getCupom()));
         }
-        CupomTroca troca = new CupomTroca();
-        troca.setCodigo(uuid.toString());
-        troca.setDataValidade(LocalDate.now().plusDays(30));
-        trocaRepository.save(troca);
+
         Endereco end = enderecoRepository.findByIdEndereco(venda.getEnderecoEntrega().getIdEndereco()).get();
         novaVenda.setStatusVenda(StatusVenda.EM_PROCESSAMENTO);
-        novaVenda.setCupomTroca(troca);
         novaVenda.setDataVenda(LocalDate.now());
         novaVenda.setEnderecoEntrega(end);
         return repository.save(novaVenda);

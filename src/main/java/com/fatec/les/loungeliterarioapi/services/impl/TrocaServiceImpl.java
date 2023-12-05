@@ -1,5 +1,6 @@
 package com.fatec.les.loungeliterarioapi.services.impl;
 
+import com.fatec.les.loungeliterarioapi.dto.ResponseTrocaDTO;
 import com.fatec.les.loungeliterarioapi.dto.ResponseVendaDTO;
 import com.fatec.les.loungeliterarioapi.dto.TrocaDTO;
 import com.fatec.les.loungeliterarioapi.mapper.SolicitacaoTrocaMapper;
@@ -17,6 +18,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Objects;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 
 @Slf4j
@@ -59,7 +62,22 @@ public class TrocaServiceImpl implements TrocaService {
         if(trocas.isEmpty()){
             return new ResponseEntity<String>("Nenhuma troca encontrada", null,  HttpStatus.FORBIDDEN);
         }
-        return new ResponseEntity<List<SolicitacaoTroca>>(trocas, null,  HttpStatus.OK);
+        List<ResponseTrocaDTO> response = trocas.stream().filter(troca -> troca.getStatusSolicitacao().equals(StatusSolicitacaoTroca.TROCA_AUTORIZADA))
+                .map(troca -> {
+                    CupomTroca cupom = cupomTrocaRepository.findBySolicitacaoTroca(troca);
+                    return ResponseTrocaDTO.builder()
+                            .cupomTroca(cupom)
+                            .quantidade(troca.getQuantidade())
+                            .statusSolicitacao(troca.getStatusSolicitacao())
+                            .valor(troca.getValor())
+                            .dataSolicitacao(troca.getDataSolicitacao())
+                            .idCliente(Math.toIntExact(troca.getCliente().getIdCliente()))
+                            .idProduto(Math.toIntExact(troca.getProduto().getId()))
+                            .idSolicitacao(troca.getIdSolicitacao())
+                            .motivo(troca.getMotivo())
+                            .build();
+                }).collect(Collectors.toList());
+        return new ResponseEntity<List<ResponseTrocaDTO>>(response, null,  HttpStatus.OK);
     }
 
     @Override

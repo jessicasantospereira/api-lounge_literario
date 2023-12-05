@@ -26,6 +26,10 @@ public class VendaDTO {
 
     private String cupom;
 
+    private Boolean temTroca;
+
+    private String cupomTroca;
+
     @JsonFormat(pattern = "yyyy-MM-dd")
     private LocalDate dataVenda = LocalDate.now();
 
@@ -34,4 +38,6 @@ public class VendaDTO {
     private Endereco enderecoEntrega;
 
     private StatusVenda statusVenda;
+    private int parcelas;
+    private BigDecimal valorParcela;
 }

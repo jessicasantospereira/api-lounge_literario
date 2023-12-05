@@ -2,6 +2,7 @@ package com.fatec.les.loungeliterarioapi.services;
 
 import com.fatec.les.loungeliterarioapi.dto.ResponseVendaDTO;
 import com.fatec.les.loungeliterarioapi.dto.VendaDTO;
+import com.fatec.les.loungeliterarioapi.dto.VendaPorMesDTO;
 import com.fatec.les.loungeliterarioapi.model.Venda;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,4 +20,6 @@ public interface VendaService {
     Page<ResponseVendaDTO> buscarTodasVendas(Pageable pageable);
 
     ResponseVendaDTO atualizarVenda(Long id, String status);
+
+    List<VendaPorMesDTO> buscarVendasPorPeriodo();
 }

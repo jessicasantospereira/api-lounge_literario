@@ -32,6 +32,7 @@ public class TrocaController {
     }
     @GetMapping("/{codigo}")
     public ResponseEntity<?> getCupons(@PathVariable("codigo") String codigo){
+        log.info("Buscando cupom pelo código: {}", codigo);
         return service.buscarCupom(codigo);
 
     }

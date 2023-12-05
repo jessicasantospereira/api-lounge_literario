@@ -3,7 +3,6 @@ package com.fatec.les.loungeliterarioapi.controller;
 import com.fatec.les.loungeliterarioapi.dto.ResponseVendaDTO;
 import com.fatec.les.loungeliterarioapi.dto.VendaDTO;
 import com.fatec.les.loungeliterarioapi.model.Produto;
-import com.fatec.les.loungeliterarioapi.model.StatusVenda;
 import com.fatec.les.loungeliterarioapi.model.Venda;
 import com.fatec.les.loungeliterarioapi.repository.ItemVendaRepository;
 import com.fatec.les.loungeliterarioapi.repository.ProdutoRepository;

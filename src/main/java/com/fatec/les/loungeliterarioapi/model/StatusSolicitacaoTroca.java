@@ -3,7 +3,9 @@ package com.fatec.les.loungeliterarioapi.model;
 public enum StatusSolicitacaoTroca {
     EM_TROCA,
     TROCA_AUTORIZADA,
-    TROCADO;
+    TROCA_RECUSADA,
+    ITENS_RECEBIDOS,
+    TROCA_EFETUADA;
     private StatusSolicitacaoTroca() {
     }
 

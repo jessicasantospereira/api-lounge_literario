@@ -15,6 +15,10 @@ public class VendaMapperImpl implements VendaMapper {
         venda.setCartaoDeCredito(vendaDto.getCartaoDeCredito());
         venda.setTemCupom(vendaDto.getTemCupom());
         venda.setTotal(vendaDto.getTotal());
+        venda.setStatusVenda(vendaDto.getStatusVenda());
+        venda.setTemTroca(vendaDto.getTemTroca());
+        venda.setParcelas(vendaDto.getParcelas());
+        venda.setValorParcela(vendaDto.getValorParcela());
         return venda;
     }
 
@@ -27,7 +31,10 @@ public class VendaMapperImpl implements VendaMapper {
         dto.setTemCupom(venda.getTemCupom());
         dto.setTotal(venda.getTotal());
         dto.setStatusVenda(venda.getStatusVenda());
-
+        dto.setTemTroca(venda.getTemTroca());
+        dto.setCupomTroca(String.valueOf(venda.getCupomTroca()));
+        dto.setParcelas(venda.getParcelas());
+        dto.setValorParcela(venda.getValorParcela());
         return dto;
     }
 }

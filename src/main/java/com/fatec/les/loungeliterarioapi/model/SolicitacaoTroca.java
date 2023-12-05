@@ -2,15 +2,18 @@ package com.fatec.les.loungeliterarioapi.model;
 
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
+@Builder
 @Table(name = "solicitacao_troca")
 public class SolicitacaoTroca {
     @Id
@@ -28,6 +31,10 @@ public class SolicitacaoTroca {
 
     @Column(name = "motivo")
     private String motivo;
+
+    private int quantidade;
+
+    private BigDecimal valor;
 
     @Column(name = "data_solicitacao")
     private LocalDate dataSolicitacao;

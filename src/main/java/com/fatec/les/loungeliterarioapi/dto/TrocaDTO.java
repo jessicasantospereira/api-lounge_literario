@@ -3,6 +3,7 @@ package com.fatec.les.loungeliterarioapi.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fatec.les.loungeliterarioapi.model.StatusSolicitacaoTroca;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -12,7 +13,9 @@ import java.time.LocalDate;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class TrocaDTO {
+    private Long idSolicitacao;
 
     private Integer idCliente;
 

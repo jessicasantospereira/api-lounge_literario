@@ -4,6 +4,8 @@ import com.fatec.les.loungeliterarioapi.dto.TrocaDTO;
 import com.fatec.les.loungeliterarioapi.services.TrocaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -27,5 +29,24 @@ public class TrocaController {
                 .orElseThrow(() -> new RuntimeException("ID do Produto não pode ser nulo ou zero"));
 
         service.solicitarTroca(troca);
+    }
+    @GetMapping("/{codigo}")
+    public ResponseEntity<?> getCupons(@PathVariable("codigo") String codigo){
+        return service.buscarCupom(codigo);
+
+    }
+    @GetMapping("/cliente/{id}")
+    public ResponseEntity<?> buscarTrocasPorCliente(@PathVariable("id") String id){
+        return service.buscarTrocasPorCliente(id);
+    }
+    @GetMapping
+    public ResponseEntity<?> getTrocas(){
+        return service.buscarTrocas();
+    }
+    @PutMapping("/{id}")
+    public ResponseEntity<?> editarTroca(@PathVariable Long id, @RequestBody String status){
+        TrocaDTO venda = service.atualizarTroca(id, status);
+
+        return new ResponseEntity<>(venda, null, HttpStatus.CREATED);
     }
 }

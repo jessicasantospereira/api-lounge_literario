@@ -3,18 +3,15 @@ package com.fatec.les.loungeliterarioapi.services.impl;
 import com.fatec.les.loungeliterarioapi.dto.ResponseVendaDTO;
 import com.fatec.les.loungeliterarioapi.dto.VendaDTO;
 import com.fatec.les.loungeliterarioapi.mapper.VendaMapper;
-import com.fatec.les.loungeliterarioapi.model.CupomTroca;
 import com.fatec.les.loungeliterarioapi.model.Endereco;
 import com.fatec.les.loungeliterarioapi.model.StatusVenda;
 import com.fatec.les.loungeliterarioapi.model.Venda;
 import com.fatec.les.loungeliterarioapi.repository.CupomRepository;
-import com.fatec.les.loungeliterarioapi.repository.CupomTrocaRepository;
 import com.fatec.les.loungeliterarioapi.repository.EnderecoRepository;
 import com.fatec.les.loungeliterarioapi.repository.VendaRepository;
 
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
 import com.fatec.les.loungeliterarioapi.services.VendaService;

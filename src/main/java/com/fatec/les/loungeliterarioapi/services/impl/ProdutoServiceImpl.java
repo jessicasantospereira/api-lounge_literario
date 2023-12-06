@@ -58,4 +58,8 @@ public class ProdutoServiceImpl implements ProdutoService {
         }
         return null;
     }
+    @Override
+    public long getItens() {
+        return repository.count();
+    }
 }

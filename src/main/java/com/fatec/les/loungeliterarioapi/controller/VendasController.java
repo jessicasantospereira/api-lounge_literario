@@ -3,7 +3,6 @@ package com.fatec.les.loungeliterarioapi.controller;
 import com.fatec.les.loungeliterarioapi.dto.ResponseVendaDTO;
 import com.fatec.les.loungeliterarioapi.dto.VendaDTO;
 import com.fatec.les.loungeliterarioapi.model.Produto;
-import com.fatec.les.loungeliterarioapi.model.StatusVenda;
 import com.fatec.les.loungeliterarioapi.model.Venda;
 import com.fatec.les.loungeliterarioapi.repository.ItemVendaRepository;
 import com.fatec.les.loungeliterarioapi.repository.ProdutoRepository;
@@ -48,7 +47,7 @@ public class VendasController {
         });
 
         itemVendaRepository.saveAll(novaVenda.getItens());
-        return new ResponseEntity<>(novaVenda.getCupomTroca(), null, HttpStatus.CREATED);
+        return new ResponseEntity<>(novaVenda, null, HttpStatus.CREATED);
 
     }
     @GetMapping
@@ -65,4 +64,9 @@ public class VendasController {
         return new ResponseEntity<>(venda, null, HttpStatus.CREATED);
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<?> listarVendasPorCliente(@PathVariable Long id){
+        List<Venda> vendas = service.listarVendasPorCliente(id);
+        return new ResponseEntity<>(vendas, null, HttpStatus.OK);
+    }
 }

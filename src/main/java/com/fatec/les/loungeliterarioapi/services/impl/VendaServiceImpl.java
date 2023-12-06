@@ -1,61 +1,67 @@
 package com.fatec.les.loungeliterarioapi.services.impl;
 
 import com.fatec.les.loungeliterarioapi.dto.ResponseVendaDTO;
+import com.fatec.les.loungeliterarioapi.dto.TrocaDTO;
 import com.fatec.les.loungeliterarioapi.dto.VendaDTO;
+import com.fatec.les.loungeliterarioapi.dto.VendaPorMesDTO;
 import com.fatec.les.loungeliterarioapi.mapper.VendaMapper;
-import com.fatec.les.loungeliterarioapi.model.CupomTroca;
-import com.fatec.les.loungeliterarioapi.model.Endereco;
-import com.fatec.les.loungeliterarioapi.model.StatusVenda;
-import com.fatec.les.loungeliterarioapi.model.Venda;
-import com.fatec.les.loungeliterarioapi.repository.CupomRepository;
-import com.fatec.les.loungeliterarioapi.repository.CupomTrocaRepository;
-import com.fatec.les.loungeliterarioapi.repository.EnderecoRepository;
-import com.fatec.les.loungeliterarioapi.repository.VendaRepository;
+import com.fatec.les.loungeliterarioapi.model.*;
+import com.fatec.les.loungeliterarioapi.repository.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 
+import com.fatec.les.loungeliterarioapi.services.TrocaService;
 import com.fatec.les.loungeliterarioapi.services.VendaService;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 @Slf4j
 @Service
+@RequiredArgsConstructor
 public class VendaServiceImpl implements VendaService {
     private final VendaRepository repository;
     private final VendaMapper mapper;
     private final CupomRepository cupomRepository;
-    private final CupomTrocaRepository trocaRepository;
     private final EnderecoRepository enderecoRepository;
-    public VendaServiceImpl(VendaRepository repository, VendaMapper mapper, CupomRepository cupomRepository, CupomTrocaRepository trocaRepository, EnderecoRepository enderecoRepository) {
-        this.repository = repository;
-        this.mapper = mapper;
-        this.cupomRepository = cupomRepository;
-        this.trocaRepository = trocaRepository;
-        this.enderecoRepository = enderecoRepository;
-    }
+    private final CupomTrocaRepository cupomTrocaRepository;
+    private final SolicitacaoTrocaRepository solicitacaoTrocaRepository;
+    private final TrocaService trocaService;
+
     @Override
     public Venda salvarVenda(VendaDTO venda) {
         log.info("Salvando venda {}", venda.getEnderecoEntrega());
         Venda novaVenda = mapper.toEntity(venda);
         UUID uuid = UUID.randomUUID();
 
-        if (venda.getTemCupom()) {
+        if (venda.getTemCupom() != null && venda.getTemCupom()) {
             novaVenda.setCupom(cupomRepository.findByCodigo(venda.getCupom()));
         }
-        CupomTroca troca = new CupomTroca();
-        troca.setCodigo(uuid.toString());
-        troca.setDataValidade(LocalDate.now().plusDays(30));
-        trocaRepository.save(troca);
+        if(venda.getTemTroca() != null && venda.getTemTroca()){
+            log.info("Tem troca {}", venda.getCupomTroca());
+            CupomTroca cupomTroca = cupomTrocaRepository.findByCodigo(venda.getCupomTroca());
+            cupomTroca.setUtilizado(true);
+            SolicitacaoTroca troca = solicitacaoTrocaRepository.findById(cupomTroca.getSolicitacaoTroca().getIdSolicitacao()).get();
+            troca.setStatusSolicitacao(StatusSolicitacaoTroca.TROCA_EFETUADA);
+            solicitacaoTrocaRepository.save(cupomTroca.getSolicitacaoTroca());
+            cupomTrocaRepository.save(cupomTroca);
+            novaVenda.setCupomTroca(cupomTroca);
+//            var novoValor = troca.getValor().subtract(venda.getItens().stream().map(item -> {
+//                return BigDecimal.valueOf(item.getQuantidade()).multiply(item.getProduto().getPreco());
+//            });
+//            TrocaDTO novaTroca = TrocaDTO.builder().motivo("Sobra de cupom").idCliente(Math.toIntExact(troca.getCliente().getIdCliente())).idProduto(Math.toIntExact(troca.getProduto().getId())).quantidade(troca.getQuantidade()).valor(novoValor).build();
+        }
+
         Endereco end = enderecoRepository.findByIdEndereco(venda.getEnderecoEntrega().getIdEndereco()).get();
         novaVenda.setStatusVenda(StatusVenda.EM_PROCESSAMENTO);
-        novaVenda.setCupomTroca(troca);
         novaVenda.setDataVenda(LocalDate.now());
         novaVenda.setEnderecoEntrega(end);
         return repository.save(novaVenda);
+
     }
     @Override
     public long getItens() {
@@ -80,5 +86,10 @@ public class VendaServiceImpl implements VendaService {
        repository.save(venda);
        ResponseVendaDTO responseVendaDTO = new ResponseVendaDTO(venda);
        return responseVendaDTO;
+    }
+
+    @Override
+    public List<VendaPorMesDTO> buscarVendasPorPeriodo() {
+        return repository.findAllByDataVenda();
     }
 }

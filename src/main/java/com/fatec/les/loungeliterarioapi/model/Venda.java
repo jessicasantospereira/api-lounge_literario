@@ -36,6 +36,9 @@ public class Venda {
     )
     private List<CartaoDeCredito> cartaoDeCredito;
 
+    private int parcelas;
+    private BigDecimal valorParcela;
+
     @OneToMany(mappedBy = "venda")
     private List<ItemVenda> itens;
     @Column
@@ -46,6 +49,9 @@ public class Venda {
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_cupom")
     private Cupom cupom;
+    @Column
+    private Boolean temTroca;
+    @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_troca")
     private CupomTroca cupomTroca;
@@ -72,7 +78,6 @@ public class Venda {
                 ", total=" + total +
                 ", temCupom=" + temCupom +
                 ", cupom=" + cupom +
-                ", cupomTroca=" + cupomTroca +
                 ", dataVenda=" + dataVenda +
                 '}';
     }

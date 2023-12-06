@@ -1,7 +1,6 @@
 package com.fatec.les.loungeliterarioapi.services.impl;
 
 import com.fatec.les.loungeliterarioapi.dto.ResponseTrocaDTO;
-import com.fatec.les.loungeliterarioapi.dto.ResponseVendaDTO;
 import com.fatec.les.loungeliterarioapi.dto.TrocaDTO;
 import com.fatec.les.loungeliterarioapi.mapper.SolicitacaoTrocaMapper;
 import com.fatec.les.loungeliterarioapi.model.*;
@@ -19,7 +18,6 @@ import org.springframework.stereotype.Service;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 
@@ -39,6 +37,7 @@ public class TrocaServiceImpl implements TrocaService {
         SolicitacaoTroca solicitacaoTroca = mapper.toEntity(trocaDTO);
         solicitacaoTroca.setCliente(clienteRepository.findById(Long.valueOf(trocaDTO.getIdCliente())).get());
         solicitacaoTroca.setProduto(produtoRepository.findById(Long.valueOf(trocaDTO.getIdProduto())).get());
+        solicitacaoTroca.setDataSolicitacao(LocalDate.now());
         return repository.save(solicitacaoTroca);
     }
 
@@ -68,6 +67,7 @@ public class TrocaServiceImpl implements TrocaService {
                 .map(troca -> {
                     if (troca.getStatusSolicitacao().equals(StatusSolicitacaoTroca.ITENS_RECEBIDOS) || troca.getStatusSolicitacao().equals(StatusSolicitacaoTroca.TROCA_EFETUADA)) {
                         CupomTroca cupom = cupomTrocaRepository.findBySolicitacaoTroca(troca);
+                        log.info(cupom.getCodigo());
                         return ResponseTrocaDTO.builder()
                                 .cupomTroca(cupom)
                                 .quantidade(troca.getQuantidade())

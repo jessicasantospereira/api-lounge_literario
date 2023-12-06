@@ -19,5 +19,4 @@ public interface VendaRepository extends JpaRepository<Venda, Long> {
 
     Page<Venda> findAll(Pageable pageable);
 
-    List<VendaPorMesDTO> findAllByDataVenda();
 }

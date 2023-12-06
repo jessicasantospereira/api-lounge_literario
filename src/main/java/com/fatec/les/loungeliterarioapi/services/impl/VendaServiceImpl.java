@@ -1,15 +1,14 @@
 package com.fatec.les.loungeliterarioapi.services.impl;
 
-import com.fatec.les.loungeliterarioapi.dto.ResponseVendaDTO;
-import com.fatec.les.loungeliterarioapi.dto.TrocaDTO;
-import com.fatec.les.loungeliterarioapi.dto.VendaDTO;
-import com.fatec.les.loungeliterarioapi.dto.VendaPorMesDTO;
+import com.fatec.les.loungeliterarioapi.dto.*;
 import com.fatec.les.loungeliterarioapi.mapper.VendaMapper;
 import com.fatec.les.loungeliterarioapi.model.*;
 import com.fatec.les.loungeliterarioapi.repository.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.UUID;
 
@@ -17,6 +16,7 @@ import com.fatec.les.loungeliterarioapi.services.TrocaService;
 import com.fatec.les.loungeliterarioapi.services.VendaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -30,7 +30,7 @@ public class VendaServiceImpl implements VendaService {
     private final EnderecoRepository enderecoRepository;
     private final CupomTrocaRepository cupomTrocaRepository;
     private final SolicitacaoTrocaRepository solicitacaoTrocaRepository;
-    private final TrocaService trocaService;
+    private final ProdutoRepository produtoRepository;
 
     @Override
     public Venda salvarVenda(VendaDTO venda) {
@@ -75,7 +75,7 @@ public class VendaServiceImpl implements VendaService {
     @Override
     public Page<ResponseVendaDTO> buscarTodasVendas(Pageable pageable) {
         Page<Venda> vendas =  repository.findAll(pageable);
-        Page<ResponseVendaDTO> responseDTO = vendas.map(venda -> new ResponseVendaDTO(venda));
+        Page<ResponseVendaDTO> responseDTO = vendas.map(ResponseVendaDTO::new);
         return responseDTO;
     }
 
@@ -89,7 +89,20 @@ public class VendaServiceImpl implements VendaService {
     }
 
     @Override
-    public List<VendaPorMesDTO> buscarVendasPorPeriodo() {
-        return repository.findAllByDataVenda();
+    public List<ProdutoResponseDTO> buscarVendasPorData(String dataInicial, String dataFinal) {
+        LocalDate dataInicialConvertida = LocalDate.parse(dataInicial);
+        LocalDate dataFinalConvertida = LocalDate.parse(dataFinal);
+        List<Object[]> quantidadeVendidaPorMes = produtoRepository.findQuantidadeVendidaPorMes(dataInicialConvertida, dataFinalConvertida);
+        List<ProdutoResponseDTO> produtos = new ArrayList<>();
+        for (Object[] vendaPorMes : quantidadeVendidaPorMes) {
+            String nomeProduto = (String) vendaPorMes[0];
+            LocalDate dataVenda = (LocalDate) vendaPorMes[1];
+            String mesAno = dataVenda.getYear() + "-" + String.format("%02d", dataVenda.getMonthValue());
+            Long quantidadeVendida = (Long) vendaPorMes[2];
+            ProdutoResponseDTO produto = ProdutoResponseDTO.builder().productName(nomeProduto).sales(VendaPorMesDTO.builder().month(mesAno).quantity(quantidadeVendida).build()).build();
+            produtos.add(produto);
+        }
+
+        return produtos;
     }
 }

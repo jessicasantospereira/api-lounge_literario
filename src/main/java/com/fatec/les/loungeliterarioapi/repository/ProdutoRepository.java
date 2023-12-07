@@ -11,22 +11,21 @@ import java.util.List;
 
 public interface ProdutoRepository extends JpaRepository<Produto, Long> {
 
-        @Query("SELECT p.titulo as productName, DATE_FORMAT(v.dataVenda, '%Y-%m') as month, SUM(iv.quantidade) as quantity " +
+        @Query("SELECT p.titulo as productName, v.dataVenda as month, SUM(iv.quantidade) as quantity " +
                 "FROM ItemVenda iv " +
                 "JOIN iv.venda v " +
                 "JOIN iv.produto p " +
                 "WHERE v.dataVenda BETWEEN :startDate AND :endDate " +
-                "GROUP BY p.titulo, DATE_FORMAT(v.dataVenda, '%Y-%m')")
+                "GROUP BY p.titulo, v.dataVenda")
         List<Object[]> findSalesDataByMonth(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
 
-        @Query("SELECT p.titulo as productName, DATE_FORMAT(v.dataVenda, '%Y-%m') as month, SUM(iv.quantidade) as quantity " +
-                "FROM ItemVenda iv " +
-                "JOIN iv.venda v " +
-                "JOIN iv.produto p " +
-                "WHERE v.dataVenda BETWEEN :startDate AND :endDate " +
-                "GROUP BY p.titulo, DATE_FORMAT(v.dataVenda, '%Y-%m')")
-        List<ProdutoResponseDTO> findQuantidadeVendidaPorMesDTO(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
-
+//        @Query("SELECT p.titulo as productName, DATE_FORMAT(v.dataVenda, '%Y-%m') as month, SUM(iv.quantidade) as quantity " +
+//                "FROM ItemVenda iv " +
+//                "JOIN iv.venda v " +
+//                "JOIN iv.produto p " +
+//                "WHERE v.dataVenda BETWEEN :startDate AND :endDate " +
+//                "GROUP BY p.titulo, DATE_FORMAT(v.dataVenda, '%Y-%m')")
+//        List<Object[]> findSalesDataByMonth(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
 
 }

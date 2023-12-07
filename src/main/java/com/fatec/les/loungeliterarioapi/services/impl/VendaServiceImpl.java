@@ -98,7 +98,7 @@ public class VendaServiceImpl implements VendaService {
 
         for (Object[] row : salesData) {
             String productName = (String) row[0];
-            String month = (String) row[1];
+            String month = String.valueOf(row[1]);
             Long quantity = (Long) row[2];
 
             // Verifica se o produto já está na lista de produtos

@@ -7,10 +7,9 @@ import com.fatec.les.loungeliterarioapi.repository.*;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 import com.fatec.les.loungeliterarioapi.services.TrocaService;
 import com.fatec.les.loungeliterarioapi.services.VendaService;
@@ -90,17 +89,34 @@ public class VendaServiceImpl implements VendaService {
 
     @Override
     public List<ProdutoResponseDTO> buscarVendasPorData(String dataInicial, String dataFinal) {
-        LocalDate dataInicialConvertida = LocalDate.parse(dataInicial);
-        LocalDate dataFinalConvertida = LocalDate.parse(dataFinal);
-        List<Object[]> quantidadeVendidaPorMes = produtoRepository.findQuantidadeVendidaPorMes(dataInicialConvertida, dataFinalConvertida);
+        LocalDate dataInicialConvertida = LocalDate.parse(dataInicial.trim());
+        LocalDate dataFinalConvertida = LocalDate.parse(dataFinal.trim());
+
+        List<Object[]> salesData = produtoRepository.findSalesDataByMonth(dataInicialConvertida, dataFinalConvertida);
+
         List<ProdutoResponseDTO> produtos = new ArrayList<>();
-        for (Object[] vendaPorMes : quantidadeVendidaPorMes) {
-            String nomeProduto = (String) vendaPorMes[0];
-            LocalDate dataVenda = (LocalDate) vendaPorMes[1];
-            String mesAno = dataVenda.getYear() + "-" + String.format("%02d", dataVenda.getMonthValue());
-            Long quantidadeVendida = (Long) vendaPorMes[2];
-            ProdutoResponseDTO produto = ProdutoResponseDTO.builder().productName(nomeProduto).sales(VendaPorMesDTO.builder().month(mesAno).quantity(quantidadeVendida).build()).build();
-            produtos.add(produto);
+
+        for (Object[] row : salesData) {
+            String productName = (String) row[0];
+            String month = (String) row[1];
+            Long quantity = (Long) row[2];
+
+            // Verifica se o produto já está na lista de produtos
+            Optional<ProdutoResponseDTO> existingProduct = produtos.stream()
+                    .filter(p -> p.getProductName().equals(productName))
+                    .findFirst();
+
+            if (existingProduct.isPresent()) {
+                // Adiciona a venda ao produto existente na lista
+                ProdutoResponseDTO product = existingProduct.get();
+                product.addSale(month, quantity);
+            } else {
+                // Cria um novo produto na lista
+                ProdutoResponseDTO newProduct = new ProdutoResponseDTO();
+                newProduct.setProductName(productName);
+                newProduct.addSale(month, quantity);
+                produtos.add(newProduct);
+            }
         }
 
         return produtos;

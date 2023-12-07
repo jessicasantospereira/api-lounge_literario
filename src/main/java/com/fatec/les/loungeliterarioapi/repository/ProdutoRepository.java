@@ -17,7 +17,8 @@ public interface ProdutoRepository extends JpaRepository<Produto, Long> {
                 "JOIN iv.produto p " +
                 "WHERE v.dataVenda BETWEEN :startDate AND :endDate " +
                 "GROUP BY p.titulo, DATE_FORMAT(v.dataVenda, '%Y-%m')")
-        List<Object[]> findQuantidadeVendidaPorMes(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+        List<Object[]> findSalesDataByMonth(@Param("startDate") LocalDate startDate, @Param("endDate") LocalDate endDate);
+
 
         @Query("SELECT p.titulo as productName, DATE_FORMAT(v.dataVenda, '%Y-%m') as month, SUM(iv.quantidade) as quantity " +
                 "FROM ItemVenda iv " +

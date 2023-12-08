@@ -34,4 +34,8 @@ public class CupomController {
     public ResponseEntity<?> atualizarCupom(@RequestBody Cupom cupom){
         return service.atualizarCupom(cupom);
     }
+    @DeleteMapping("/{id}")
+    public ResponseEntity<?> deletarCupom(@PathVariable("id") long id){
+        return service.deletarCupom(id);
+    }
 }

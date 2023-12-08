@@ -61,4 +61,11 @@ public class CupomService {
         c1.setDataValidade(cupom.getDataValidade());
         return new ResponseEntity<Cupom>(repository.save(c1), null,  HttpStatus.OK);
     }
+
+    public ResponseEntity<?> deletarCupom(long id) {
+        Cupom c1 = repository.findById(id).get();
+        Optional.ofNullable(c1).orElseThrow(() -> new RuntimeException("Cupom não encontrado"));
+        repository.delete(c1);
+        return new ResponseEntity<>("Excluído com sucesso", null,  HttpStatus.OK);
+    }
 }

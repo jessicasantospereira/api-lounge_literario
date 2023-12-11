@@ -7,7 +7,6 @@ import lombok.*;
 @NoArgsConstructor
 @AllArgsConstructor
 public class VendaPorMesDTO {
-    private Integer mes;
-    private Integer ano;
-    private Long totalVendas;
+    private String month;
+    private Long quantity;
 }

@@ -34,7 +34,9 @@ jobs:
       run: mvn test
 
     - name: Install Code Climate Test Reporter
-      run: curl -L https://github.com/codeclimate/test-reporter/releases/download/v0.6.3/codeclimate-test-reporter-0.6.3-linux-amd64 > /usr/local/bin/codeclimate-test-reporter && chmod +x /usr/local/bin/codeclimate-test-reporter
+      run: |
+        curl -L "https://github.com/codeclimate/test-reporter/releases/download/v0.6.3/codeclimate-test-reporter-0.6.3-linux-amd64" -o /usr/local/bin/codeclimate-test-reporter
+        chmod +x /usr/local/bin/codeclimate-test-reporter
 
     - name: Upload coverage to Code Climate
       run: codeclimate-test-reporter format-coverage target/site/jacoco-coverage.xml

@@ -22,6 +22,9 @@ public class EnderecoController {
         return endService.salvarEndereco(endereco);
 
     }
+
+
+    
     @GetMapping("/{id}/{idEnd}")
     public ResponseEntity<?> buscarEndereco(@PathVariable("id") Long id, @PathVariable("idEnd") Long idEnd){
         log.info("Buscar endereco cliente id: {} ", id);

@@ -31,7 +31,7 @@ jobs:
       run: mvn package
 
     - name: Run unit tests with coverage
-      run: mvn test --coverage
+      run: mvn test
 
     - name: Install Code Climate Test Reporter
       run: curl -L https://github.com/codeclimate/test-reporter/releases/download/v0.6.3/codeclimate-test-reporter-0.6.3-linux-amd64 > /usr/local/bin/codeclimate-test-reporter && chmod +x /usr/local/bin/codeclimate-test-reporter

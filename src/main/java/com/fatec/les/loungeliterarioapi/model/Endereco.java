@@ -12,19 +12,30 @@ import lombok.NoArgsConstructor;
 @Entity
 @Table(name = "enderecos")
 public class Endereco {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_endereco")
     private Long idEndereco;
+
     private String logradouro;
+
     private String numero;
+
     private String complemento;
+
     private String cep;
+
     private String bairro;
+
     private String cidade;
+
     private String uf;
+
     private boolean endEntrega;
+
     private boolean endCobranca;
+
     private String nomeEndereco;
 
     @Enumerated(EnumType.STRING)
@@ -36,21 +47,4 @@ public class Endereco {
     @JsonBackReference
     private Cliente cliente;
 
-    @Override
-    public String toString() {
-        return "Endereco{" +
-                "idEndereco=" + idEndereco +
-                ", logradouro='" + logradouro + '\'' +
-                ", numero='" + numero + '\'' +
-                ", complemento='" + complemento + '\'' +
-                ", cep='" + cep + '\'' +
-                ", bairro='" + bairro + '\'' +
-                ", cidade='" + cidade + '\'' +
-                ", uf='" + uf + '\'' +
-                ", endEntrega=" + endEntrega +
-                ", endCobranca=" + endCobranca +
-                ", tipoEndereco=" + tipoEndereco +
-                ", cliente=" + cliente +
-                '}';
-    }
 }

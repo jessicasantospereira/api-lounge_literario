@@ -5,7 +5,6 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -14,11 +13,11 @@ import java.util.List;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-@ToString
 @Entity
 @Table(name="venda")
 @JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Venda {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -37,20 +36,26 @@ public class Venda {
     private List<CartaoDeCredito> cartaoDeCredito;
 
     private int parcelas;
+
     private BigDecimal valorParcela;
 
     @OneToMany(mappedBy = "venda")
     private List<ItemVenda> itens;
+
     @Column
     private BigDecimal total;
+
     @Column
     private Boolean temCupom;
+
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_cupom")
     private Cupom cupom;
+
     @Column
     private Boolean temTroca;
+
     @JsonIgnore
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "id_troca")
@@ -68,17 +73,4 @@ public class Venda {
     @Enumerated(EnumType.STRING)
     private StatusVenda statusVenda;
 
-    @Override
-    public String toString() {
-        return "Venda{" +
-                "id=" + id +
-                ", cliente=" + cliente +
-                ", cartaoDeCredito=" + cartaoDeCredito +
-                ", itens=" + itens +
-                ", total=" + total +
-                ", temCupom=" + temCupom +
-                ", cupom=" + cupom +
-                ", dataVenda=" + dataVenda +
-                '}';
-    }
 }

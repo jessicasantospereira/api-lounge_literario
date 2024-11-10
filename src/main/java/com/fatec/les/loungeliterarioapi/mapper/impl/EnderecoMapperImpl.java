@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class EnderecoMapperImpl implements EnderecoMapper {
+
     @Override
     public Endereco toEntity(EnderecoDTO enderecoDto) {
         Endereco endereco = new Endereco();
@@ -46,4 +47,5 @@ public class EnderecoMapperImpl implements EnderecoMapper {
 
         return dto;
     }
+
 }

@@ -41,6 +41,6 @@ jobs:
         chmod +x /usr/local/bin/codeclimate-test-reporter
 
     - name: Upload coverage to Code Climate
-      run: codeclimate-test-reporter format-coverage target/site/jacoco-coverage.xml
+      run: /usr/local/bin/codeclimate-test-reporter format-coverage target/site/jacoco-coverage.xml
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}

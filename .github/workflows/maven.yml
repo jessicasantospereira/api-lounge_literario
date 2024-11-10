@@ -30,7 +30,13 @@ jobs:
     - name: Build with Maven
       run: mvn package
 
-    - name: Publish code coverage
-      uses: paambaati/codeclimate-action@v3.0.0
+    - name: Run unit tests with coverage
+      run: mvn test --coverage
+
+    - name: Install Code Climate Test Reporter
+      run: curl -L https://github.com/codeclimate/test-reporter/releases/download/v0.6.3/codeclimate-test-reporter-0.6.3-linux-amd64 > /usr/local/bin/codeclimate-test-reporter && chmod +x /usr/local/bin/codeclimate-test-reporter
+
+    - name: Upload coverage to Code Climate
+      run: codeclimate-test-reporter format-coverage target/site/jacoco-coverage.xml
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}

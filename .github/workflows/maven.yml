@@ -46,5 +46,5 @@ jobs:
         coverageCommand: mvn test
         coverageLocations: ${{github.workspace}}/target/site/jacoco/jacoco.xml:jacoco
       env:
-        CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}
+        CC_TEST_REPORTER_ID: ${{secrets.CC_TEST_REPORTER_ID}}
         JACOCO_SOURCE_PATH: "${{github.workspace}}/src/main/java"

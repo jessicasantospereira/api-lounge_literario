@@ -45,5 +45,6 @@ jobs:
       with:
         coverageCommand: mvn test
         coverageFile: target/site/jacoco-coverage.xml
+        coverageInputType: jacoco
       env:
         CC_TEST_REPORTER_ID: ${{ secrets.CC_TEST_REPORTER_ID }}

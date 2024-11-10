@@ -2,12 +2,10 @@ package com.fatec.les.loungeliterarioapi.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import com.fatec.les.loungeliterarioapi.dto.CartaoDeCreditoDTO;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -18,11 +16,14 @@ import java.util.List;
 @Entity
 @Table(name = "clientes")
 public class Cliente {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_cliente")
     private Long idCliente;
+
     private String nome;
+
     private String cpf;
 
     @Column(columnDefinition = "VARCHAR(255)")
@@ -36,8 +37,11 @@ public class Cliente {
     private LocalDate dataNascimento;
 
     private String ddd;
+
     private String telefone;
+
     private String email;
+
     private String senha;
 
     @Enumerated(EnumType.STRING)
@@ -64,28 +68,9 @@ public class Cliente {
     public void removerEndereco(Endereco end) {
         endereco.remove(end);
     }
+
     public void addCartaoDeCredito(CartaoDeCredito cartao) {
         cartaoDeCredito.add(cartao);
     }
-    @Override
-    public String toString() {
-        return "Cliente{" +
-                "idCliente=" + idCliente +
-                ", nome='" + nome + '\'' +
-                ", cpf='" + cpf + '\'' +
-                ", codigo='" + codigo + '\'' +
-                ", isAtivo=" + isAtivo +
-                ", dataNascimento=" + dataNascimento +
-                ", ddd='" + ddd + '\'' +
-                ", telefone='" + telefone + '\'' +
-                ", email='" + email + '\'' +
-                ", senha='" + senha + '\'' +
-                ", genero=" + genero +
-                ", dataCadastro=" + dataCadastro +
-                ", endereco=" + endereco +
-                ", cartaoDeCredito=" + cartaoDeCredito +
-                '}';
-    }
-
 
 }

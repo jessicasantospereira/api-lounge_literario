@@ -1,6 +1,7 @@
 package com.fatec.les.loungeliterarioapi.model;
 
 public enum StatusVenda {
+
     EM_PROCESSAMENTO,
     APROVADO,
     EM_TRANSITO,

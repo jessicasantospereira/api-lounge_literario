@@ -26,12 +26,13 @@
 		<sonar.host.url>http://localhost:9000</sonar.host.url>
 		<sonar.login>squ_ec5331148a0bc7a37447fdd4447c46a91e50472a</sonar.login>
 		<sonar.java.binaries>${project.build.directory}/**</sonar.java.binaries>
-		<sonar.exclusions>**/dto/**,
+		<sonar.coverage.exclusions>
+			**/dto/**,
 			**/model/**,
 			**/config/**,
 			**/repository/**,
 			**/controller/**,
-		</sonar.exclusions>
+		</sonar.coverage.exclusions>
 	</properties>
 	<dependencies>
 		<dependency>

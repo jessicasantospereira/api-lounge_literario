@@ -1,6 +1,7 @@
 package com.fatec.les.loungeliterarioapi.model;
 
 public enum Genero {
+
     MASCULINO("Masculino"),
     FEMININO("Feminino"),
     OUTROS("Outros");

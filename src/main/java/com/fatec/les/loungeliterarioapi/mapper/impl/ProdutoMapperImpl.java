@@ -7,9 +7,9 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class ProdutoMapperImpl implements ProdutoMapper {
+
     @Override
     public Produto toEntity(ProdutoDTO produtoDto) {
-        System.out.println("Entrei aqui " + produtoDto.getCodigo());
         Produto produto = new Produto();
         produto.setTitulo(produtoDto.getTitulo());
         produto.setDescricao(produtoDto.getDescricao());
@@ -40,7 +40,6 @@ public class ProdutoMapperImpl implements ProdutoMapper {
         if (produto == null) {
             return null;
         }
-        System.out.println("Entrei aqui " + produto.getQtdeEstoque());
         ProdutoDTO dto = new ProdutoDTO();
         dto.setAltura(produto.getAltura());
         dto.setAno(produto.getAno());
@@ -67,4 +66,5 @@ public class ProdutoMapperImpl implements ProdutoMapper {
 
         return dto;
     }
+
 }

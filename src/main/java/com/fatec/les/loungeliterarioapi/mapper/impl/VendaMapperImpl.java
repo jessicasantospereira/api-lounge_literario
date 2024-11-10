@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class VendaMapperImpl implements VendaMapper {
+
     @Override
     public Venda toEntity(VendaDTO vendaDto) {
         Venda venda = new Venda();

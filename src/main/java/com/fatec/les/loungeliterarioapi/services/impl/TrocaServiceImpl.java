@@ -27,10 +27,15 @@ import java.util.stream.Collectors;
 public class TrocaServiceImpl implements TrocaService {
 
     private final SolicitacaoTrocaRepository repository;
+
     private final SolicitacaoTrocaMapper mapper;
+
     private final ClienteRepository clienteRepository;
+
     private final ProdutoRepository produtoRepository;
+
     private final CupomTrocaRepository cupomTrocaRepository;
+
     @Override
     public SolicitacaoTroca solicitarTroca(TrocaDTO trocaDTO) {
         log.info("SERVICE -> Solicitar troca {}: ", trocaDTO);
@@ -98,10 +103,10 @@ public class TrocaServiceImpl implements TrocaService {
     }
 
     @Override
-    public ResponseEntity<?> buscarTrocas() {
-
-        return new ResponseEntity<List<SolicitacaoTroca>>(repository.findAll(), null,  HttpStatus.OK);
+    public ResponseEntity<List<SolicitacaoTroca>> buscarTrocas() {
+        return new ResponseEntity<>(repository.findAll(), null, HttpStatus.OK);
     }
+
     @Override
     public TrocaDTO atualizarTroca(Long id, String status) {
         SolicitacaoTroca troca = repository.findById(id).get();

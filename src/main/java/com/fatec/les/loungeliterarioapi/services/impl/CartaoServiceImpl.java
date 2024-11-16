@@ -17,10 +17,13 @@ import java.util.List;
 @Slf4j
 @Service
 public class CartaoServiceImpl implements CartaoService {
+
     private final ClienteService clienteService;
+
     private final CartaoRepository repository;
 
     private final CartaoDeCreditoMapper cartaoMapper;
+
     public CartaoServiceImpl(CartaoRepository repository, ClienteService clienteService, CartaoDeCreditoMapper cartaoMapper) {
         this.repository = repository;
         this.clienteService = clienteService;

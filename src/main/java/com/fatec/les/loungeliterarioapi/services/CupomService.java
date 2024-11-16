@@ -4,7 +4,6 @@ import com.fatec.les.loungeliterarioapi.model.Cupom;
 import com.fatec.les.loungeliterarioapi.repository.CupomRepository;
 
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 @Service
 public class CupomService {
+
     @Autowired
     private CupomRepository repository;
 
@@ -47,25 +47,31 @@ public class CupomService {
     }
 
     public ResponseEntity<?> buscarCupomPorId(long id) {
-        Cupom c1 = repository.findById(id).get();
-        Optional.ofNullable(c1).orElseThrow(() -> new RuntimeException("Cupom não encontrado"));
-
-        return new ResponseEntity<Cupom>(c1, null,  HttpStatus.OK);
+        Optional<Cupom> cupomOptional = repository.findById(id);
+        if (cupomOptional.isPresent()) {
+            return ResponseEntity.ok(cupomOptional.get());
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cupom não encontrado");
+        }
     }
 
     public ResponseEntity<?> atualizarCupom(Cupom cupom) {
-        Cupom c1 = repository.findById(cupom.getIdCupom()).get();
-        Optional.ofNullable(c1).orElseThrow(() -> new RuntimeException("Cupom não encontrado"));
-        c1.setCodigo(cupom.getCodigo());
-        c1.setValor(cupom.getValor());
-        c1.setDataValidade(cupom.getDataValidade());
-        return new ResponseEntity<Cupom>(repository.save(c1), null,  HttpStatus.OK);
+        Optional<Cupom> c1 = repository.findById(cupom.getIdCupom());
+        if(c1.isEmpty()){
+            return new ResponseEntity<String>("Cupom não encontrado", null,  HttpStatus.NOT_FOUND);
+        }
+        c1.get().setCodigo(cupom.getCodigo());
+        c1.get().setValor(cupom.getValor());
+        c1.get().setDataValidade(cupom.getDataValidade());
+        return new ResponseEntity<Cupom>(repository.save(c1.get()), null,  HttpStatus.OK);
     }
 
     public ResponseEntity<?> deletarCupom(long id) {
-        Cupom c1 = repository.findById(id).get();
-        Optional.ofNullable(c1).orElseThrow(() -> new RuntimeException("Cupom não encontrado"));
-        repository.delete(c1);
+        Optional<Cupom> c1 = repository.findById(id);
+        if(c1.isEmpty()){
+            return new ResponseEntity<String>("Cupom não encontrado", null,  HttpStatus.NOT_FOUND);
+        }
+        repository.delete(c1.get());
         return new ResponseEntity<>("Excluído com sucesso", null,  HttpStatus.OK);
     }
 }

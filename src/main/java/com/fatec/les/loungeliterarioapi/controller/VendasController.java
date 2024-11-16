@@ -7,7 +7,9 @@ import com.fatec.les.loungeliterarioapi.model.Venda;
 import com.fatec.les.loungeliterarioapi.repository.ItemVendaRepository;
 import com.fatec.les.loungeliterarioapi.repository.ProdutoRepository;
 import com.fatec.les.loungeliterarioapi.services.VendaService;
+import com.fatec.les.loungeliterarioapi.usecase.CalcularRankingCliente;
 import jakarta.transaction.Transactional;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -17,20 +19,21 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.Optional;
+
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("/api/vendas")
 @CrossOrigin("*")
 public class VendasController {
+
     private final VendaService service;
+
     private final ItemVendaRepository itemVendaRepository;
+
     private final ProdutoRepository produtoRepository;
 
-    public VendasController(VendaService service, ItemVendaRepository itemVendaRepository, ProdutoRepository produtoRepository) {
-        this.service = service;
-        this.itemVendaRepository = itemVendaRepository;
-        this.produtoRepository = produtoRepository;
-    }
+    private final CalcularRankingCliente calcularRankingCliente;
 
     @PostMapping(consumes = "application/json")
     @Transactional
@@ -47,6 +50,7 @@ public class VendasController {
         });
 
         itemVendaRepository.saveAll(novaVenda.getItens());
+        calcularRankingCliente.execute(novaVenda);
         return new ResponseEntity<>(novaVenda, null, HttpStatus.CREATED);
 
     }

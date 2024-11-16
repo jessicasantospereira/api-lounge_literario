@@ -4,13 +4,16 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @Entity
@@ -60,6 +63,11 @@ public class Cliente {
     @JoinColumn(name = "idCliente", foreignKey = @ForeignKey(name = "fk_idCartao"))
     @JsonManagedReference
     private List<CartaoDeCredito> cartaoDeCredito;
+
+    private int ranking;
+
+    @Column(name = "ultima_atualizacao")
+    private LocalDateTime ultimaAtualizacao;
 
     public void addEndereco(Endereco end) {
         endereco.add(end);

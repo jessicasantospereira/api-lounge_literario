@@ -16,12 +16,16 @@ import java.util.UUID;
 @Slf4j
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
+
     private final ProdutoRepository repository;
+
     private final ProdutoMapper produtoMapper;
+
     public ProdutoServiceImpl(ProdutoRepository repository, ProdutoMapper produtoMapper) {
         this.repository = repository;
         this.produtoMapper = produtoMapper;
     }
+
     @Override
     public ProdutoDTO salvarProduto(ProdutoDTO produto) {
         try {

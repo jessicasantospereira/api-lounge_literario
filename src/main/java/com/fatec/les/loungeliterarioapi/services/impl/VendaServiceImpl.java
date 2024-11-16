@@ -5,17 +5,12 @@ import com.fatec.les.loungeliterarioapi.mapper.VendaMapper;
 import com.fatec.les.loungeliterarioapi.model.*;
 import com.fatec.les.loungeliterarioapi.repository.*;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.*;
 
-import com.fatec.les.loungeliterarioapi.services.TrocaService;
 import com.fatec.les.loungeliterarioapi.services.VendaService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.aspectj.weaver.ast.Or;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -23,6 +18,7 @@ import org.springframework.stereotype.Service;
 @Service
 @RequiredArgsConstructor
 public class VendaServiceImpl implements VendaService {
+
     private final VendaRepository repository;
     private final VendaMapper mapper;
     private final CupomRepository cupomRepository;
@@ -35,7 +31,6 @@ public class VendaServiceImpl implements VendaService {
     public Venda salvarVenda(VendaDTO venda) {
         log.info("Salvando venda {}", venda.getEnderecoEntrega());
         Venda novaVenda = mapper.toEntity(venda);
-        UUID uuid = UUID.randomUUID();
 
         if (venda.getTemCupom() != null && venda.getTemCupom()) {
             novaVenda.setCupom(cupomRepository.findByCodigo(venda.getCupom()));
@@ -66,6 +61,7 @@ public class VendaServiceImpl implements VendaService {
     public long getItens() {
         return repository.count();
     }
+
     @Override
     public List<Venda> listarVendasPorCliente(Long id) {
        return repository.findAllByIdCliente(id).get();

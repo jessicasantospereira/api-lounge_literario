@@ -1,6 +1,7 @@
 package com.fatec.les.loungeliterarioapi.model;
 
 public enum Bandeiras {
+
     VISA("Visa"),
     MASTERCARD("Mastercard"),
     ELO("Elo"),
@@ -9,10 +10,13 @@ public enum Bandeiras {
     DINERS("Diners Club");
 
     private String descricao;
+
     Bandeiras(String descricao) {
         this.descricao = descricao;
     }
+
     public String getDescricao() {
         return descricao;
     }
+
 }

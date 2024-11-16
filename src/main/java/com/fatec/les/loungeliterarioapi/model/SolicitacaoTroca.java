@@ -16,6 +16,7 @@ import java.time.LocalDate;
 @Builder
 @Table(name = "solicitacao_troca")
 public class SolicitacaoTroca {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_solicitacao")
@@ -42,4 +43,5 @@ public class SolicitacaoTroca {
     @Enumerated(EnumType.STRING)
     @Column(name = "status_solicitacao")
     private StatusSolicitacaoTroca statusSolicitacao;
+
 }

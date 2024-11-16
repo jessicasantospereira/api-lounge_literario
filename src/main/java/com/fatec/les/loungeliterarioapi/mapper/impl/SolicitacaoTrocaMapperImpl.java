@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 @Component
 public class SolicitacaoTrocaMapperImpl implements SolicitacaoTrocaMapper {
+
     @Override
     public SolicitacaoTroca toEntity(TrocaDTO trocaDto) {
         SolicitacaoTroca solicitacaoTroca = SolicitacaoTroca.builder()
@@ -23,4 +24,5 @@ public class SolicitacaoTrocaMapperImpl implements SolicitacaoTrocaMapper {
     public TrocaDTO toDto(SolicitacaoTroca troca) {
         return null;
     }
+
 }

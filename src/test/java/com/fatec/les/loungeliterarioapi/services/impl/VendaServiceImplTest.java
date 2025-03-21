@@ -1,8 +1,6 @@
 package com.fatec.les.loungeliterarioapi.services.impl;
 
-import com.fatec.les.loungeliterarioapi.Utils;
 import com.fatec.les.loungeliterarioapi.model.StatusVenda;
-import org.junit.Ignore;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

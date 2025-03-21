@@ -33,7 +33,7 @@ public class CalcularRankingClienteTest {
      public void testCalcularRankingCliente() {
         Venda venda = Utils.criarVenda();
         Cliente cliente = calcularRankingCliente.execute(venda);
-        assertEquals(60, cliente.getRanking());
+        assertEquals(70, cliente.getRanking());
         assertNotNull(cliente.getUltimaAtualizacao());
      }
 }

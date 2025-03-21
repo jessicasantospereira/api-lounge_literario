@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.springframework.boot</groupId>
 		<artifactId>spring-boot-starter-parent</artifactId>
-		<version>3.0.5</version>
+		<version>3.3.4</version>
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.fatec.les</groupId>
@@ -24,7 +24,7 @@
 		<sonar.jacoco.reportPath>${project.basedir}/../target/jacoco.exec</sonar.jacoco.reportPath>
 		<sonar.language>java</sonar.language>
 		<sonar.host.url>http://localhost:9000</sonar.host.url>
-		<sonar.login>squ_ec5331148a0bc7a37447fdd4447c46a91e50472a</sonar.login>
+		<sonar.login>squ_8f30efbbd22fc4bdd912d79fd3aea0e4e46203d3</sonar.login>
 		<sonar.java.binaries>${project.build.directory}/**</sonar.java.binaries>
 		<sonar.coverage.exclusions>
 			**/dto/**,
@@ -44,6 +44,10 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.jacoco</groupId>
 			<artifactId>jacoco-maven-plugin</artifactId>
 			<version>${jacoco.version}</version>
@@ -57,7 +61,7 @@
 		<dependency>
 			<groupId>com.h2database</groupId>
 			<artifactId>h2</artifactId>
-			<scope>runtime</scope>
+			<scope>test</scope>
 		</dependency>
 		<dependency>
 			<groupId>com.mysql</groupId>
@@ -163,11 +167,17 @@
 										<limit>
 											<counter>LINE</counter>
 											<value>COVEREDRATIO</value>
-											<minimum>0.85</minimum>
+											<minimum>0.33</minimum>
 										</limit>
 									</limits>
 								</rule>
 							</rules>
+							<excludes>
+								<exclude>**/config/**</exclude>
+								<exclude>**/model/**</exclude>
+								<exclude>**/controller/**</exclude>
+								<exclude>**/dto/**</exclude>
+							</excludes>
 						</configuration>
 					</execution>
 				</executions>

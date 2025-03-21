@@ -27,10 +27,15 @@ import java.util.stream.Collectors;
 public class TrocaServiceImpl implements TrocaService {
 
     private final SolicitacaoTrocaRepository repository;
+
     private final SolicitacaoTrocaMapper mapper;
+
     private final ClienteRepository clienteRepository;
+
     private final ProdutoRepository produtoRepository;
+
     private final CupomTrocaRepository cupomTrocaRepository;
+
     @Override
     public SolicitacaoTroca solicitarTroca(TrocaDTO trocaDTO) {
         log.info("SERVICE -> Solicitar troca {}: ", trocaDTO);
@@ -46,15 +51,15 @@ public class TrocaServiceImpl implements TrocaService {
         CupomTroca c1 = cupomTrocaRepository.findByCodigo(codigo);
         LocalDate dataAtual = LocalDate.now();
         if(c1 == null){
-            return new ResponseEntity<String>("Cupom não encontrado", null,  HttpStatus.FORBIDDEN);
+            return new ResponseEntity<String>("Cupom não encontrado", HttpStatus.FORBIDDEN);
         }
         if(dataAtual.isAfter(c1.getDataValidade())){
-            return new ResponseEntity<String>("Cupom expirado", null,  HttpStatus.FORBIDDEN);
+            return new ResponseEntity<String>("Cupom expirado", HttpStatus.FORBIDDEN);
         }
         if(c1.isUtilizado()){
-            return new ResponseEntity<String>("Cupom já utilizado", null,  HttpStatus.FORBIDDEN);
+            return new ResponseEntity<String>("Cupom já utilizado", HttpStatus.FORBIDDEN);
         }
-        return new ResponseEntity<CupomTroca>(c1, null,  HttpStatus.OK);
+        return new ResponseEntity<CupomTroca>(c1, HttpStatus.OK);
     }
 
     @Override
@@ -98,10 +103,10 @@ public class TrocaServiceImpl implements TrocaService {
     }
 
     @Override
-    public ResponseEntity<?> buscarTrocas() {
-
-        return new ResponseEntity<List<SolicitacaoTroca>>(repository.findAll(), null,  HttpStatus.OK);
+    public ResponseEntity<List<SolicitacaoTroca>> buscarTrocas() {
+        return new ResponseEntity<>(repository.findAll(), null, HttpStatus.OK);
     }
+
     @Override
     public TrocaDTO atualizarTroca(Long id, String status) {
         SolicitacaoTroca troca = repository.findById(id).get();

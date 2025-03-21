@@ -22,7 +22,6 @@ public class VendaServiceImpl implements VendaService {
     private final VendaRepository repository;
     private final VendaMapper mapper;
     private final CupomRepository cupomRepository;
-    private final EnderecoRepository enderecoRepository;
     private final CupomTrocaRepository cupomTrocaRepository;
     private final SolicitacaoTrocaRepository solicitacaoTrocaRepository;
     private final ProdutoRepository produtoRepository;
@@ -44,16 +43,11 @@ public class VendaServiceImpl implements VendaService {
             solicitacaoTrocaRepository.save(cupomTroca.getSolicitacaoTroca());
             cupomTrocaRepository.save(cupomTroca);
             novaVenda.setCupomTroca(cupomTroca);
-//            var novoValor = troca.getValor().subtract(venda.getItens().stream().map(item -> {
-//                return BigDecimal.valueOf(item.getQuantidade()).multiply(item.getProduto().getPreco());
-//            });
-//            TrocaDTO novaTroca = TrocaDTO.builder().motivo("Sobra de cupom").idCliente(Math.toIntExact(troca.getCliente().getIdCliente())).idProduto(Math.toIntExact(troca.getProduto().getId())).quantidade(troca.getQuantidade()).valor(novoValor).build();
         }
 
-        Endereco end = enderecoRepository.findByIdEndereco(venda.getEnderecoEntrega().getIdEndereco()).get();
         novaVenda.setStatusVenda(StatusVenda.EM_PROCESSAMENTO);
         novaVenda.setDataVenda(LocalDate.now());
-        novaVenda.setEnderecoEntrega(end);
+        novaVenda.setEnderecoEntrega(venda.getEnderecoEntrega());
         return repository.save(novaVenda);
 
     }

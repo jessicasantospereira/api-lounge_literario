@@ -44,7 +44,7 @@ public class Endereco {
     @Column(name = "tipo_endereco")
     private TipoEndereco tipoEndereco;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "idCliente", foreignKey = @ForeignKey(name = "fk_idEndereco"))
     @JsonBackReference
     private Cliente cliente;

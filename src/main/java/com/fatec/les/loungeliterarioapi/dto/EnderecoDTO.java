@@ -1,13 +1,10 @@
 package com.fatec.les.loungeliterarioapi.dto;
 
-import com.fatec.les.loungeliterarioapi.model.Cliente;
 import com.fatec.les.loungeliterarioapi.model.TipoEndereco;
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Data
+@Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString

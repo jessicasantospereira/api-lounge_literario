@@ -28,39 +28,25 @@ public class ProdutoServiceImpl implements ProdutoService {
 
     @Override
     public ProdutoDTO salvarProduto(ProdutoDTO produto) {
-        try {
             UUID uuid = UUID.randomUUID();
             produto.setCodigo(uuid.toString());
             log.info("Salvando produto {}", produto.getCodigo());
             return produtoMapper.toDto(repository.save(produtoMapper.toEntity(produto)));
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
 
     @Override
     public List<ProdutoDTO> buscarTodos() {
-        try {
             log.info("Buscando todos os produtos");
             Optional<List<Produto>> produtos = Optional.of(repository.findAll());
             return produtos.map(produtoList -> produtoList.stream().map(produtoMapper::toDto).collect(java.util.stream.Collectors.toList())).orElse(null);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
+
     }
 
     @Override
     public ResponseEntity<ProdutoDTO> buscarPorId(Long id) {
-        try {
             log.info("Buscando produto {}", id);
             Optional<Produto> produto = repository.findById(id);
             return produto.map(value -> ResponseEntity.ok(produtoMapper.toDto(value))).orElseGet(() -> ResponseEntity.notFound().build());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return null;
     }
     @Override
     public long getItens() {

@@ -10,16 +10,18 @@ import com.fatec.les.loungeliterarioapi.model.CartaoDeCredito;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
 import com.fatec.les.loungeliterarioapi.model.Endereco;
 import com.fatec.les.loungeliterarioapi.model.Genero;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
 
 @Component
+@RequiredArgsConstructor
 public class ClienteMapperImpl implements ClienteMapper {
 
-    EnderecoMapper enderecoMapper;
+    private final EnderecoMapper enderecoMapper;
 
-    CartaoDeCreditoMapper cartaoMapper;
+    private final CartaoDeCreditoMapper cartaoMapper;
 
     @Override
     public Cliente toEntity(ClienteDTO clienteDto) {
@@ -108,24 +110,26 @@ public class ClienteMapperImpl implements ClienteMapper {
                 enderecos.add(novoEndereco);
             }
         }
-        for (CartaoDeCreditoDTO cartaoDTO : cartoesDTO) {
-            boolean cartaoExistente = false;
-            for (CartaoDeCredito cartao : cartoes) {
-                if (cartao.getIdCartao().equals(cartaoDTO.getIdCartao())) {
-                    // Atualize o cartão existente com os dados do DTO
-                    cartao.setNome(cartaoDTO.getNome());
-                    cartao.setNumero(cartaoDTO.getNumero());
-                    cartao.setCvv(cartaoDTO.getCvv());
-                    cartao.setValidade(cartaoDTO.getValidade());
-                    cartao.setPrincipal(cartaoDTO.isPrincipal());
-                    cartaoExistente = true;
-                    break;
+        if (cartoesDTO != null) {
+            for (CartaoDeCreditoDTO cartaoDTO : cartoesDTO) {
+                boolean cartaoExistente = false;
+                for (CartaoDeCredito cartao : cartoes) {
+                    if (cartao.getIdCartao().equals(cartaoDTO.getIdCartao())) {
+                        // Atualize o cartão existente com os dados do DTO
+                        cartao.setNome(cartaoDTO.getNome());
+                        cartao.setNumero(cartaoDTO.getNumero());
+                        cartao.setCvv(cartaoDTO.getCvv());
+                        cartao.setValidade(cartaoDTO.getValidade());
+                        cartao.setPrincipal(cartaoDTO.isPrincipal());
+                        cartaoExistente = true;
+                        break;
+                    }
                 }
-            }
-            if (!cartaoExistente) {
-                // Crie um novo cartão e adicione à lista
-                CartaoDeCredito novoCartao = cartaoMapper.toEntity(cartaoDTO);
-                cartoes.add(novoCartao);
+                if (!cartaoExistente) {
+                    // Crie um novo cartão e adicione à lista
+                    CartaoDeCredito novoCartao = cartaoMapper.toEntity(cartaoDTO);
+                    cartoes.add(novoCartao);
+                }
             }
         }
 

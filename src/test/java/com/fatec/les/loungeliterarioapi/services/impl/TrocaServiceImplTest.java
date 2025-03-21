@@ -14,6 +14,7 @@ import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
 import java.math.BigDecimal;
@@ -87,11 +88,54 @@ class TrocaServiceImplTest {
     @DisplayName("Deve buscar um cupom")
     void buscarCupom() {
         String codigo = "123456";
-        when(cupomTrocaRepository.findByCodigo(codigo)).thenReturn(null);
-
-        Object response = trocaService.buscarCupom(codigo);
-
+        CupomTroca cupom = new CupomTroca();
+        cupom.setCodigo("CUPOM123");
+        cupom.setIdCupomTroca(1L);
+        cupom.setDataValidade(LocalDate.parse("2025-12-31"));
+        when(cupomTrocaRepository.findByCodigo(codigo)).thenReturn(cupom);
+        var response = trocaService.buscarCupom(codigo);
         assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+    }
+
+    @Test
+    @DisplayName("Não deve encontrar um cupom")
+    void buscarCupomNaoEncontrado() {
+        String codigo = "123456";
+        when(cupomTrocaRepository.findByCodigo(codigo)).thenReturn(null);
+        var response = trocaService.buscarCupom(codigo);
+        assertNotNull(response);
+        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    }
+
+    @Test
+    @DisplayName("Deve encontrar um cupom já utilizado")
+    void buscarCupomJaUtilizado() {
+        String codigo = "123456";
+        CupomTroca cupom = new CupomTroca();
+        cupom.setCodigo("CUPOM123");
+        cupom.setIdCupomTroca(1L);
+        cupom.setDataValidade(LocalDate.parse("2025-12-31"));
+        cupom.setUtilizado(true);
+        when(cupomTrocaRepository.findByCodigo(codigo)).thenReturn(cupom);
+        var response = trocaService.buscarCupom(codigo);
+        assertNotNull(response);
+        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+    }
+
+    @Test
+    @DisplayName("Deve encontrar um cupom expirado")
+    void buscarCupomExpirado() {
+        String codigo = "123456";
+        CupomTroca cupom = new CupomTroca();
+        cupom.setCodigo("CUPOM123");
+        cupom.setIdCupomTroca(1L);
+        cupom.setDataValidade(LocalDate.parse("2024-12-31"));
+        cupom.setUtilizado(true);
+        when(cupomTrocaRepository.findByCodigo(codigo)).thenReturn(cupom);
+        var response = trocaService.buscarCupom(codigo);
+        assertNotNull(response);
+        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
     }
 
     @Test
@@ -119,11 +163,42 @@ class TrocaServiceImplTest {
         ResponseEntity<?> response = trocaService.buscarTrocasPorCliente(idCliente.toString());
 
         assertNotNull(response);
-        assertEquals(200, response.getStatusCodeValue());
+        assertEquals(HttpStatus.OK, response.getStatusCode());
         List<ResponseTrocaDTO> responseBody = (List<ResponseTrocaDTO>) response.getBody();
         assertNotNull(responseBody);
         assertEquals(1, responseBody.size());
         assertEquals("CUPOM123", responseBody.get(0).getCupomTroca().getCodigo());
+    }
+
+    @Test
+    @DisplayName("Deve buscar trocas por cliente else")
+    void buscarTrocasPorClienteElse() {
+        Long idCliente = 1L;
+
+        SolicitacaoTroca solicitacaoTroca = new SolicitacaoTroca();
+        solicitacaoTroca.setIdSolicitacao(1L);
+        solicitacaoTroca.setCliente(Cliente.builder().idCliente(idCliente).build());
+        solicitacaoTroca.setProduto(Produto.builder().id(1L).build());
+        solicitacaoTroca.setDataSolicitacao(LocalDate.now());
+        solicitacaoTroca.setStatusSolicitacao(StatusSolicitacaoTroca.EM_TROCA);
+        solicitacaoTroca.setQuantidade(1);
+        solicitacaoTroca.setValor(BigDecimal.valueOf(100.0));
+        solicitacaoTroca.setMotivo("Defeito");
+
+        CupomTroca cupomTroca = new CupomTroca();
+        cupomTroca.setCodigo("CUPOM123");
+        cupomTroca.setSolicitacaoTroca(solicitacaoTroca);
+
+        when(repository.findAllByIdCliente(idCliente)).thenReturn(Collections.singletonList(solicitacaoTroca));
+        when(cupomTrocaRepository.findBySolicitacaoTroca(solicitacaoTroca)).thenReturn(cupomTroca);
+
+        ResponseEntity<?> response = trocaService.buscarTrocasPorCliente(idCliente.toString());
+
+        assertNotNull(response);
+        assertEquals(HttpStatus.OK, response.getStatusCode());
+        List<ResponseTrocaDTO> responseBody = (List<ResponseTrocaDTO>) response.getBody();
+        assertNotNull(responseBody);
+        assertEquals(1, responseBody.size());
     }
 
     @Test

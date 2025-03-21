@@ -37,10 +37,26 @@ class EnderecoServiceImplTest {
     }
 
     @Test
+    @DisplayName("Deve atualizar endereço caso passe o id")
+    void salvarEnderecoComIdEndereco() {
+        var enderecoNovo = novoEndereco();
+        enderecoNovo.setIdCliente(11L);
+        enderecoNovo.setIdEndereco(16L);
+        var result = enderecoService.salvarEndereco(enderecoNovo);
+        assertNotNull(result);
+    }
+
+    @Test
     @DisplayName("Deve buscar endereço por id")
     void buscarEnderecoPorId() {
         var result = enderecoService.buscarEnderecoPorId(16L);
         assertNotNull(result);
+    }
+
+    @Test
+    @DisplayName("Deve deletar endereço")
+    void deletarEndereco() {
+        assertDoesNotThrow(() -> enderecoService.deletarEndereco(16L));
     }
 
     private EnderecoDTO novoEndereco(){

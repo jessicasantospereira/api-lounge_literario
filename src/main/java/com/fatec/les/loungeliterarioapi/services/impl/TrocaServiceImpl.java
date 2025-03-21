@@ -51,15 +51,15 @@ public class TrocaServiceImpl implements TrocaService {
         CupomTroca c1 = cupomTrocaRepository.findByCodigo(codigo);
         LocalDate dataAtual = LocalDate.now();
         if(c1 == null){
-            return new ResponseEntity<String>("Cupom não encontrado", null,  HttpStatus.FORBIDDEN);
+            return new ResponseEntity<String>("Cupom não encontrado", HttpStatus.FORBIDDEN);
         }
         if(dataAtual.isAfter(c1.getDataValidade())){
-            return new ResponseEntity<String>("Cupom expirado", null,  HttpStatus.FORBIDDEN);
+            return new ResponseEntity<String>("Cupom expirado", HttpStatus.FORBIDDEN);
         }
         if(c1.isUtilizado()){
-            return new ResponseEntity<String>("Cupom já utilizado", null,  HttpStatus.FORBIDDEN);
+            return new ResponseEntity<String>("Cupom já utilizado", HttpStatus.FORBIDDEN);
         }
-        return new ResponseEntity<CupomTroca>(c1, null,  HttpStatus.OK);
+        return new ResponseEntity<CupomTroca>(c1, HttpStatus.OK);
     }
 
     @Override

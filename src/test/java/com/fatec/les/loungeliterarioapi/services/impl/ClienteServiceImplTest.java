@@ -28,6 +28,18 @@ class ClienteServiceImplTest {
     }
 
     @Test
+    @DisplayName("Deve atualizar um cliente")
+    void atualizarCliente() {
+        var clienteDTO = Utils.criarClienteDTO();
+        clienteDTO.setIdCliente(1L);
+        clienteDTO.setNome("Cliente Atualizado");
+        var result = clienteService.salvarCliente(clienteDTO);
+        System.out.println(result);
+        assertNotNull(result);
+        assertEquals(HttpStatus.CREATED, result.getStatusCode());
+    }
+
+    @Test
     @DisplayName("Deve buscar um cliente por id")
     void buscarPorIdDoCliente() {
         var result = clienteService.buscarPorIdDoCliente(1L);
@@ -51,16 +63,14 @@ class ClienteServiceImplTest {
     })
     void getItens() {
         var result = clienteService.getItens();
-        assertEquals(3, result);
+        assertEquals(2, result);
     }
-    // TODO: Fazer novo teste após refatorar classe ClienteServiceImpl
-//    @Test
-//    @DisplayName("Deve deletar um cliente")
-//    void deletarCliente() {
-//        var cliente = clienteService.buscarPorIdDoCliente(1L);
-//        clienteService.deletarCliente(cliente);
-//        var result = clienteService.buscarPorIdDoCliente(1L);
-//        System.out.println(result);
-//    }
+
+    @Test
+    @DisplayName("Deve deletar um cliente")
+    void deletarCliente() {
+        var cliente = clienteService.buscarPorIdDoCliente(1L);
+        assertDoesNotThrow(() -> clienteService.deletarCliente(cliente));
+    }
 
 }

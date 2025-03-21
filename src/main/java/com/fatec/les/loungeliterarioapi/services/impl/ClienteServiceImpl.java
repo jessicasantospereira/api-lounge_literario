@@ -11,6 +11,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 
 @Slf4j
@@ -24,6 +25,7 @@ public class ClienteServiceImpl implements ClienteService {
         this.clienteMapper = clienteMapper;
     }
     @Override
+    @Transactional
     public ResponseEntity<?> salvarCliente(ClienteDTO dados) {
         try {
             if(dados.getIdCliente() != null){

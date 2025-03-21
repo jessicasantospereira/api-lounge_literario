@@ -63,4 +63,14 @@ public class Utils {
 
         return Arrays.asList(itemVenda, itemVenda, itemVenda);
     }
+
+    public static VendaDTO criarVendaDTO() {
+        return VendaDTO.builder()
+                .cliente(criarCliente())
+                .enderecoEntrega(criarCliente().getEndereco().get(0))
+                .temCupom(false)
+                .temTroca(false)
+                .itens(criarItensVenda())
+                .build();
+    }
 }

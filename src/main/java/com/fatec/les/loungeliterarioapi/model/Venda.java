@@ -67,7 +67,7 @@ public class Venda {
     @Column(name = "data_venda")
     private LocalDate dataVenda;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne(cascade = CascadeType.MERGE)
     @JoinColumn(name = "id_endereco")
     private Endereco enderecoEntrega;
 

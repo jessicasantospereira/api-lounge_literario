@@ -114,7 +114,7 @@ class CupomServiceTest {
     @Test
     @DisplayName("Deve buscar um cupom por código")
     void buscarCupom() {
-        Cupom cupom = Cupom.builder().idCupom(1L).codigo("TESTE20").dataValidade(LocalDate.of(2024,12,25)).valor(20.00).build();
+        Cupom cupom = Cupom.builder().idCupom(1L).codigo("TESTE20").dataValidade(LocalDate.of(2025,12,25)).valor(20.00).build();
         when(cupomRepository.findByCodigo(cupom.getCodigo())).thenReturn(cupom);
         var response = cupomService.buscarCupom(cupom.getCodigo());
         assertEquals(HttpStatusCode.valueOf(200), response.getStatusCode());

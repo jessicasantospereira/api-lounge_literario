@@ -4,7 +4,9 @@ import com.fatec.les.loungeliterarioapi.dto.ClienteDTO;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
 import com.fatec.les.loungeliterarioapi.services.ClienteService;
 
+import com.fatec.les.loungeliterarioapi.usecase.cliente.SalvarCliente;
 import jakarta.persistence.EntityNotFoundException;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -15,15 +17,14 @@ import java.util.UUID;
 
 @Slf4j
 @RestController
+@RequiredArgsConstructor
 @RequestMapping("api/clientes")
-@CrossOrigin("*")
 public class ClienteController {
+
+    private final SalvarCliente salvarCliente;
 
     private final ClienteService service;
 
-    public ClienteController(ClienteService clienteService){
-        this.service = clienteService;
-    }
     @GetMapping
     public Page<Cliente> getLista(@RequestParam(value="nome", required = false, defaultValue = "") String nome,
                                      @RequestParam(value="cpf", required = false, defaultValue = "") String cpf,
@@ -55,6 +56,7 @@ public class ClienteController {
 
     @PostMapping
     public ResponseEntity<?> salvarCliente(@RequestBody ClienteDTO cliente){
+
        log.info("Cliente entrada {} ", cliente.toString());
         UUID uuid = UUID.randomUUID();
         if (cliente.getIdCliente() != null) {

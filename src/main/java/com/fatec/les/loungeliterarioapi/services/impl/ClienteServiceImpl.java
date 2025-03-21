@@ -32,7 +32,7 @@ public class ClienteServiceImpl implements ClienteService {
                 Cliente existente = repository.findById(dados.getIdCliente()).orElse(null);
                 if (existente != null) {
                     // Atualize o cliente existente com os dados do DTO
-                    clienteMapper.updateFromDTO(existente, dados);
+                    clienteMapper.updateFromDTO(existente, clienteMapper.toEntity(dados));
 
                     // Salve o cliente atualizado
                     Cliente clienteAtualizado = repository.save(existente);

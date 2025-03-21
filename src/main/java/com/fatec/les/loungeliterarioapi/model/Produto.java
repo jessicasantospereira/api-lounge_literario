@@ -56,6 +56,7 @@ public class Produto {
 
     @Enumerated(EnumType.STRING)
     private List<Tags> categoria;
+
     @Column(name = "preco", precision = 16, scale = 2)
     private BigDecimal preco;
 

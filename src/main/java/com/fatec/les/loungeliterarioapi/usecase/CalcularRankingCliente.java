@@ -3,19 +3,17 @@ package com.fatec.les.loungeliterarioapi.usecase;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
 import com.fatec.les.loungeliterarioapi.model.Venda;
 import com.fatec.les.loungeliterarioapi.repository.ClienteRepository;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
+@RequiredArgsConstructor
 public class CalcularRankingCliente {
 
     private final ClienteRepository clienteRepository;
-
-    public CalcularRankingCliente(ClienteRepository clienteRepository) {
-        this.clienteRepository = clienteRepository;
-    }
 
     public Cliente execute(Venda venda) {
         Cliente cliente = venda.getCliente();

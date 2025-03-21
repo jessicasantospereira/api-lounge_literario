@@ -12,4 +12,5 @@ public class RequestExceptionHandler {
     public ResponseEntity threat404() {
         return ResponseEntity.badRequest().body("Recurso não encontrado");
     }
+
 }

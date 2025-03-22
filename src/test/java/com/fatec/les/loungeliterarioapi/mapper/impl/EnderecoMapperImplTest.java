@@ -19,7 +19,7 @@ class EnderecoMapperImplTest {
 
     @Test
     @DisplayName("Deve converter para Entity")
-    public void deveConverterParaEntity() {
+    void deveConverterParaEntity() {
         EnderecoDTO endereco = Utils.criarEnderecoDTO();
         Endereco enderecoEntity = enderecoMapper.toEntity(endereco);
         assertNotNull(enderecoEntity);
@@ -28,7 +28,7 @@ class EnderecoMapperImplTest {
 
     @Test
     @DisplayName("Deve converter para DTO")
-    public void deveConverterParaDTO() {
+    void deveConverterParaDTO() {
         Endereco endereco = Utils.criarEndereco();
         EnderecoDTO enderecoDTO = enderecoMapper.toDto(endereco);
         assertNotNull(enderecoDTO);
@@ -37,7 +37,7 @@ class EnderecoMapperImplTest {
 
     @Test
     @DisplayName("Deve retornar null ao converter para DTO")
-    public void deveRetornarNullAoConverterParaDTO() {
+    void deveRetornarNullAoConverterParaDTO() {
         EnderecoDTO enderecoDTO = enderecoMapper.toDto(null);
         assertNull(enderecoDTO);
     }

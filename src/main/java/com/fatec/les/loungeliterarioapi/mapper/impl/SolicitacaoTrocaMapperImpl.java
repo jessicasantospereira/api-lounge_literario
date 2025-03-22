@@ -10,14 +10,12 @@ public class SolicitacaoTrocaMapperImpl implements SolicitacaoTrocaMapper {
 
     @Override
     public SolicitacaoTroca toEntity(TrocaDTO trocaDto) {
-        SolicitacaoTroca solicitacaoTroca = SolicitacaoTroca.builder()
+        return SolicitacaoTroca.builder()
                 .motivo(trocaDto.getMotivo())
                 .statusSolicitacao(trocaDto.getStatusSolicitacao())
                 .quantidade(trocaDto.getQuantidade())
                 .valor(trocaDto.getValor())
                 .build();
-
-        return solicitacaoTroca;
     }
 
     @Override

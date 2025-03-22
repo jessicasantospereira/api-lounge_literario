@@ -19,7 +19,7 @@ class VendaMapperImplTest {
 
     @Test
     @DisplayName("Deve converter para Entity")
-    public void deveConverterParaEntity() {
+    void deveConverterParaEntity() {
          VendaDTO venda = Utils.criarVendaDTO();
          Venda vendaEntity = vendaMapper.toEntity(venda);
          assertNotNull(vendaEntity);
@@ -28,7 +28,7 @@ class VendaMapperImplTest {
 
     @Test
     @DisplayName("Deve converter para DTO")
-    public void deveConverterParaDTO() {
+    void deveConverterParaDTO() {
         Venda venda = Utils.criarVenda();
         VendaDTO vendaDTO = vendaMapper.toDto(venda);
         assertNotNull(vendaDTO);

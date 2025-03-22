@@ -19,7 +19,7 @@ class SolicitacaoTrocaMapperImplTest {
 
     @Test
     @DisplayName("Deve converter para Entity")
-    public void deveConverterParaEntity() {
+    void deveConverterParaEntity() {
         TrocaDTO solicitacaoTroca = Utils.criarSolicitacaoTroca();
          SolicitacaoTroca solicitacaoTrocaEntity = solicitacaoTrocaMapper.toEntity(solicitacaoTroca);
          assertNotNull(solicitacaoTrocaEntity);
@@ -28,7 +28,7 @@ class SolicitacaoTrocaMapperImplTest {
 
     @Test
     @DisplayName("Deve converter para DTO")
-    public void deveConverterParaDTO() {
+    void deveConverterParaDTO() {
         SolicitacaoTroca solicitacaoTroca = new SolicitacaoTroca();
         TrocaDTO solicitacaoTrocaDTO = solicitacaoTrocaMapper.toDto(solicitacaoTroca);
         assertNull(solicitacaoTrocaDTO);

@@ -64,8 +64,7 @@ public class VendaServiceImpl implements VendaService {
     @Override
     public Page<ResponseVendaDTO> buscarTodasVendas(Pageable pageable) {
         Page<Venda> vendas =  repository.findAll(pageable);
-        Page<ResponseVendaDTO> responseDTO = vendas.map(ResponseVendaDTO::new);
-        return responseDTO;
+        return vendas.map(ResponseVendaDTO::new);
     }
 
     @Override
@@ -73,8 +72,7 @@ public class VendaServiceImpl implements VendaService {
        Venda venda = repository.findById(id).get();
        venda.setStatusVenda(StatusVenda.getStatusVenda(status));
        repository.save(venda);
-       ResponseVendaDTO responseVendaDTO = new ResponseVendaDTO(venda);
-       return responseVendaDTO;
+        return new ResponseVendaDTO(venda);
     }
 
     @Override

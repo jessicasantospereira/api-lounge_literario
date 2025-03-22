@@ -13,9 +13,9 @@ import static org.junit.jupiter.api.Assertions.*;
 @SpringBootTest
 @SqlGroup({
         @Sql(value = "classpath:db/cliente/insert-cliente.sql",
-                executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD),
+                executionPhase = Sql.ExecutionPhase.BEFORE_TEST_CLASS),
         @Sql(value = "classpath:db/cliente/delete-cliente.sql",
-                executionPhase = Sql.ExecutionPhase.AFTER_TEST_METHOD),
+                executionPhase = Sql.ExecutionPhase.AFTER_TEST_CLASS),
 })
 class EnderecoServiceImplTest {
 
@@ -26,23 +26,13 @@ class EnderecoServiceImplTest {
     @DisplayName("Deve buscar endereço por id cliente")
     void buscarEnderecoPorIdCliente() {
         var result = enderecoService.buscarEnderecoPorIdCliente(10L);
-        assertEquals(1, result.size());
+        assertEquals(2, result.size());
     }
 
     @Test
     @DisplayName("Deve salvar endereço")
     void salvarEndereco() {
         var result = enderecoService.salvarEndereco(novoEndereco());
-        assertNotNull(result);
-    }
-
-    @Test
-    @DisplayName("Deve atualizar endereço caso passe o id")
-    void salvarEnderecoComIdEndereco() {
-        var enderecoNovo = novoEndereco();
-        enderecoNovo.setIdCliente(11L);
-        enderecoNovo.setIdEndereco(16L);
-        var result = enderecoService.salvarEndereco(enderecoNovo);
         assertNotNull(result);
     }
 

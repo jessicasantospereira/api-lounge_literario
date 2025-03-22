@@ -20,21 +20,22 @@ public class SalvarCliente {
 
     private final ClienteMapper clienteMapper;
 
-    public Long execute(ClienteDTO dados) {
+    public ClienteDTO execute(ClienteDTO dados) {
         log.info("Cliente entrada {} ", dados.toString());
         UUID uuid = UUID.randomUUID();
         if(dados.getIdCliente() != null){
             log.info("Cliente pra atualizar {} ", dados.getIdCliente());
-            var existente = repository.findById(dados.getIdCliente()).orElseThrow(() -> new DomainException(Error.UNPROCESSABLE_ENTITY, "Cliente não encontrado"));
+            var existente = repository.findById(dados.getIdCliente()).orElseThrow(() ->
+                    new DomainException(Error.UNPROCESSABLE_ENTITY, "Cliente não encontrado"));
             clienteMapper.updateFromDTO(existente, clienteMapper.toEntity(dados));
             var clienteAtualizado = repository.save(existente);
             log.info("Cliente atualizado {} ", clienteAtualizado.getIdCliente());
-            return clienteAtualizado.getIdCliente();
+            return clienteMapper.toDto(clienteAtualizado);
         }
         dados.setCodigo(uuid.toString());
         var cliente = repository.save(clienteMapper.toEntity(dados));
         log.info("Cliente salvo {} ", cliente.getIdCliente());
-        return cliente.getIdCliente();
+        return clienteMapper.toDto(cliente);
     }
 
 }

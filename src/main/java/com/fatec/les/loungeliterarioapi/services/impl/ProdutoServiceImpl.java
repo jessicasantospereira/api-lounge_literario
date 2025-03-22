@@ -13,6 +13,8 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import static java.util.stream.Collectors.toList;
+
 @Slf4j
 @Service
 public class ProdutoServiceImpl implements ProdutoService {
@@ -38,7 +40,8 @@ public class ProdutoServiceImpl implements ProdutoService {
     public List<ProdutoDTO> buscarTodos() {
             log.info("Buscando todos os produtos");
             Optional<List<Produto>> produtos = Optional.of(repository.findAll());
-            return produtos.map(produtoList -> produtoList.stream().map(produtoMapper::toDto).collect(java.util.stream.Collectors.toList())).orElse(null);
+            return produtos.map(produtoList -> produtoList.stream().map(produtoMapper::toDto)
+                    .toList()).orElse(null);
 
     }
 

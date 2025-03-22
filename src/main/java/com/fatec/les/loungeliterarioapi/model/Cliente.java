@@ -54,7 +54,7 @@ public class Cliente {
     @Column(name = "data_cadastro")
     private LocalDate dataCadastro = LocalDate.now();
 
-    @OneToMany(cascade = CascadeType.ALL)
+    @OneToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinColumn(name = "idCliente", foreignKey = @ForeignKey(name = "fk_idEndereco"))
     @JsonManagedReference
     private List<Endereco> endereco;

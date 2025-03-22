@@ -10,10 +10,9 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.UUID;
 
 @Slf4j
 @RestController
@@ -32,8 +31,9 @@ public class ClienteController {
 
         return service.buscarTodos(nome, cpf, pageable);
     }
+
     @GetMapping("/{id}")
-    public ResponseEntity<?> getCliente(@PathVariable("id") Long id){
+    public ResponseEntity<Cliente> getCliente(@PathVariable("id") Long id){
         log.info("Buscar cliente {} ", id);
         Cliente cliente = service.buscarPorIdDoCliente(id);
         if (cliente == null) {
@@ -43,52 +43,26 @@ public class ClienteController {
         log.info("Cliente encontrado {} ", cliente.getNome());
         return ResponseEntity.ok(cliente);
     }
+
     @PutMapping("/{id}")
-    public ResponseEntity<?> atualizarCliente(@PathVariable("id") Long id, @RequestBody ClienteDTO cliente){
-        Cliente clienteExistente = service.buscarPorIdDoCliente(id);
-        log.info("Cliente entrada {} ", clienteExistente.getNome());
-        if (clienteExistente.getIdCliente() == null) {
-            throw new EntityNotFoundException();
-        }
-        service.salvarCliente(cliente);
-        return ResponseEntity.ok(cliente);
+    public ResponseEntity<ClienteDTO> atualizarCliente(@PathVariable("id") Long id, @RequestBody ClienteDTO cliente){
+        cliente.setIdCliente(id);
+        return ResponseEntity.ok(salvarCliente.execute(cliente));
     }
 
     @PostMapping
-    public ResponseEntity<?> salvarCliente(@RequestBody ClienteDTO cliente){
-
-       log.info("Cliente entrada {} ", cliente.toString());
-        UUID uuid = UUID.randomUUID();
-        if (cliente.getIdCliente() != null) {
-            Cliente existente = service.buscarPorIdDoCliente(cliente.getIdCliente());
-//            if (cliente.getEndereco() != null) {
-//                Endereco endereco = null;
-//                for (EnderecoDTO end : cliente.getEndereco()) {
-//                    existente.addEndereco(end);
-//                    endereco = end;
-//                }
-//                endereco.setCliente(existente);
-//                return endService.salvarEndereco(endereco);
-//            }
-
-        }else {
-            cliente.setCodigo(uuid.toString());
-        }
-
-        ResponseEntity clienteSalvo = service.salvarCliente(cliente);
-        log.info("Cliente saida {} ", clienteSalvo.toString());
-        return clienteSalvo;
-
+    public ResponseEntity<ClienteDTO> salvarCliente(@RequestBody ClienteDTO cliente){
+        return ResponseEntity.ok(salvarCliente.execute(cliente));
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deletarCliente(@PathVariable("id") Long id){
+    public ResponseEntity<HttpStatus> deletarCliente(@PathVariable("id") Long id){
         Cliente cliente = service.buscarPorIdDoCliente(id);
         if (cliente.getIdCliente() == null) {
             throw new EntityNotFoundException();
         }
         service.deletarCliente(cliente);
-        return ResponseEntity.ok().build();
+        return ResponseEntity.ok(HttpStatus.NO_CONTENT);
     }
 
 

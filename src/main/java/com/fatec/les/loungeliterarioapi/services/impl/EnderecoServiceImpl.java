@@ -18,9 +18,12 @@ import java.util.List;
 @Slf4j
 @Service
 public class EnderecoServiceImpl implements EnderecoService {
-    private EnderecoRepository repository;
-    private ClienteService clienteService;
-    private EnderecoMapper enderecoMapper;
+
+    private final EnderecoRepository repository;
+
+    private final ClienteService clienteService;
+
+    private final EnderecoMapper enderecoMapper;
 
     @Autowired
     public EnderecoServiceImpl(EnderecoRepository repository, EnderecoMapper enderecoMapper, ClienteService clienteService) {
@@ -32,9 +35,7 @@ public class EnderecoServiceImpl implements EnderecoService {
     @Override
     public List<Endereco> buscarEnderecoPorIdCliente(Long id) {
         log.info("Buscando endereço por id do cliente");
-        List<Endereco> enderecos = this.repository.findByCliente(id).get();
-
-        return enderecos;
+        return this.repository.findByCliente(id).get();
     }
 
     @Override

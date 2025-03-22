@@ -1,8 +1,6 @@
 package com.fatec.les.loungeliterarioapi.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
-import com.fatec.les.loungeliterarioapi.model.CartaoDeCredito;
-import com.fatec.les.loungeliterarioapi.model.Endereco;
 import lombok.*;
 
 import java.time.LocalDate;

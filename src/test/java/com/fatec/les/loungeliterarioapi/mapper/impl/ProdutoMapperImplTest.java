@@ -19,7 +19,7 @@ class ProdutoMapperImplTest {
 
     @Test
     @DisplayName("Deve converter para Entity")
-    public void deveConverterParaEntity() {
+    void deveConverterParaEntity() {
          ProdutoDTO produto = Utils.criarProdutoDTO();
          Produto produtoEntity = produtoMapper.toEntity(produto);
          assertNotNull(produtoEntity);
@@ -28,7 +28,7 @@ class ProdutoMapperImplTest {
 
     @Test
     @DisplayName("Deve converter para DTO")
-    public void deveConverterParaDTO() {
+    void deveConverterParaDTO() {
          Produto produto = Utils.criarProduto();
          ProdutoDTO produtoDTO = produtoMapper.toDto(produto);
          assertNotNull(produtoDTO);
@@ -37,7 +37,7 @@ class ProdutoMapperImplTest {
 
     @Test
     @DisplayName("Deve retornar null ao converter para DTO")
-    public void deveRetornarNullAoConverterParaDTO() {
+    void deveRetornarNullAoConverterParaDTO() {
          ProdutoDTO produtoDTO = produtoMapper.toDto(null);
          assertNull(produtoDTO);
     }

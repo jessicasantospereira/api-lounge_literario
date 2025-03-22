@@ -19,7 +19,7 @@ class ClienteMapperImplTest {
 
     @Test
     @DisplayName("Deve converter para Entity")
-    public void deveConverterParaEntity() {
+    void deveConverterParaEntity() {
         ClienteDTO cliente = Utils.criarClienteDTO();
         Cliente clienteEntity = clienteMapper.toEntity(cliente);
         assertNotNull(clienteEntity);
@@ -28,7 +28,7 @@ class ClienteMapperImplTest {
 
     @Test
     @DisplayName("Deve converter para DTO")
-    public void deveConverterParaDTO() {
+    void deveConverterParaDTO() {
         Cliente cliente = Utils.criarCliente();
         ClienteDTO clienteDTO = clienteMapper.toDto(cliente);
         assertNotNull(clienteDTO);
@@ -37,7 +37,7 @@ class ClienteMapperImplTest {
 
     @Test
     @DisplayName("Deve retornar null ao converter para DTO")
-    public void deveRetornarNullAoConverterParaDTO() {
+    void deveRetornarNullAoConverterParaDTO() {
         ClienteDTO clienteDTO = clienteMapper.toDto(null);
         assertNull(clienteDTO);
     }

@@ -1,7 +1,5 @@
 package com.fatec.les.loungeliterarioapi.dto;
 
-import com.fatec.les.loungeliterarioapi.model.Bandeiras;
-import com.fatec.les.loungeliterarioapi.model.CartaoDeCredito;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;

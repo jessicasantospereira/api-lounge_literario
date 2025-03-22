@@ -10,11 +10,11 @@ import org.mapstruct.NullValuePropertyMappingStrategy;
 @Mapper(componentModel = "spring")
 public interface ClienteMapper {
 
-    public Cliente toEntity(ClienteDTO clienteDto);
+    Cliente toEntity(ClienteDTO clienteDto);
 
-    public ClienteDTO toDto(Cliente cliente);
+    ClienteDTO toDto(Cliente cliente);
 
     @BeanMapping(nullValuePropertyMappingStrategy = NullValuePropertyMappingStrategy.IGNORE)
-    public void updateFromDTO(@MappingTarget Cliente clienteExistente, Cliente novo);
+    void updateFromDTO(@MappingTarget Cliente clienteExistente, Cliente novo);
 
 }

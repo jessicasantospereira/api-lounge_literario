@@ -15,7 +15,7 @@ import org.mockito.MockitoAnnotations;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class CalcularRankingClienteTest {
+class CalcularRankingClienteTest {
 
     @InjectMocks
     private CalcularRankingCliente calcularRankingCliente;
@@ -30,7 +30,7 @@ public class CalcularRankingClienteTest {
 
      @Test
      @DisplayName("Deve calcular o ranking do cliente")
-     public void testCalcularRankingCliente() {
+     void testCalcularRankingCliente() {
         Venda venda = Utils.criarVenda();
         Cliente cliente = calcularRankingCliente.execute(venda);
         assertEquals(70, cliente.getRanking());

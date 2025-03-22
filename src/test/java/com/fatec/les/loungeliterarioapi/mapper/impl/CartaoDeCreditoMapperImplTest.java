@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-public class CartaoDeCreditoMapperImplTest {
+class CartaoDeCreditoMapperImplTest {
 
     private final CartaoDeCreditoMapper cartaoDeCreditoMapper;
 
@@ -20,7 +20,7 @@ public class CartaoDeCreditoMapperImplTest {
 
     @Test
     @DisplayName("Deve converter para Entity")
-    public void deveConverterParaEntity() {
+    void deveConverterParaEntity() {
         CartaoDeCreditoDTO cartao = cartaoCreditoDTO();
         CartaoDeCredito cartaoDeCredito = cartaoDeCreditoMapper.toEntity(cartao);
         assertNotNull(cartaoDeCredito);
@@ -29,7 +29,7 @@ public class CartaoDeCreditoMapperImplTest {
 
     @Test
     @DisplayName("Deve converter para DTO")
-    public void deveConverterParaDTO() {
+    void deveConverterParaDTO() {
         CartaoDeCredito cartao = cartaoCredito();
         CartaoDeCreditoDTO cartaoDeCreditoDTO = cartaoDeCreditoMapper.toDto(cartao);
         assertNotNull(cartaoDeCreditoDTO);
@@ -38,7 +38,7 @@ public class CartaoDeCreditoMapperImplTest {
 
     @Test
     @DisplayName("Deve retornar null ao converter para DTO")
-    public void deveRetornarNullAoConverterParaDTO() {
+    void deveRetornarNullAoConverterParaDTO() {
         CartaoDeCreditoDTO cartaoDeCreditoDTO = cartaoDeCreditoMapper.toDto(null);
         assertNull(cartaoDeCreditoDTO);
     }

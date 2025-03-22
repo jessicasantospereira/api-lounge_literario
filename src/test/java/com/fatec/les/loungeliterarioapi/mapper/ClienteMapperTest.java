@@ -1,8 +1,7 @@
-package com.fatec.les.loungeliterarioapi.mapper.impl;
+package com.fatec.les.loungeliterarioapi.mapper;
 
 import com.fatec.les.loungeliterarioapi.Utils;
 import com.fatec.les.loungeliterarioapi.dto.ClienteDTO;
-import com.fatec.les.loungeliterarioapi.mapper.ClienteMapper;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class ClienteMapperImplTest {
+class ClienteMapperTest {
 
     @Autowired
     private ClienteMapper clienteMapper;

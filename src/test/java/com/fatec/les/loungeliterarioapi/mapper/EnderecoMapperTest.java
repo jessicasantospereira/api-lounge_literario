@@ -1,8 +1,7 @@
-package com.fatec.les.loungeliterarioapi.mapper.impl;
+package com.fatec.les.loungeliterarioapi.mapper;
 
 import com.fatec.les.loungeliterarioapi.Utils;
 import com.fatec.les.loungeliterarioapi.dto.EnderecoDTO;
-import com.fatec.les.loungeliterarioapi.mapper.EnderecoMapper;
 import com.fatec.les.loungeliterarioapi.model.Endereco;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -12,7 +11,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class EnderecoMapperImplTest {
+class EnderecoMapperTest {
 
     @Autowired
     EnderecoMapper enderecoMapper;

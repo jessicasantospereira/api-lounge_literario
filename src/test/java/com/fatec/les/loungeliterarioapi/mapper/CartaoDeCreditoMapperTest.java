@@ -1,7 +1,6 @@
-package com.fatec.les.loungeliterarioapi.mapper.impl;
+package com.fatec.les.loungeliterarioapi.mapper;
 
 import com.fatec.les.loungeliterarioapi.dto.CartaoDeCreditoDTO;
-import com.fatec.les.loungeliterarioapi.mapper.CartaoDeCreditoMapper;
 import com.fatec.les.loungeliterarioapi.model.Bandeiras;
 import com.fatec.les.loungeliterarioapi.model.CartaoDeCredito;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
@@ -13,7 +12,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
-class CartaoDeCreditoMapperImplTest {
+class CartaoDeCreditoMapperTest {
 
     @Autowired
     private CartaoDeCreditoMapper cartaoDeCreditoMapper;
@@ -68,5 +67,4 @@ class CartaoDeCreditoMapperImplTest {
         cartao.setCliente(cliente);
         return cartao;
     }
-
 }

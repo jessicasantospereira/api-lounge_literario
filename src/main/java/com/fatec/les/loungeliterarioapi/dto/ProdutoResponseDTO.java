@@ -9,17 +9,19 @@ import java.util.List;
 @Data
 @Builder
 public class ProdutoResponseDTO {
-    private String productName;
+
+    private String titulo;
+
     private List<VendaPorMesDTO> sales;
 
     public ProdutoResponseDTO() {
         this.sales = new ArrayList<>();
     }
 
-    public void addSale(String month, Long quantity) {
+    public void addSale(String mes, Long quantidade) {
         VendaPorMesDTO sale = new VendaPorMesDTO();
-        sale.setMonth(month);
-        sale.setQuantity(quantity);
+        sale.setMes(mes);
+        sale.setQuantidade(quantidade);
         this.sales.add(sale);
     }
 

@@ -75,38 +75,4 @@ public class VendaServiceImpl implements VendaService {
         return new ResponseVendaDTO(venda);
     }
 
-    @Override
-    public List<ProdutoResponseDTO> buscarVendasPorData(String dataInicial, String dataFinal) {
-        LocalDate dataInicialConvertida = LocalDate.parse(dataInicial.trim());
-        LocalDate dataFinalConvertida = LocalDate.parse(dataFinal.trim());
-
-        List<Object[]> salesData = produtoRepository.findSalesDataByMonth(dataInicialConvertida, dataFinalConvertida);
-
-        List<ProdutoResponseDTO> produtos = new ArrayList<>();
-
-        for (Object[] row : salesData) {
-            String productName = (String) row[0];
-            String month = String.valueOf(row[1]);
-            Long quantity = (Long) row[2];
-
-            // Verifica se o produto já está na lista de produtos
-            Optional<ProdutoResponseDTO> existingProduct = produtos.stream()
-                    .filter(p -> p.getProductName().equals(productName))
-                    .findFirst();
-
-            if (existingProduct.isPresent()) {
-                // Adiciona a venda ao produto existente na lista
-                ProdutoResponseDTO product = existingProduct.get();
-                product.addSale(month, quantity);
-            } else {
-                // Cria um novo produto na lista
-                ProdutoResponseDTO newProduct = new ProdutoResponseDTO();
-                newProduct.setProductName(productName);
-                newProduct.addSale(month, quantity);
-                produtos.add(newProduct);
-            }
-        }
-
-        return produtos;
-    }
 }

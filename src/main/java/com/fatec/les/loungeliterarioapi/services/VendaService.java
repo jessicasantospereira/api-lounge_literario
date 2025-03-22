@@ -1,6 +1,5 @@
 package com.fatec.les.loungeliterarioapi.services;
 
-import com.fatec.les.loungeliterarioapi.dto.ProdutoResponseDTO;
 import com.fatec.les.loungeliterarioapi.dto.ResponseVendaDTO;
 import com.fatec.les.loungeliterarioapi.dto.VendaDTO;
 import com.fatec.les.loungeliterarioapi.model.Venda;
@@ -21,5 +20,4 @@ public interface VendaService {
 
     ResponseVendaDTO atualizarVenda(Long id, String status);
 
-    List<ProdutoResponseDTO> buscarVendasPorData(String dataInicial, String dataFinal);
 }

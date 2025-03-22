@@ -28,6 +28,12 @@
 		<sonar.login>squ_ed3185a071df3f7fd3449be4534e73c629213a8b</sonar.login>
 		<sonar.java.binaries>${project.build.directory}/**</sonar.java.binaries>
 		<sonar.tests>${project.basedir}/src/test/java</sonar.tests>
+<!--		<sonar.inclusions>-->
+<!--			**/mapper/**,-->
+<!--			**/services/**,-->
+<!--			**/usecase/**,-->
+<!--			**/infra/**-->
+<!--		</sonar.inclusions>-->
 		<sonar.coverage.exclusions>
 			**/dto/**,
 			**/model/**,

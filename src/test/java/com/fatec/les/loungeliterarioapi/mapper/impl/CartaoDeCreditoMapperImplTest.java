@@ -7,16 +7,16 @@ import com.fatec.les.loungeliterarioapi.model.CartaoDeCredito;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.context.SpringBootTest;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+@SpringBootTest
 class CartaoDeCreditoMapperImplTest {
 
-    private final CartaoDeCreditoMapper cartaoDeCreditoMapper;
-
-    public CartaoDeCreditoMapperImplTest() {
-        this.cartaoDeCreditoMapper = new CartaoDeCreditoMapperImpl();
-    }
+    @Autowired
+    private CartaoDeCreditoMapper cartaoDeCreditoMapper;
 
     @Test
     @DisplayName("Deve converter para Entity")

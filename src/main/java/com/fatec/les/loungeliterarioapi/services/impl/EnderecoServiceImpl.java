@@ -1,6 +1,8 @@
 package com.fatec.les.loungeliterarioapi.services.impl;
 
 import com.fatec.les.loungeliterarioapi.dto.EnderecoDTO;
+import com.fatec.les.loungeliterarioapi.exceptions.DomainException;
+import com.fatec.les.loungeliterarioapi.exceptions.Error;
 import com.fatec.les.loungeliterarioapi.mapper.EnderecoMapper;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
 import com.fatec.les.loungeliterarioapi.model.Endereco;
@@ -35,11 +37,11 @@ public class EnderecoServiceImpl implements EnderecoService {
     @Override
     public List<Endereco> buscarEnderecoPorIdCliente(Long id) {
         log.info("Buscando endereço por id do cliente");
-        return this.repository.findByCliente(id).get();
+        return this.repository.findByCliente(id).orElseThrow(() -> new DomainException(Error.NOT_FOUND, "Endereço não encontrado"));
     }
 
     @Override
-    public ResponseEntity<?> salvarEndereco(EnderecoDTO endereco) {
+    public ResponseEntity<EnderecoDTO> salvarEndereco(EnderecoDTO endereco) {
         log.info("Salvando endereço");
         Cliente c1 = clienteService.buscarPorIdDoCliente(endereco.getIdCliente());
         Endereco end = enderecoMapper.toEntity(endereco);
@@ -47,9 +49,9 @@ public class EnderecoServiceImpl implements EnderecoService {
         if(endereco.getIdEndereco() != null){
             end.setIdEndereco(endereco.getIdEndereco());
             Endereco existente = repository.save(end);
-            return new ResponseEntity<EnderecoDTO>(enderecoMapper.toDto(existente), HttpStatus.CREATED);
+            return new ResponseEntity<>(enderecoMapper.toDto(existente), HttpStatus.CREATED);
         }
-        return new ResponseEntity<>(this.repository.save(end), HttpStatus.CREATED);
+        return new ResponseEntity<>(enderecoMapper.toDto(this.repository.save(end)), HttpStatus.CREATED);
     }
 
     @Override

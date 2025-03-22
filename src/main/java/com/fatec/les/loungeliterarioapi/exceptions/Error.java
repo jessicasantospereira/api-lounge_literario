@@ -8,9 +8,10 @@ public enum Error {
 
     // @formatter:off
     INTERNAL_SERVER_ERROR("LL01", HttpStatus.INTERNAL_SERVER_ERROR),
-    UNPROCESSABLE_ENTITY("LL01", HttpStatus.UNPROCESSABLE_ENTITY),
+    UNPROCESSABLE_ENTITY("LL02", HttpStatus.UNPROCESSABLE_ENTITY),
     FORBIDEN("LL03", HttpStatus.FORBIDDEN),
-    BAD_REQUEST("LL01", HttpStatus.BAD_REQUEST);
+    BAD_REQUEST("LL04", HttpStatus.BAD_REQUEST),
+    NOT_FOUND("LL05", HttpStatus.NOT_FOUND);
     // @formatter:on
 
     private final String code;

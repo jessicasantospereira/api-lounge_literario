@@ -24,7 +24,6 @@ import java.util.Optional;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/vendas")
-@CrossOrigin("*")
 public class VendasController {
 
     private final VendaService service;
@@ -37,7 +36,7 @@ public class VendasController {
 
     @PostMapping(consumes = "application/json")
     @Transactional
-    public ResponseEntity<?> realizarVenda(@RequestBody VendaDTO venda){
+    public ResponseEntity<Venda> realizarVenda(@RequestBody VendaDTO venda){
         Venda novaVenda = service.salvarVenda(venda);
 
         venda.getItens().forEach(iv -> {
@@ -62,14 +61,14 @@ public class VendasController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<?> editarVenda(@PathVariable Long id, @RequestBody String status){
+    public ResponseEntity<ResponseVendaDTO> editarVenda(@PathVariable Long id, @RequestBody String status){
         ResponseVendaDTO venda = service.atualizarVenda(id, status);
 
         return new ResponseEntity<>(venda, null, HttpStatus.CREATED);
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<?> listarVendasPorCliente(@PathVariable Long id){
+    public ResponseEntity<List<Venda>> listarVendasPorCliente(@PathVariable Long id){
         List<Venda> vendas = service.listarVendasPorCliente(id);
         return new ResponseEntity<>(vendas, null, HttpStatus.OK);
     }

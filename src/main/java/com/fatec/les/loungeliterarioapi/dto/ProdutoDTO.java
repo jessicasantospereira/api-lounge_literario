@@ -16,27 +16,47 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ProdutoDTO {
+
     private Long id;
+
     private String titulo;
+
     private String descricao;
+
     private String imagem;
+
     private List<Tags> categoria;
+
     private BigDecimal preco;
+
     private String codigo;
+
     private int qtdeEstoque;
+
     private boolean isAtivo;
+
     private int numeroPaginas;
+
     private String autor;
+
     private String editora;
+
     private String edicao;
+
     private String ano;
+
     private String isbn;
+
     private double altura;
+
     private double largura;
+
     private double peso;
+
     private double profundidade;
 
     @JsonFormat(pattern = "yyyy-MM-dd")
-    private LocalDate dataCadastro = LocalDate.now();
+    private LocalDate dataCadastro;
 
 }
+

@@ -2,9 +2,13 @@ package com.fatec.les.loungeliterarioapi.mapper;
 
 import com.fatec.les.loungeliterarioapi.dto.EnderecoDTO;
 import com.fatec.les.loungeliterarioapi.model.Endereco;
+import org.mapstruct.Mapper;
 
+@Mapper(componentModel = "spring")
 public interface EnderecoMapper {
-    public Endereco toEntity(EnderecoDTO enderecoDto);
 
-    public EnderecoDTO toDto(Endereco endereco);
+    Endereco toEntity(EnderecoDTO enderecoDto);
+
+    EnderecoDTO toDto(Endereco endereco);
+
 }

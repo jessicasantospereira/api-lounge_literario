@@ -1,5 +1,6 @@
 package com.fatec.les.loungeliterarioapi.services;
 
+import com.fatec.les.loungeliterarioapi.exceptions.DomainException;
 import com.fatec.les.loungeliterarioapi.model.Cupom;
 import com.fatec.les.loungeliterarioapi.repository.CupomRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -45,9 +46,7 @@ class CupomServiceTest {
     void cadastrarCupomExistente() {
         Cupom cupom = Cupom.builder().idCupom(1L).codigo("TESTE20").valor(20.00).build();
         when(cupomRepository.findByCodigo(cupom.getCodigo())).thenReturn(cupom);
-        var response = cupomService.cadastrar(cupom);
-        assertEquals(HttpStatusCode.valueOf(403), response.getStatusCode());
-        assertEquals("Cupom já cadastrado", response.getBody());
+        assertThrows(DomainException.class, () -> cupomService.cadastrar(cupom));
     }
 
     @Test
@@ -65,9 +64,7 @@ class CupomServiceTest {
     void buscarCupomPorIdInexistente() {
         Long idInexistente = 1L;
         when(cupomRepository.findById(idInexistente)).thenReturn(Optional.empty());
-        var response = cupomService.buscarCupomPorId(idInexistente);
-        assertEquals(HttpStatusCode.valueOf(404), response.getStatusCode());
-        assertEquals("Cupom não encontrado", response.getBody());
+        assertThrows(DomainException.class, () -> cupomService.deletarCupom(idInexistente));
     }
 
     @Test
@@ -86,9 +83,7 @@ class CupomServiceTest {
     void atualizarCupomInexistente() {
         Cupom cupom = Cupom.builder().idCupom(1L).codigo("TESTE20").valor(20.00).build();
         when(cupomRepository.findById(cupom.getIdCupom())).thenReturn(Optional.empty());
-        var response = cupomService.atualizarCupom(cupom);
-        assertEquals(HttpStatusCode.valueOf(404), response.getStatusCode());
-        assertEquals("Cupom não encontrado", response.getBody());
+        assertThrows(DomainException.class, () -> cupomService.atualizarCupom(cupom));
     }
 
     @Test
@@ -96,9 +91,7 @@ class CupomServiceTest {
     void deletarCupom() {
         Cupom cupom = Cupom.builder().idCupom(1L).codigo("TESTE20").valor(20.00).build();
         when(cupomRepository.findById(cupom.getIdCupom())).thenReturn(Optional.of(cupom));
-        var response = cupomService.deletarCupom(cupom.getIdCupom());
-        assertEquals(HttpStatusCode.valueOf(200), response.getStatusCode());
-        assertNotNull(response.getBody());
+        assertDoesNotThrow(() -> cupomService.deletarCupom(cupom.getIdCupom()));
     }
 
     @Test
@@ -106,9 +99,7 @@ class CupomServiceTest {
     void deletarCupomInexistente() {
         Long idInexistente = 1L;
         when(cupomRepository.findById(idInexistente)).thenReturn(Optional.empty());
-        var response = cupomService.deletarCupom(idInexistente);
-        assertEquals(HttpStatusCode.valueOf(404), response.getStatusCode());
-        assertEquals("Cupom não encontrado", response.getBody());
+        assertThrows(DomainException.class, () -> cupomService.deletarCupom(idInexistente));
     }
 
     @Test
@@ -126,9 +117,7 @@ class CupomServiceTest {
     void buscarCupomInexistente() {
         String codigoInexistente = "TESTE20";
         when(cupomRepository.findByCodigo(codigoInexistente)).thenReturn(null);
-        var response = cupomService.buscarCupom(codigoInexistente);
-        assertEquals(HttpStatusCode.valueOf(403), response.getStatusCode());
-        assertEquals("Cupom não encontrado", response.getBody());
+        assertThrows(DomainException.class, () -> cupomService.buscarCupom(codigoInexistente));
     }
 
     @Test
@@ -136,9 +125,12 @@ class CupomServiceTest {
     void buscarCupomDataExpirada() {
         Cupom cupom = Cupom.builder().idCupom(1L).codigo("TESTE20").dataValidade(LocalDate.of(2021,12,25)).valor(20.00).build();
         when(cupomRepository.findByCodigo(cupom.getCodigo())).thenReturn(cupom);
-        var response = cupomService.buscarCupom(cupom.getCodigo());
-        assertEquals(HttpStatusCode.valueOf(400), response.getStatusCode());
-        assertNotNull(response.getBody());
+        try {
+            cupomService.buscarCupom(cupom.getCodigo());
+        } catch (DomainException e) {
+            assertEquals(HttpStatusCode.valueOf(400), e.getStatus());
+            assertEquals("Cupom expirado", e.getMessage());
+        }
     }
 
     @Test

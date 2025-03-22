@@ -31,7 +31,7 @@ class SolicitacaoTrocaMapperImplTest {
     void deveConverterParaDTO() {
         SolicitacaoTroca solicitacaoTroca = new SolicitacaoTroca();
         TrocaDTO solicitacaoTrocaDTO = solicitacaoTrocaMapper.toDto(solicitacaoTroca);
-        assertNull(solicitacaoTrocaDTO);
+        assertNotNull(solicitacaoTrocaDTO);
     }
 
 }

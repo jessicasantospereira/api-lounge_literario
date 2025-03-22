@@ -66,26 +66,10 @@ public class Produto {
 
     private int qtdeEstoque;
 
-    public Produto(String titulo, String descricao, String imagem, Tags categoria, BigDecimal preco, int qtde, String codigo, boolean isAtivo, int numeroPaginas, String autor, String editora, String edicao, String ano, String isbn, double altura, double largura, double peso, double profundidade) {
-        this.titulo = titulo;
-        this.descricao = descricao;
-        this.imagem = imagem;
-        this.categoria.add(categoria);
-        this.preco = preco;
-        this.qtdeEstoque = qtde;
-        this.codigo = codigo;
-        this.isAtivo = isAtivo;
-        this.numeroPaginas = numeroPaginas;
-        this.autor = autor;
-        this.editora = editora;
-        this.edicao = edicao;
-        this.ano = ano;
-        this.isbn = isbn;
-        this.altura = altura;
-        this.largura = largura;
-        this.peso = peso;
-        this.profundidade = profundidade;
-        setDataCadastro(LocalDate.now());
+    @PrePersist
+    public void prePersist() {
+        this.isAtivo = true;
+        this.dataCadastro = LocalDate.now();
     }
 
 }

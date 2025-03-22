@@ -2,10 +2,13 @@ package com.fatec.les.loungeliterarioapi.mapper;
 
 import com.fatec.les.loungeliterarioapi.dto.CartaoDeCreditoDTO;
 import com.fatec.les.loungeliterarioapi.model.CartaoDeCredito;
+import org.mapstruct.Mapper;
 
+@Mapper(componentModel = "spring")
 public interface CartaoDeCreditoMapper {
 
-    public CartaoDeCredito toEntity(CartaoDeCreditoDTO cartaoDto);
+    CartaoDeCredito toEntity(CartaoDeCreditoDTO cartaoDto);
 
-    public CartaoDeCreditoDTO toDto(CartaoDeCredito cartao);
+    CartaoDeCreditoDTO toDto(CartaoDeCredito cartao);
+
 }

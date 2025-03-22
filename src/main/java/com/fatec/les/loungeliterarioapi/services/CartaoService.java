@@ -7,10 +7,13 @@ import org.springframework.http.ResponseEntity;
 import java.util.List;
 
 public interface CartaoService {
+
     List<CartaoDeCredito> buscarCartaoPorIdCliente(Long id);
 
     void deletarCartao(Long idCartao);
 
-    ResponseEntity<?> salvarCartao(CartaoDeCreditoDTO cartao);
+    ResponseEntity<CartaoDeCreditoDTO> salvarCartao(CartaoDeCreditoDTO cartao);
+
     CartaoDeCreditoDTO buscarCartaoPorId(Long idCartao);
+
 }

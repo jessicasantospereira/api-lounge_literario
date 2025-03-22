@@ -1,6 +1,8 @@
 package com.fatec.les.loungeliterarioapi.services.impl;
 
 import com.fatec.les.loungeliterarioapi.dto.CartaoDeCreditoDTO;
+import com.fatec.les.loungeliterarioapi.exceptions.DomainException;
+import com.fatec.les.loungeliterarioapi.exceptions.Error;
 import com.fatec.les.loungeliterarioapi.mapper.CartaoDeCreditoMapper;
 import com.fatec.les.loungeliterarioapi.model.CartaoDeCredito;
 import com.fatec.les.loungeliterarioapi.model.Cliente;
@@ -29,11 +31,11 @@ public class CartaoServiceImpl implements CartaoService {
         this.clienteService = clienteService;
         this.cartaoMapper = cartaoMapper;
     }
+
     @Override
     public List<CartaoDeCredito> buscarCartaoPorIdCliente(Long id) {
         log.info("Buscando cartão por id do cliente");
-        List<CartaoDeCredito> cartoes = this.repository.findByCliente(id).get();
-        return cartoes;
+        return this.repository.findByCliente(id).orElseThrow(() -> new DomainException(Error.NOT_FOUND, "Cartão não encontrado"));
     }
 
     @Override
@@ -43,7 +45,7 @@ public class CartaoServiceImpl implements CartaoService {
     }
 
     @Override
-    public ResponseEntity<?> salvarCartao(CartaoDeCreditoDTO cartao) {
+    public ResponseEntity<CartaoDeCreditoDTO> salvarCartao(CartaoDeCreditoDTO cartao) {
         log.info("Salvando cartão de crédito");
         Cliente c1 = clienteService.buscarPorIdDoCliente(cartao.getIdCliente());
         CartaoDeCredito cartaoDeCredito = cartaoMapper.toEntity(cartao);
@@ -60,7 +62,7 @@ public class CartaoServiceImpl implements CartaoService {
                 repository.save(cartaoPrincipal);
             }
             CartaoDeCredito existente = repository.save(cartaoDeCredito);
-            return new ResponseEntity<CartaoDeCreditoDTO>(cartaoMapper.toDto(existente), HttpStatus.CREATED);
+            return new ResponseEntity<>(cartaoMapper.toDto(existente), HttpStatus.CREATED);
         }
         // Se já houver um cartão marcado como principal, desmarque-o
         if (cartaoPrincipal != null) {

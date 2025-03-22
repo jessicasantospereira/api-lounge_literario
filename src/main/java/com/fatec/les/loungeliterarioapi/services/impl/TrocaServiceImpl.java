@@ -2,6 +2,8 @@ package com.fatec.les.loungeliterarioapi.services.impl;
 
 import com.fatec.les.loungeliterarioapi.dto.ResponseTrocaDTO;
 import com.fatec.les.loungeliterarioapi.dto.TrocaDTO;
+import com.fatec.les.loungeliterarioapi.exceptions.DomainException;
+import com.fatec.les.loungeliterarioapi.exceptions.Error;
 import com.fatec.les.loungeliterarioapi.mapper.SolicitacaoTrocaMapper;
 import com.fatec.les.loungeliterarioapi.model.*;
 import com.fatec.les.loungeliterarioapi.repository.ClienteRepository;
@@ -47,28 +49,28 @@ public class TrocaServiceImpl implements TrocaService {
     }
 
     @Override
-    public ResponseEntity<?> buscarCupom(String codigo) {
+    public ResponseEntity<CupomTroca> buscarCupom(String codigo) {
         CupomTroca c1 = cupomTrocaRepository.findByCodigo(codigo);
         LocalDate dataAtual = LocalDate.now();
         if(c1 == null){
-            return new ResponseEntity<String>("Cupom não encontrado", HttpStatus.FORBIDDEN);
+            throw new DomainException(Error.NOT_FOUND, "Cupom não encontrado");
         }
         if(dataAtual.isAfter(c1.getDataValidade())){
-            return new ResponseEntity<String>("Cupom expirado", HttpStatus.FORBIDDEN);
+            throw new DomainException(Error.UNPROCESSABLE_ENTITY, "Cupom expirado");
         }
         if(c1.isUtilizado()){
-            return new ResponseEntity<String>("Cupom já utilizado", HttpStatus.FORBIDDEN);
+            throw new DomainException(Error.UNPROCESSABLE_ENTITY, "Cupom já utilizado");
         }
-        return new ResponseEntity<CupomTroca>(c1, HttpStatus.OK);
+        return new ResponseEntity<>(c1, HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<?> buscarTrocasPorCliente(String id) {
+    public ResponseEntity<List<ResponseTrocaDTO>> buscarTrocasPorCliente(String id) {
         List<SolicitacaoTroca> trocas = repository.findAllByIdCliente(Long.valueOf(id));
         if (trocas.isEmpty()) {
             return null;
         }
-        List<Object> response = trocas.stream()
+        List<ResponseTrocaDTO> response = trocas.stream()
                 .map(troca -> {
                     if (troca.getStatusSolicitacao().equals(StatusSolicitacaoTroca.ITENS_RECEBIDOS) || troca.getStatusSolicitacao().equals(StatusSolicitacaoTroca.TROCA_EFETUADA)) {
                         CupomTroca cupom = cupomTrocaRepository.findBySolicitacaoTroca(troca);

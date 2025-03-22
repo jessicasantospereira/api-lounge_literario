@@ -2,6 +2,7 @@ package com.fatec.les.loungeliterarioapi.services.impl;
 
 import com.fatec.les.loungeliterarioapi.dto.ResponseTrocaDTO;
 import com.fatec.les.loungeliterarioapi.dto.TrocaDTO;
+import com.fatec.les.loungeliterarioapi.exceptions.DomainException;
 import com.fatec.les.loungeliterarioapi.mapper.SolicitacaoTrocaMapper;
 import com.fatec.les.loungeliterarioapi.model.*;
 import com.fatec.les.loungeliterarioapi.repository.ClienteRepository;
@@ -99,17 +100,15 @@ class TrocaServiceImplTest {
     }
 
     @Test
-    @DisplayName("Não deve encontrar um cupom")
+    @DisplayName("Deve lançar uma exceção caso cupom não encontrado")
     void buscarCupomNaoEncontrado() {
         String codigo = "123456";
         when(cupomTrocaRepository.findByCodigo(codigo)).thenReturn(null);
-        var response = trocaService.buscarCupom(codigo);
-        assertNotNull(response);
-        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+        assertThrows(DomainException.class, ()-> trocaService.buscarCupom(codigo));
     }
 
     @Test
-    @DisplayName("Deve encontrar um cupom já utilizado")
+    @DisplayName("Deve lançar uma exceção caso cupom já utilizado")
     void buscarCupomJaUtilizado() {
         String codigo = "123456";
         CupomTroca cupom = new CupomTroca();
@@ -118,13 +117,11 @@ class TrocaServiceImplTest {
         cupom.setDataValidade(LocalDate.parse("2025-12-31"));
         cupom.setUtilizado(true);
         when(cupomTrocaRepository.findByCodigo(codigo)).thenReturn(cupom);
-        var response = trocaService.buscarCupom(codigo);
-        assertNotNull(response);
-        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+        assertThrows(DomainException.class, ()-> trocaService.buscarCupom(codigo));
     }
 
     @Test
-    @DisplayName("Deve encontrar um cupom expirado")
+    @DisplayName("Deve lançar uma exceção caso cupom expirado")
     void buscarCupomExpirado() {
         String codigo = "123456";
         CupomTroca cupom = new CupomTroca();
@@ -133,9 +130,7 @@ class TrocaServiceImplTest {
         cupom.setDataValidade(LocalDate.parse("2024-12-31"));
         cupom.setUtilizado(true);
         when(cupomTrocaRepository.findByCodigo(codigo)).thenReturn(cupom);
-        var response = trocaService.buscarCupom(codigo);
-        assertNotNull(response);
-        assertEquals(HttpStatus.FORBIDDEN, response.getStatusCode());
+        assertThrows(DomainException.class, ()-> trocaService.buscarCupom(codigo));
     }
 
     @Test
